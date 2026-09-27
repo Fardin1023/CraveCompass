@@ -157,7 +157,10 @@ export default function HomePage() {
       {/* ── Navbar ─────────────────────────── */}
       <nav className="navbar" role="navigation" aria-label="Main navigation">
         <div className="navbar-logo">
-          <div className="navbar-logo-icon">🧭</div>
+          <div className="navbar-logo-icon">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.jpg" alt="CraveCompass Logo" />
+          </div>
           <span className="navbar-logo-text">CraveCompass</span>
         </div>
 
