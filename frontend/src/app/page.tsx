@@ -1,5 +1,6 @@
 'use client';
 
+// CraveCompass Dhaka — Live Production
 import dynamic from 'next/dynamic';
 import { useState, useCallback, useEffect } from 'react';
 import { useGeolocation } from '@/hooks/useGeolocation';
