@@ -1,0 +1,3149 @@
+[
+  {
+    "_id": "6ab9464604a23dff5d69bb34",
+    "googlePlaceId": "seed_dhaka_001",
+    "name": "Kacchi Bhai",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.3742,
+        23.7461
+      ]
+    },
+    "address": {
+      "formatted": "Road 4, Dhanmondi, Dhaka 1205",
+      "street": "Road 4",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1205"
+    },
+    "categories": [
+      "restaurant",
+      "bangladeshi_restaurant"
+    ],
+    "cuisine": [
+      "bangladeshi",
+      "biryani"
+    ],
+    "priceLevel": 2,
+    "rating": 4.7,
+    "totalRatings": 8420,
+    "phone": "+880 1711-234567",
+    "website": "https://kacchibhai.com",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 12:00 PM – 10:30 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Rahim Ahmed",
+        "rating": 5,
+        "text": "Best kacchi biryani in Dhaka! Tender mutton and fragrant chinigura rice.",
+        "_id": "6ab9464604a23dff5d69bb35",
+        "time": "2026-09-27T16:37:26.837Z"
+      },
+      {
+        "author": "Nusrat Jahan",
+        "rating": 5,
+        "text": "A Dhaka institution. Always consistent quality, worth every taka.",
+        "_id": "6ab9464604a23dff5d69bb36",
+        "time": "2026-09-27T16:37:26.838Z"
+      }
+    ],
+    "tags": [
+      "kacchi biryani",
+      "mutton",
+      "bangladeshi",
+      "popular",
+      "dhanmondi",
+      "must-try",
+      "borhani"
+    ],
+    "popularityScore": 1200,
+    "isFeatured": true,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.838Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.878Z",
+    "updatedAt": "2026-09-27T16:37:26.878Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb37",
+    "googlePlaceId": "seed_dhaka_004",
+    "name": "Fakruddin Biryani House",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.378,
+        23.75
+      ]
+    },
+    "address": {
+      "formatted": "House 6, Road 7/A, Dhanmondi, Dhaka 1209",
+      "street": "Road 7/A",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1209"
+    },
+    "categories": [
+      "restaurant",
+      "bangladeshi_restaurant"
+    ],
+    "cuisine": [
+      "bangladeshi",
+      "biryani"
+    ],
+    "priceLevel": 2,
+    "rating": 4.6,
+    "totalRatings": 5800,
+    "phone": "+880 1813-567890",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 12:00 PM – 10:30 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1624374053855-39404ebda88b?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Tanvir Ahmed",
+        "rating": 5,
+        "text": "Fakruddin biryani is iconic! Perfectly spiced, generous portions.",
+        "_id": "6ab9464604a23dff5d69bb38",
+        "time": "2026-09-27T16:37:26.839Z"
+      },
+      {
+        "author": "Riya Chowdhury",
+        "rating": 4,
+        "text": "Best beef tehari in the city. Always reliable quality.",
+        "_id": "6ab9464604a23dff5d69bb39",
+        "time": "2026-09-27T16:37:26.839Z"
+      }
+    ],
+    "tags": [
+      "biryani",
+      "tehari",
+      "dhanmondi",
+      "bangladeshi",
+      "family",
+      "takeaway"
+    ],
+    "popularityScore": 1050,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.839Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.879Z",
+    "updatedAt": "2026-09-27T16:37:26.879Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb3a",
+    "googlePlaceId": "seed_dhaka_012",
+    "name": "Moshla Kitchen",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.376,
+        23.752
+      ]
+    },
+    "address": {
+      "formatted": "House 5, Road 27, Dhanmondi, Dhaka 1209",
+      "street": "Road 27",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1209"
+    },
+    "categories": [
+      "restaurant",
+      "bangladeshi_restaurant"
+    ],
+    "cuisine": [
+      "bangladeshi",
+      "indian"
+    ],
+    "priceLevel": 2,
+    "rating": 4.6,
+    "totalRatings": 2100,
+    "phone": "+880 1855-345678",
+    "openingHours": {
+      "openNow": false,
+      "weekdayText": [
+        "Daily: 12:00 PM – 10:30 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Joyita Dey",
+        "rating": 5,
+        "text": "Modern take on traditional Bangladeshi cuisine. Flavor bomb!",
+        "_id": "6ab9464604a23dff5d69bb3b",
+        "time": "2026-09-27T16:37:26.840Z"
+      },
+      {
+        "author": "Wasim Akram",
+        "rating": 4,
+        "text": "Great curries, very authentic. The chicken rezala is superb.",
+        "_id": "6ab9464604a23dff5d69bb3c",
+        "time": "2026-09-27T16:37:26.840Z"
+      }
+    ],
+    "tags": [
+      "bangladeshi",
+      "curry",
+      "dhanmondi",
+      "modern",
+      "spicy",
+      "family",
+      "desi"
+    ],
+    "popularityScore": 760,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.840Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.879Z",
+    "updatedAt": "2026-09-27T16:37:26.879Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb3d",
+    "googlePlaceId": "seed_dhaka_014",
+    "name": "Cheez Dhaka",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.3755,
+        23.751
+      ]
+    },
+    "address": {
+      "formatted": "House 34, Road 27, Dhanmondi, Dhaka 1209",
+      "street": "Road 27",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1209"
+    },
+    "categories": [
+      "restaurant",
+      "pizza_restaurant"
+    ],
+    "cuisine": [
+      "pizza",
+      "fast food"
+    ],
+    "priceLevel": 2,
+    "rating": 4.5,
+    "totalRatings": 2600,
+    "phone": "+880 1833-445566",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 11:30 AM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Fahim Reza",
+        "rating": 5,
+        "text": "The cheese pull on their deep dish pizza is unreal! Cozy vibe.",
+        "_id": "6ab9464604a23dff5d69bb3e",
+        "time": "2026-09-27T16:37:26.840Z"
+      },
+      {
+        "author": "Afreen Noor",
+        "rating": 4,
+        "text": "Great cheesy pizza at affordable prices. Loved the garlic bread.",
+        "_id": "6ab9464604a23dff5d69bb3f",
+        "time": "2026-09-27T16:37:26.840Z"
+      }
+    ],
+    "tags": [
+      "pizza",
+      "deep dish",
+      "cheese pull",
+      "dhanmondi",
+      "casual",
+      "slice",
+      "pepperoni"
+    ],
+    "popularityScore": 890,
+    "isFeatured": true,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.840Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.879Z",
+    "updatedAt": "2026-09-27T16:37:26.879Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb40",
+    "googlePlaceId": "seed_dhaka_017",
+    "name": "Takeout Dhanmondi",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.377,
+        23.748
+      ]
+    },
+    "address": {
+      "formatted": "House 7A, Road 5, Dhanmondi, Dhaka 1205",
+      "street": "Road 5",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1205"
+    },
+    "categories": [
+      "restaurant",
+      "burger_restaurant",
+      "fast_food"
+    ],
+    "cuisine": [
+      "burger",
+      "american",
+      "fast food"
+    ],
+    "priceLevel": 2,
+    "rating": 4.6,
+    "totalRatings": 6300,
+    "phone": "+880 1722-334455",
+    "website": "https://takeoutbd.com",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 12:00 PM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Mahir Faisal",
+        "rating": 5,
+        "text": "Pioneer of Dhaka burger culture! Juiciest beef patties in town.",
+        "_id": "6ab9464604a23dff5d69bb41",
+        "time": "2026-09-27T16:37:26.841Z"
+      },
+      {
+        "author": "Tasnim Zahid",
+        "rating": 4,
+        "text": "Classic Beef Cheese Burger with extra sauce is unbeatable.",
+        "_id": "6ab9464604a23dff5d69bb42",
+        "time": "2026-09-27T16:37:26.841Z"
+      }
+    ],
+    "tags": [
+      "burger",
+      "beef burger",
+      "cheese burger",
+      "dhanmondi",
+      "popular",
+      "fries",
+      "iconic"
+    ],
+    "popularityScore": 1150,
+    "isFeatured": true,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.841Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.879Z",
+    "updatedAt": "2026-09-27T16:37:26.879Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb43",
+    "googlePlaceId": "seed_dhaka_018",
+    "name": "Sultan's Dine",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.375,
+        23.7495
+      ]
+    },
+    "address": {
+      "formatted": "Green Akshay Plaza, Road 9A, Dhanmondi, Dhaka 1209",
+      "street": "Road 9A",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1209"
+    },
+    "categories": [
+      "restaurant",
+      "bangladeshi_restaurant"
+    ],
+    "cuisine": [
+      "bangladeshi",
+      "biryani"
+    ],
+    "priceLevel": 2,
+    "rating": 4.8,
+    "totalRatings": 9100,
+    "phone": "+880 1713-112233",
+    "website": "https://sultansdine.com",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 12:00 PM – 10:30 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Alvi Hassan",
+        "rating": 5,
+        "text": "The gold standard for Kacchi Biryani in Bangladesh. Tender mutton, aromatic rice, best borhani.",
+        "_id": "6ab9464604a23dff5d69bb44",
+        "time": "2026-09-27T16:37:26.841Z"
+      },
+      {
+        "author": "Mahi Chowdhury",
+        "rating": 5,
+        "text": "Incredible flavor and massive portions. Always a 10/10 feast!",
+        "_id": "6ab9464604a23dff5d69bb45",
+        "time": "2026-09-27T16:37:26.841Z"
+      }
+    ],
+    "tags": [
+      "kacchi biryani",
+      "sultans dine",
+      "dhanmondi",
+      "mutton",
+      "borhani",
+      "legendary"
+    ],
+    "popularityScore": 1350,
+    "isFeatured": true,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.841Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.879Z",
+    "updatedAt": "2026-09-27T16:37:26.879Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb46",
+    "googlePlaceId": "seed_dhaka_031",
+    "name": "Bar-B-Q Tonight Dhaka",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.3758,
+        23.7535
+      ]
+    },
+    "address": {
+      "formatted": "Road 27, House 42, Dhanmondi, Dhaka 1209",
+      "street": "Road 27",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1209"
+    },
+    "categories": [
+      "restaurant",
+      "barbecue_restaurant"
+    ],
+    "cuisine": [
+      "kabab",
+      "mughlai",
+      "chicken"
+    ],
+    "priceLevel": 3,
+    "rating": 4.5,
+    "totalRatings": 3200,
+    "phone": "+880 1711-889977",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 12:30 PM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Sohail Tanvir",
+        "rating": 5,
+        "text": "Best mutton ribs and reshmi kabab in Dhaka! Fresh hot rogni naan.",
+        "_id": "6ab9464604a23dff5d69bb47",
+        "time": "2026-09-27T16:37:26.842Z"
+      },
+      {
+        "author": "Farhana Haque",
+        "rating": 4,
+        "text": "Always a top choice for barbecue with family. High quality.",
+        "_id": "6ab9464604a23dff5d69bb48",
+        "time": "2026-09-27T16:37:26.842Z"
+      }
+    ],
+    "tags": [
+      "kabab",
+      "reshmi kabab",
+      "mutton chops",
+      "dhanmondi",
+      "bbq",
+      "family dining"
+    ],
+    "popularityScore": 890,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.842Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.879Z",
+    "updatedAt": "2026-09-27T16:37:26.879Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb49",
+    "googlePlaceId": "seed_dhaka_032",
+    "name": "Crimson Cup Coffee House",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.3768,
+        23.7525
+      ]
+    },
+    "address": {
+      "formatted": "Road 27, Dhanmondi, Dhaka 1209",
+      "street": "Road 27",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1209"
+    },
+    "categories": [
+      "cafe",
+      "coffee_shop"
+    ],
+    "cuisine": [
+      "coffee",
+      "breakfast",
+      "dessert"
+    ],
+    "priceLevel": 2,
+    "rating": 4.6,
+    "totalRatings": 4100,
+    "phone": "+880 1788-223344",
+    "website": "https://crimsoncup.com.bd",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 8:00 AM – 12:00 AM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Anika Bushra",
+        "rating": 5,
+        "text": "Cozy study environment and rich iced caramel macchiato. My everyday hangout.",
+        "_id": "6ab9464604a23dff5d69bb4a",
+        "time": "2026-09-27T16:37:26.842Z"
+      },
+      {
+        "author": "Zubair Hossain",
+        "rating": 4,
+        "text": "Great coffee aroma and fast wifi. Friendly baristas.",
+        "_id": "6ab9464604a23dff5d69bb4b",
+        "time": "2026-09-27T16:37:26.842Z"
+      }
+    ],
+    "tags": [
+      "coffee",
+      "mocha",
+      "dhanmondi",
+      "wifi",
+      "cozy",
+      "study cafe",
+      "cheesecake"
+    ],
+    "popularityScore": 920,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.842Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.879Z",
+    "updatedAt": "2026-09-27T16:37:26.879Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb4c",
+    "googlePlaceId": "seed_dhaka_033",
+    "name": "Madchef Dhanmondi",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.3735,
+        23.7485
+      ]
+    },
+    "address": {
+      "formatted": "Shimanto Square, Road 2, Dhanmondi, Dhaka 1205",
+      "street": "Road 2",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1205"
+    },
+    "categories": [
+      "restaurant",
+      "burger_restaurant"
+    ],
+    "cuisine": [
+      "burger",
+      "american",
+      "fast food"
+    ],
+    "priceLevel": 2,
+    "rating": 4.5,
+    "totalRatings": 3700,
+    "phone": "+880 1922-334411",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 12:00 PM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Nafis Iqbal",
+        "rating": 5,
+        "text": "Dhaka Dhabba burger is top tier! Thick juicy patty and spicy mayo.",
+        "_id": "6ab9464604a23dff5d69bb4d",
+        "time": "2026-09-27T16:37:26.842Z"
+      },
+      {
+        "author": "Sumaiya Binte",
+        "rating": 4,
+        "text": "Very consistent gourmet burgers. Love the poutine fries.",
+        "_id": "6ab9464604a23dff5d69bb4e",
+        "time": "2026-09-27T16:37:26.842Z"
+      }
+    ],
+    "tags": [
+      "burger",
+      "gourmet burger",
+      "dhanmondi",
+      "fries",
+      "milkshakes",
+      "cheddar"
+    ],
+    "popularityScore": 880,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.843Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb4f",
+    "googlePlaceId": "seed_dhaka_006",
+    "name": "Chillox Banani",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.4046,
+        23.7937
+      ]
+    },
+    "address": {
+      "formatted": "Road 11, Block C, Banani, Dhaka 1213",
+      "street": "Road 11",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1213"
+    },
+    "categories": [
+      "restaurant",
+      "burger_restaurant",
+      "fast_food"
+    ],
+    "cuisine": [
+      "burger",
+      "american",
+      "fast food"
+    ],
+    "priceLevel": 2,
+    "rating": 4.5,
+    "totalRatings": 4700,
+    "phone": "+880 1700-789012",
+    "website": "https://chillox.com.bd",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 11:00 AM – 12:00 AM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Adnan Siddiqui",
+        "rating": 5,
+        "text": "Hands down the best burgers in Dhaka! The smash burger is insane.",
+        "_id": "6ab9464604a23dff5d69bb50",
+        "time": "2026-09-27T16:37:26.843Z"
+      },
+      {
+        "author": "Priya Das",
+        "rating": 4,
+        "text": "Great burger spot. Highly recommend the Chillox Special with sausage.",
+        "_id": "6ab9464604a23dff5d69bb51",
+        "time": "2026-09-27T16:37:26.843Z"
+      }
+    ],
+    "tags": [
+      "burger",
+      "smash burger",
+      "banani",
+      "trendy",
+      "halal",
+      "late night",
+      "takeaway"
+    ],
+    "popularityScore": 920,
+    "isFeatured": true,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.843Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb52",
+    "googlePlaceId": "seed_dhaka_010",
+    "name": "Café Mango",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.402,
+        23.77
+      ]
+    },
+    "address": {
+      "formatted": "DOHS, Road 2, Mohakhali, Dhaka 1206",
+      "street": "Road 2, DOHS",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1206"
+    },
+    "categories": [
+      "cafe",
+      "restaurant"
+    ],
+    "cuisine": [
+      "coffee",
+      "breakfast",
+      "continental"
+    ],
+    "priceLevel": 2,
+    "rating": 4.5,
+    "totalRatings": 2800,
+    "phone": "+880 1677-123456",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 8:00 AM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Nadia Hossain",
+        "rating": 5,
+        "text": "Cozy atmosphere, great coffee, and reliable wifi for working.",
+        "_id": "6ab9464604a23dff5d69bb53",
+        "time": "2026-09-27T16:37:26.843Z"
+      },
+      {
+        "author": "Arif Khan",
+        "rating": 4,
+        "text": "Lovely brunch spot. The pasta and latte are both excellent.",
+        "_id": "6ab9464604a23dff5d69bb54",
+        "time": "2026-09-27T16:37:26.843Z"
+      }
+    ],
+    "tags": [
+      "coffee",
+      "brunch",
+      "cafe",
+      "continental",
+      "wifi",
+      "casual",
+      "mohakhali",
+      "dessert"
+    ],
+    "popularityScore": 840,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.843Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb55",
+    "googlePlaceId": "seed_dhaka_011",
+    "name": "Butcher's Burger",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.4075,
+        23.796
+      ]
+    },
+    "address": {
+      "formatted": "House 28, Road 17, Banani, Dhaka 1213",
+      "street": "Road 17",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1213"
+    },
+    "categories": [
+      "restaurant",
+      "burger_restaurant"
+    ],
+    "cuisine": [
+      "burger",
+      "american"
+    ],
+    "priceLevel": 3,
+    "rating": 4.5,
+    "totalRatings": 3400,
+    "phone": "+880 1944-234567",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 12:00 PM – 11:30 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Shahriar Hossain",
+        "rating": 5,
+        "text": "Premium burgers with quality beef. Worth every taka!",
+        "_id": "6ab9464604a23dff5d69bb56",
+        "time": "2026-09-27T16:37:26.844Z"
+      },
+      {
+        "author": "Asha Roy",
+        "rating": 4,
+        "text": "Excellent burgers and great fries. One of the top burger spots.",
+        "_id": "6ab9464604a23dff5d69bb57",
+        "time": "2026-09-27T16:37:26.844Z"
+      }
+    ],
+    "tags": [
+      "burger",
+      "beef burger",
+      "banani",
+      "premium",
+      "halal",
+      "trendy"
+    ],
+    "popularityScore": 870,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.844Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb58",
+    "googlePlaceId": "seed_dhaka_013",
+    "name": "Pizza Guy Banani",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.4062,
+        23.7942
+      ]
+    },
+    "address": {
+      "formatted": "Road 11, Block D, Banani, Dhaka 1213",
+      "street": "Road 11",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1213"
+    },
+    "categories": [
+      "restaurant",
+      "pizza_restaurant",
+      "italian_restaurant"
+    ],
+    "cuisine": [
+      "pizza",
+      "italian"
+    ],
+    "priceLevel": 3,
+    "rating": 4.7,
+    "totalRatings": 3100,
+    "phone": "+880 1788-990011",
+    "website": "https://pizzaguybd.com",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 12:00 PM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Tanvir Rahman",
+        "rating": 5,
+        "text": "Best wood-fired pizza in Dhaka! Authentic sourdough crust.",
+        "_id": "6ab9464604a23dff5d69bb59",
+        "time": "2026-09-27T16:37:26.844Z"
+      },
+      {
+        "author": "Samira Anjum",
+        "rating": 5,
+        "text": "Pepperoni and truffle pizza are incredible. Must-visit in Banani.",
+        "_id": "6ab9464604a23dff5d69bb5a",
+        "time": "2026-09-27T16:37:26.844Z"
+      }
+    ],
+    "tags": [
+      "pizza",
+      "wood fired pizza",
+      "sourdough",
+      "banani",
+      "italian",
+      "popular",
+      "cheese",
+      "margherita"
+    ],
+    "popularityScore": 980,
+    "isFeatured": true,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.844Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb5b",
+    "googlePlaceId": "seed_dhaka_025",
+    "name": "Tokyo Express Banani",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.4035,
+        23.793
+      ]
+    },
+    "address": {
+      "formatted": "Road 11, House 67, Banani, Dhaka 1213",
+      "street": "Road 11",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1213"
+    },
+    "categories": [
+      "restaurant",
+      "japanese_restaurant"
+    ],
+    "cuisine": [
+      "sushi",
+      "japanese"
+    ],
+    "priceLevel": 3,
+    "rating": 4.4,
+    "totalRatings": 2200,
+    "phone": "+880 1755-443322",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 12:30 PM – 10:30 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1611143669185-af224c5e3252?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Mehedi Hasan",
+        "rating": 5,
+        "text": "Super fresh salmon nigiri and spicy tuna rolls! Cozy ambiance.",
+        "_id": "6ab9464604a23dff5d69bb5c",
+        "time": "2026-09-27T16:37:26.844Z"
+      },
+      {
+        "author": "Nadia Karim",
+        "rating": 4,
+        "text": "Authentic ramen broth and crispy prawn tempura. Highly recommended.",
+        "_id": "6ab9464604a23dff5d69bb5d",
+        "time": "2026-09-27T16:37:26.844Z"
+      }
+    ],
+    "tags": [
+      "sushi",
+      "ramen",
+      "bento",
+      "banani",
+      "japanese",
+      "california roll",
+      "tempura"
+    ],
+    "popularityScore": 790,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.845Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb5e",
+    "googlePlaceId": "seed_dhaka_026",
+    "name": "North End Coffee Roasters Banani",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.405,
+        23.792
+      ]
+    },
+    "address": {
+      "formatted": "Road 11, Banani, Dhaka 1213",
+      "street": "Road 11",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1213"
+    },
+    "categories": [
+      "cafe",
+      "coffee_shop"
+    ],
+    "cuisine": [
+      "coffee",
+      "breakfast",
+      "dessert"
+    ],
+    "priceLevel": 2,
+    "rating": 4.8,
+    "totalRatings": 5200,
+    "phone": "+880 1711-556677",
+    "website": "https://northendcoffee.com",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 7:30 AM – 11:30 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Shafiqul Alam",
+        "rating": 5,
+        "text": "The pioneer of specialty coffee in Bangladesh. Freshly roasted beans!",
+        "_id": "6ab9464604a23dff5d69bb5f",
+        "time": "2026-09-27T16:37:26.846Z"
+      },
+      {
+        "author": "Rasheda Parvin",
+        "rating": 5,
+        "text": "Their iced Americano and cinnamon roll are heavenly.",
+        "_id": "6ab9464604a23dff5d69bb60",
+        "time": "2026-09-27T16:37:26.846Z"
+      }
+    ],
+    "tags": [
+      "coffee",
+      "espresso",
+      "cappuccino",
+      "banani",
+      "artisan",
+      "croissant",
+      "cinnamon roll"
+    ],
+    "popularityScore": 1100,
+    "isFeatured": true,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.846Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb61",
+    "googlePlaceId": "seed_dhaka_027",
+    "name": "The Manhattan FISH MARKET",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.408,
+        23.7915
+      ]
+    },
+    "address": {
+      "formatted": "Road 11, Block D, Banani, Dhaka 1213",
+      "street": "Road 11",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1213"
+    },
+    "categories": [
+      "restaurant",
+      "seafood_restaurant"
+    ],
+    "cuisine": [
+      "seafood",
+      "american"
+    ],
+    "priceLevel": 3,
+    "rating": 4.4,
+    "totalRatings": 2900,
+    "phone": "+880 1844-332211",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 12:00 PM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Arman Khan",
+        "rating": 5,
+        "text": "The Manhattan Flaming Seafood Platter is a showstopper and delicious!",
+        "_id": "6ab9464604a23dff5d69bb62",
+        "time": "2026-09-27T16:37:26.846Z"
+      },
+      {
+        "author": "Maliha Rahman",
+        "rating": 4,
+        "text": "Crispy batter fish and garlic herb rice. Great family seafood feast.",
+        "_id": "6ab9464604a23dff5d69bb63",
+        "time": "2026-09-27T16:37:26.846Z"
+      }
+    ],
+    "tags": [
+      "seafood",
+      "fish and chips",
+      "flaming platter",
+      "prawns",
+      "banani",
+      "calamari"
+    ],
+    "popularityScore": 810,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.846Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb64",
+    "googlePlaceId": "seed_dhaka_028",
+    "name": "Yum Cha District Banani",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.4042,
+        23.7948
+      ]
+    },
+    "address": {
+      "formatted": "House 55, Road 11, Banani, Dhaka 1213",
+      "street": "Road 11",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1213"
+    },
+    "categories": [
+      "restaurant",
+      "asian_restaurant"
+    ],
+    "cuisine": [
+      "chinese",
+      "thai",
+      "asian"
+    ],
+    "priceLevel": 3,
+    "rating": 4.5,
+    "totalRatings": 2100,
+    "phone": "+880 1777-665544",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 12:00 PM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Sabrina Mostafa",
+        "rating": 5,
+        "text": "Authentic soup dumplings (Xiao Long Bao) and spicy dan dan noodles!",
+        "_id": "6ab9464604a23dff5d69bb65",
+        "time": "2026-09-27T16:37:26.847Z"
+      },
+      {
+        "author": "Tareq Aziz",
+        "rating": 4,
+        "text": "Crispy duck bao and prawn har gow are stellar.",
+        "_id": "6ab9464604a23dff5d69bb66",
+        "time": "2026-09-27T16:37:26.847Z"
+      }
+    ],
+    "tags": [
+      "dim sum",
+      "dumplings",
+      "bao bun",
+      "banani",
+      "asian street food",
+      "noodles"
+    ],
+    "popularityScore": 780,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.847Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb67",
+    "googlePlaceId": "seed_dhaka_005",
+    "name": "Nando's Gulshan",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.4138,
+        23.7905
+      ]
+    },
+    "address": {
+      "formatted": "Gulshan Avenue, Plot 104, Gulshan 2, Dhaka 1212",
+      "street": "Gulshan Avenue",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1212"
+    },
+    "categories": [
+      "restaurant",
+      "fast_food",
+      "chicken_restaurant"
+    ],
+    "cuisine": [
+      "american",
+      "chicken"
+    ],
+    "priceLevel": 3,
+    "rating": 4.3,
+    "totalRatings": 3200,
+    "phone": "+880 1988-678901",
+    "website": "https://nandos.com.bd",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 11:00 AM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1598514982901-e51c3b664b72?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Zara Khan",
+        "rating": 4,
+        "text": "Great peri-peri chicken as always! Gulshan branch has great ambiance.",
+        "_id": "6ab9464604a23dff5d69bb68",
+        "time": "2026-09-27T16:37:26.847Z"
+      },
+      {
+        "author": "Sahil Rahman",
+        "rating": 4,
+        "text": "Consistently good food and service. Love the extra hot wings.",
+        "_id": "6ab9464604a23dff5d69bb69",
+        "time": "2026-09-27T16:37:26.847Z"
+      }
+    ],
+    "tags": [
+      "peri peri",
+      "chicken",
+      "gulshan",
+      "flame grilled",
+      "wings",
+      "halal"
+    ],
+    "popularityScore": 780,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.847Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb6a",
+    "googlePlaceId": "seed_dhaka_007",
+    "name": "Izumi Japanese Restaurant",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.4148,
+        23.782
+      ]
+    },
+    "address": {
+      "formatted": "CWS-A 8, Gulshan North Avenue, Gulshan 1, Dhaka 1212",
+      "street": "Gulshan North Avenue",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1212"
+    },
+    "categories": [
+      "restaurant",
+      "japanese_restaurant"
+    ],
+    "cuisine": [
+      "sushi",
+      "japanese"
+    ],
+    "priceLevel": 4,
+    "rating": 4.6,
+    "totalRatings": 1800,
+    "phone": "+880 1755-890123",
+    "openingHours": {
+      "openNow": false,
+      "weekdayText": [
+        "Daily: 12:00 PM – 3:00 PM, 7:00 PM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Mehnaz Parveen",
+        "rating": 5,
+        "text": "Best Japanese food in Dhaka! Beautiful garden courtyard.",
+        "_id": "6ab9464604a23dff5d69bb6b",
+        "time": "2026-09-27T16:37:26.847Z"
+      },
+      {
+        "author": "Imran Chowdhury",
+        "rating": 5,
+        "text": "The sashimi grade tuna and salmon are fresh flown-in quality.",
+        "_id": "6ab9464604a23dff5d69bb6c",
+        "time": "2026-09-27T16:37:26.847Z"
+      }
+    ],
+    "tags": [
+      "sushi",
+      "sashimi",
+      "japanese",
+      "gulshan",
+      "fine dining",
+      "upscale",
+      "date night"
+    ],
+    "popularityScore": 720,
+    "isFeatured": true,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.848Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb6d",
+    "googlePlaceId": "seed_dhaka_008",
+    "name": "Thai Garden Restaurant",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.412,
+        23.786
+      ]
+    },
+    "address": {
+      "formatted": "House 43, Road 113, Gulshan 2, Dhaka 1212",
+      "street": "Road 113",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1212"
+    },
+    "categories": [
+      "restaurant",
+      "thai_restaurant"
+    ],
+    "cuisine": [
+      "thai",
+      "asian"
+    ],
+    "priceLevel": 3,
+    "rating": 4.4,
+    "totalRatings": 1500,
+    "phone": "+880 1822-901234",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 12:00 PM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Luna Akter",
+        "rating": 4,
+        "text": "Authentic Thai flavors in Gulshan. Great tom yum soup!",
+        "_id": "6ab9464604a23dff5d69bb6e",
+        "time": "2026-09-27T16:37:26.848Z"
+      },
+      {
+        "author": "Reza Islam",
+        "rating": 5,
+        "text": "The green curry and sticky mango rice are unbeatable.",
+        "_id": "6ab9464604a23dff5d69bb6f",
+        "time": "2026-09-27T16:37:26.848Z"
+      }
+    ],
+    "tags": [
+      "thai",
+      "pad thai",
+      "tom yum",
+      "gulshan",
+      "upscale",
+      "green curry"
+    ],
+    "popularityScore": 680,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.848Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb70",
+    "googlePlaceId": "seed_dhaka_015",
+    "name": "Pizza Hut Gulshan 1",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.415,
+        23.78
+      ]
+    },
+    "address": {
+      "formatted": "Plot 15, Gulshan Avenue, Gulshan 1, Dhaka 1212",
+      "street": "Gulshan Avenue",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1212"
+    },
+    "categories": [
+      "restaurant",
+      "pizza_restaurant"
+    ],
+    "cuisine": [
+      "pizza",
+      "american"
+    ],
+    "priceLevel": 2,
+    "rating": 4.3,
+    "totalRatings": 4900,
+    "phone": "+880 1977-889900",
+    "website": "https://pizzahutbd.com",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 11:00 AM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Nazmul Haque",
+        "rating": 4,
+        "text": "Classic stuffed crust pan pizza. Reliable family dinner spot.",
+        "_id": "6ab9464604a23dff5d69bb71",
+        "time": "2026-09-27T16:37:26.848Z"
+      },
+      {
+        "author": "Rashedul Karim",
+        "rating": 4,
+        "text": "Fast service. The beef supreme and garlic bread are great.",
+        "_id": "6ab9464604a23dff5d69bb72",
+        "time": "2026-09-27T16:37:26.848Z"
+      }
+    ],
+    "tags": [
+      "pizza",
+      "pan pizza",
+      "stuffed crust",
+      "gulshan",
+      "family",
+      "wings"
+    ],
+    "popularityScore": 850,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.848Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb73",
+    "googlePlaceId": "seed_dhaka_016",
+    "name": "Bella Italia Gulshan",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.418,
+        23.791
+      ]
+    },
+    "address": {
+      "formatted": "Road 50, Gulshan 2, Dhaka 1212",
+      "street": "Road 50",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1212"
+    },
+    "categories": [
+      "restaurant",
+      "italian_restaurant",
+      "pizza_restaurant"
+    ],
+    "cuisine": [
+      "pizza",
+      "italian"
+    ],
+    "priceLevel": 4,
+    "rating": 4.6,
+    "totalRatings": 1400,
+    "phone": "+880 1711-002233",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 12:00 PM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Sadik Rahman",
+        "rating": 5,
+        "text": "Authentic Italian pizza with crispy thin crust and rich mozzarella.",
+        "_id": "6ab9464604a23dff5d69bb74",
+        "time": "2026-09-27T16:37:26.848Z"
+      },
+      {
+        "author": "Nayla Kabir",
+        "rating": 5,
+        "text": "Romantic ambiance, great tiramisu and wood-fired quattro formaggi.",
+        "_id": "6ab9464604a23dff5d69bb75",
+        "time": "2026-09-27T16:37:26.848Z"
+      }
+    ],
+    "tags": [
+      "pizza",
+      "italian",
+      "wood fired",
+      "pasta",
+      "gulshan",
+      "fine dining",
+      "date night"
+    ],
+    "popularityScore": 820,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.848Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb76",
+    "googlePlaceId": "seed_dhaka_023",
+    "name": "Farmhouse Burger Gulshan",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.4165,
+        23.7925
+      ]
+    },
+    "address": {
+      "formatted": "House 12, Road 53, Gulshan 2, Dhaka 1212",
+      "street": "Road 53",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1212"
+    },
+    "categories": [
+      "restaurant",
+      "burger_restaurant"
+    ],
+    "cuisine": [
+      "burger",
+      "american"
+    ],
+    "priceLevel": 3,
+    "rating": 4.7,
+    "totalRatings": 3800,
+    "phone": "+880 1733-445588",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 12:00 PM – 11:30 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Raihan Siddiq",
+        "rating": 5,
+        "text": "Best artisanal smash burgers in Gulshan. The brioche bun is pillowy soft.",
+        "_id": "6ab9464604a23dff5d69bb77",
+        "time": "2026-09-27T16:37:26.849Z"
+      },
+      {
+        "author": "Farzeen Huq",
+        "rating": 5,
+        "text": "Truffle mushroom burger and sweet potato fries are unmissable.",
+        "_id": "6ab9464604a23dff5d69bb78",
+        "time": "2026-09-27T16:37:26.849Z"
+      }
+    ],
+    "tags": [
+      "burger",
+      "smash burger",
+      "brioche bun",
+      "gulshan",
+      "artisanal",
+      "truffle fries"
+    ],
+    "popularityScore": 990,
+    "isFeatured": true,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.849Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb79",
+    "googlePlaceId": "seed_dhaka_024",
+    "name": "Prego at The Westin Dhaka",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.4132,
+        23.7918
+      ]
+    },
+    "address": {
+      "formatted": "Plot 1, CWN(B), Road 45, Gulshan 2, Dhaka 1212",
+      "street": "Road 45",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1212"
+    },
+    "categories": [
+      "restaurant",
+      "italian_restaurant",
+      "pizza_restaurant"
+    ],
+    "cuisine": [
+      "pizza",
+      "italian"
+    ],
+    "priceLevel": 4,
+    "rating": 4.7,
+    "totalRatings": 1800,
+    "phone": "+880 2-9891988",
+    "openingHours": {
+      "openNow": false,
+      "weekdayText": [
+        "Daily: 6:30 PM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1544982503-9f984c14501a?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Kazi Mahbub",
+        "rating": 5,
+        "text": "Top floor Italian dining with panoramic skyline views of Dhaka. World class pizza.",
+        "_id": "6ab9464604a23dff5d69bb7a",
+        "time": "2026-09-27T16:37:26.849Z"
+      },
+      {
+        "author": "Eshita Zaman",
+        "rating": 5,
+        "text": "Exceptional wine pairing, freshly baked focaccia and wood fired pizza.",
+        "_id": "6ab9464604a23dff5d69bb7b",
+        "time": "2026-09-27T16:37:26.849Z"
+      }
+    ],
+    "tags": [
+      "pizza",
+      "fine dining",
+      "the westin",
+      "gulshan",
+      "italian",
+      "wood fired oven",
+      "skyline view"
+    ],
+    "popularityScore": 910,
+    "isFeatured": true,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.850Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb7c",
+    "googlePlaceId": "seed_dhaka_030",
+    "name": "Soi70 Gulshan",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.414,
+        23.7785
+      ]
+    },
+    "address": {
+      "formatted": "Navana Rowshan, Gulshan Avenue, Gulshan 1, Dhaka 1212",
+      "street": "Gulshan Avenue",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1212"
+    },
+    "categories": [
+      "restaurant",
+      "thai_restaurant"
+    ],
+    "cuisine": [
+      "thai",
+      "asian"
+    ],
+    "priceLevel": 3,
+    "rating": 4.5,
+    "totalRatings": 1700,
+    "phone": "+880 1819-223388",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 12:30 PM – 10:30 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Faisal Noor",
+        "rating": 5,
+        "text": "Truly spicy, authentic Bangkok street flavors right in Gulshan 1!",
+        "_id": "6ab9464604a23dff5d69bb7d",
+        "time": "2026-09-27T16:37:26.850Z"
+      },
+      {
+        "author": "Tahsin Ara",
+        "rating": 4,
+        "text": "Pad Thai noodles have the perfect wok-hei smokiness.",
+        "_id": "6ab9464604a23dff5d69bb7e",
+        "time": "2026-09-27T16:37:26.850Z"
+      }
+    ],
+    "tags": [
+      "thai",
+      "pad krapow",
+      "tom yum",
+      "gulshan",
+      "asian",
+      "spicy thai"
+    ],
+    "popularityScore": 740,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.850Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb7f",
+    "googlePlaceId": "seed_dhaka_002",
+    "name": "Haji Mohammad Ali Biryani Hotel",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.4074,
+        23.723
+      ]
+    },
+    "address": {
+      "formatted": "Nazira Bazar, Old Dhaka, Dhaka 1100",
+      "street": "Nazira Bazar",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1100"
+    },
+    "categories": [
+      "restaurant",
+      "bangladeshi_restaurant"
+    ],
+    "cuisine": [
+      "bangladeshi",
+      "biryani"
+    ],
+    "priceLevel": 1,
+    "rating": 4.8,
+    "totalRatings": 6200,
+    "phone": "+880 1919-345678",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 11:00 AM – 9:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Karim Uddin",
+        "rating": 5,
+        "text": "Serving legendary biryani for generations in jackfruit leaf plates!",
+        "_id": "6ab9464604a23dff5d69bb80",
+        "time": "2026-09-27T16:37:26.851Z"
+      },
+      {
+        "author": "Sadia Islam",
+        "rating": 4,
+        "text": "Authentic Old Dhaka flavors. Mustard oil aroma is extraordinary.",
+        "_id": "6ab9464604a23dff5d69bb81",
+        "time": "2026-09-27T16:37:26.851Z"
+      }
+    ],
+    "tags": [
+      "haji biryani",
+      "old dhaka",
+      "traditional",
+      "cheap",
+      "iconic",
+      "mutton biryani"
+    ],
+    "popularityScore": 1100,
+    "isFeatured": true,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.851Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb82",
+    "googlePlaceId": "seed_dhaka_003",
+    "name": "Star Kabab & Restaurant",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.406,
+        23.718
+      ]
+    },
+    "address": {
+      "formatted": "51 North Brook Hall Rd, Old Dhaka, Dhaka 1100",
+      "street": "North Brook Hall Road",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1100"
+    },
+    "categories": [
+      "restaurant",
+      "bangladeshi_restaurant"
+    ],
+    "cuisine": [
+      "bangladeshi",
+      "kabab"
+    ],
+    "priceLevel": 1,
+    "rating": 4.5,
+    "totalRatings": 4100,
+    "phone": "+880 1712-456789",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 10:00 AM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Farhan Hossain",
+        "rating": 5,
+        "text": "Best kabab in Dhaka. Smoky, juicy, and incredibly cheap.",
+        "_id": "6ab9464604a23dff5d69bb83",
+        "time": "2026-09-27T16:37:26.851Z"
+      },
+      {
+        "author": "Mitu Begum",
+        "rating": 4,
+        "text": "Classic Old Dhaka kabab experience. Come early, it gets packed.",
+        "_id": "6ab9464604a23dff5d69bb84",
+        "time": "2026-09-27T16:37:26.851Z"
+      }
+    ],
+    "tags": [
+      "kabab",
+      "tikka",
+      "old dhaka",
+      "cheap",
+      "street food",
+      "grilled",
+      "boti kabab"
+    ],
+    "popularityScore": 950,
+    "isFeatured": true,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.851Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb85",
+    "googlePlaceId": "seed_dhaka_036",
+    "name": "Grand Nawab",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.4085,
+        23.7225
+      ]
+    },
+    "address": {
+      "formatted": "Kazi Alauddin Road, Nazira Bazar, Old Dhaka 1100",
+      "street": "Kazi Alauddin Road",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1100"
+    },
+    "categories": [
+      "restaurant",
+      "bangladeshi_restaurant"
+    ],
+    "cuisine": [
+      "bangladeshi",
+      "biryani"
+    ],
+    "priceLevel": 2,
+    "rating": 4.7,
+    "totalRatings": 4300,
+    "phone": "+880 1744-889900",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 12:00 PM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Shakil Mahmud",
+        "rating": 5,
+        "text": "Royal Mughlai flavors. The Shahi Morog Polao is packed with aroma.",
+        "_id": "6ab9464604a23dff5d69bb86",
+        "time": "2026-09-27T16:37:26.851Z"
+      },
+      {
+        "author": "Farzana Yesmin",
+        "rating": 5,
+        "text": "Kacchi biryani served with real saffron and rich spices. Top 3 in Dhaka.",
+        "_id": "6ab9464604a23dff5d69bb87",
+        "time": "2026-09-27T16:37:26.851Z"
+      }
+    ],
+    "tags": [
+      "kacchi biryani",
+      "shahi morog polao",
+      "borhani",
+      "old dhaka",
+      "nazira bazar",
+      "nawab"
+    ],
+    "popularityScore": 1050,
+    "isFeatured": true,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.852Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb88",
+    "googlePlaceId": "seed_dhaka_037",
+    "name": "Al-Razzak Hotel",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.4045,
+        23.7195
+      ]
+    },
+    "address": {
+      "formatted": "29 Bangshal Road, Old Dhaka 1100",
+      "street": "Bangshal Road",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1100"
+    },
+    "categories": [
+      "restaurant",
+      "bangladeshi_restaurant"
+    ],
+    "cuisine": [
+      "bangladeshi",
+      "kabab",
+      "biryani"
+    ],
+    "priceLevel": 1,
+    "rating": 4.6,
+    "totalRatings": 5400,
+    "phone": "+880 1819-332211",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 6:00 AM – 1:00 AM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Kamrul Hasan",
+        "rating": 5,
+        "text": "Their Glace Mutton and hot tandoori roti at midnight is historic.",
+        "_id": "6ab9464604a23dff5d69bb89",
+        "time": "2026-09-27T16:37:26.852Z"
+      },
+      {
+        "author": "Munira Khatun",
+        "rating": 4,
+        "text": "Authentic heritage taste of Old Dhaka. Highly recommended.",
+        "_id": "6ab9464604a23dff5d69bb8a",
+        "time": "2026-09-27T16:37:26.852Z"
+      }
+    ],
+    "tags": [
+      "glace mutton",
+      "tehari",
+      "sheekh kabab",
+      "bakarkhani",
+      "old dhaka",
+      "iconic"
+    ],
+    "popularityScore": 1020,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.852Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb8b",
+    "googlePlaceId": "seed_dhaka_038",
+    "name": "Nirob Hotel",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.4025,
+        23.7255
+      ]
+    },
+    "address": {
+      "formatted": "113/2 Nazimuddin Road, Old Dhaka 1100",
+      "street": "Nazimuddin Road",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1100"
+    },
+    "categories": [
+      "restaurant",
+      "bangladeshi_restaurant"
+    ],
+    "cuisine": [
+      "bangladeshi",
+      "seafood"
+    ],
+    "priceLevel": 1,
+    "rating": 4.7,
+    "totalRatings": 3900,
+    "phone": "+880 1712-990011",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 7:00 AM – 11:30 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Zahidul Islam",
+        "rating": 5,
+        "text": "30+ varieties of traditional bhortas with steaming hot rice and hilsha curry!",
+        "_id": "6ab9464604a23dff5d69bb8c",
+        "time": "2026-09-27T16:37:26.852Z"
+      },
+      {
+        "author": "Laboni Das",
+        "rating": 5,
+        "text": "Unbeatable home-cooked authentic Bengali taste in Puran Dhaka.",
+        "_id": "6ab9464604a23dff5d69bb8d",
+        "time": "2026-09-27T16:37:26.852Z"
+      }
+    ],
+    "tags": [
+      "bhorta",
+      "hilsha fish",
+      "bangladeshi",
+      "traditional",
+      "cheap",
+      "old dhaka",
+      "fish curry"
+    ],
+    "popularityScore": 980,
+    "isFeatured": true,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.852Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb8e",
+    "googlePlaceId": "seed_dhaka_039",
+    "name": "Beauty Lassi & Faluda",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.407,
+        23.7228
+      ]
+    },
+    "address": {
+      "formatted": "30/1 Johnson Road, Nazira Bazar, Old Dhaka 1100",
+      "street": "Johnson Road",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1100"
+    },
+    "categories": [
+      "cafe",
+      "dessert_shop"
+    ],
+    "cuisine": [
+      "dessert",
+      "bangladeshi"
+    ],
+    "priceLevel": 1,
+    "rating": 4.8,
+    "totalRatings": 6700,
+    "phone": "+880 1817-554433",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 9:00 AM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Abir Chowdhury",
+        "rating": 5,
+        "text": "100+ year old heritage spot. The special faluda with kulfi is unmatched!",
+        "_id": "6ab9464604a23dff5d69bb8f",
+        "time": "2026-09-27T16:37:26.853Z"
+      },
+      {
+        "author": "Nusrat Noor",
+        "rating": 5,
+        "text": "Best sweet lassi in Bangladesh. Refreshing and nostalgic.",
+        "_id": "6ab9464604a23dff5d69bb90",
+        "time": "2026-09-27T16:37:26.853Z"
+      }
+    ],
+    "tags": [
+      "lassi",
+      "faluda",
+      "lemonade",
+      "old dhaka",
+      "sweet",
+      "century old",
+      "legendary"
+    ],
+    "popularityScore": 1150,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.853Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb91",
+    "googlePlaceId": "seed_dhaka_040",
+    "name": "Bismillah Kabab Ghar",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.4078,
+        23.722
+      ]
+    },
+    "address": {
+      "formatted": "Nazira Bazar, Old Dhaka 1100",
+      "street": "Nazira Bazar",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1100"
+    },
+    "categories": [
+      "restaurant",
+      "street_food"
+    ],
+    "cuisine": [
+      "kabab",
+      "bangladeshi"
+    ],
+    "priceLevel": 1,
+    "rating": 4.6,
+    "totalRatings": 4800,
+    "phone": "+880 1911-224466",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 4:00 PM – 1:00 AM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Mamunur Rashid",
+        "rating": 5,
+        "text": "Crispy fried beef chaap with hot fluffy luchis is heavenly.",
+        "_id": "6ab9464604a23dff5d69bb92",
+        "time": "2026-09-27T16:37:26.853Z"
+      },
+      {
+        "author": "Sultana Razia",
+        "rating": 4,
+        "text": "Authentic late-night Old Dhaka street food culture.",
+        "_id": "6ab9464604a23dff5d69bb93",
+        "time": "2026-09-27T16:37:26.853Z"
+      }
+    ],
+    "tags": [
+      "beef chaap",
+      "luchi",
+      "sheekh kabab",
+      "brain masala",
+      "old dhaka street food"
+    ],
+    "popularityScore": 920,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.853Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb94",
+    "googlePlaceId": "seed_dhaka_019",
+    "name": "Street Oven Uttara",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.388,
+        23.872
+      ]
+    },
+    "address": {
+      "formatted": "Gareeb-e-Nawaz Avenue, Sector 11, Uttara, Dhaka 1230",
+      "street": "Gareeb-e-Nawaz Avenue",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1230"
+    },
+    "categories": [
+      "restaurant",
+      "pizza_restaurant",
+      "italian_restaurant"
+    ],
+    "cuisine": [
+      "pizza",
+      "italian"
+    ],
+    "priceLevel": 2,
+    "rating": 4.6,
+    "totalRatings": 2800,
+    "phone": "+880 1766-332211",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 12:00 PM – 11:30 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Tanvir Hossain",
+        "rating": 5,
+        "text": "Best wood-fired pizza in Uttara! The crust has amazing char and flavor.",
+        "_id": "6ab9464604a23dff5d69bb95",
+        "time": "2026-09-27T16:37:26.853Z"
+      },
+      {
+        "author": "Shabnam Faria",
+        "rating": 5,
+        "text": "Great cheesy garlic bread and rustic margherita pizza.",
+        "_id": "6ab9464604a23dff5d69bb96",
+        "time": "2026-09-27T16:37:26.853Z"
+      }
+    ],
+    "tags": [
+      "pizza",
+      "wood fired pizza",
+      "uttara",
+      "italian",
+      "pasta",
+      "thin crust",
+      "sourdough"
+    ],
+    "popularityScore": 880,
+    "isFeatured": true,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.854Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.880Z",
+    "updatedAt": "2026-09-27T16:37:26.880Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb97",
+    "googlePlaceId": "seed_dhaka_020",
+    "name": "Madchef Uttara",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.3995,
+        23.864
+      ]
+    },
+    "address": {
+      "formatted": "Rabindra Sarani, Sector 3, Uttara, Dhaka 1230",
+      "street": "Rabindra Sarani",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1230"
+    },
+    "categories": [
+      "restaurant",
+      "burger_restaurant"
+    ],
+    "cuisine": [
+      "burger",
+      "american"
+    ],
+    "priceLevel": 2,
+    "rating": 4.5,
+    "totalRatings": 3100,
+    "phone": "+880 1844-556677",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 11:30 AM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Nayeem Hasan",
+        "rating": 5,
+        "text": "Madchef in Uttara never disappoints. The Naga burger is fire!",
+        "_id": "6ab9464604a23dff5d69bb98",
+        "time": "2026-09-27T16:37:26.854Z"
+      },
+      {
+        "author": "Rumana Islam",
+        "rating": 4,
+        "text": "Great outdoor seating vibe and delicious cheesy burgers.",
+        "_id": "6ab9464604a23dff5d69bb99",
+        "time": "2026-09-27T16:37:26.854Z"
+      }
+    ],
+    "tags": [
+      "burger",
+      "gourmet burger",
+      "uttara",
+      "loaded fries",
+      "milkshake",
+      "fast food"
+    ],
+    "popularityScore": 840,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.854Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.881Z",
+    "updatedAt": "2026-09-27T16:37:26.881Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb9a",
+    "googlePlaceId": "seed_dhaka_021",
+    "name": "Kacchi Ghor Uttara",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.401,
+        23.8685
+      ]
+    },
+    "address": {
+      "formatted": "House 14, Road 1, Sector 7, Uttara, Dhaka 1230",
+      "street": "Road 1, Sector 7",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1230"
+    },
+    "categories": [
+      "restaurant",
+      "bangladeshi_restaurant"
+    ],
+    "cuisine": [
+      "bangladeshi",
+      "biryani"
+    ],
+    "priceLevel": 2,
+    "rating": 4.6,
+    "totalRatings": 2500,
+    "phone": "+880 1722-113355",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 12:00 PM – 10:30 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Tawfiq Omar",
+        "rating": 5,
+        "text": "Generous meat portions, soft potatoes and aromatic basmati rice.",
+        "_id": "6ab9464604a23dff5d69bb9b",
+        "time": "2026-09-27T16:37:26.855Z"
+      },
+      {
+        "author": "Sayeeda Begum",
+        "rating": 4,
+        "text": "Top kacchi destination for Uttara residents. Great borhani.",
+        "_id": "6ab9464604a23dff5d69bb9c",
+        "time": "2026-09-27T16:37:26.855Z"
+      }
+    ],
+    "tags": [
+      "kacchi biryani",
+      "uttara",
+      "mutton",
+      "chaler biryani",
+      "family dining"
+    ],
+    "popularityScore": 820,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.855Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.881Z",
+    "updatedAt": "2026-09-27T16:37:26.881Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bb9d",
+    "googlePlaceId": "seed_dhaka_022",
+    "name": "Gloria Jean's Coffees Uttara",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.398,
+        23.8625
+      ]
+    },
+    "address": {
+      "formatted": "Jashimuddin Avenue, Sector 3, Uttara, Dhaka 1230",
+      "street": "Jashimuddin Avenue",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1230"
+    },
+    "categories": [
+      "cafe",
+      "coffee_shop"
+    ],
+    "cuisine": [
+      "coffee",
+      "breakfast",
+      "dessert"
+    ],
+    "priceLevel": 3,
+    "rating": 4.5,
+    "totalRatings": 3300,
+    "phone": "+880 1888-990022",
+    "website": "https://gloriajeanscoffeesbd.com",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 8:00 AM – 11:30 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Arif Billah",
+        "rating": 5,
+        "text": "Spacious 2-story cafe, great for remote work and meetings in Uttara.",
+        "_id": "6ab9464604a23dff5d69bb9e",
+        "time": "2026-09-27T16:37:26.855Z"
+      },
+      {
+        "author": "Farah Diba",
+        "rating": 4,
+        "text": "Signature chocolate chillers and warm apple pie are fantastic.",
+        "_id": "6ab9464604a23dff5d69bb9f",
+        "time": "2026-09-27T16:37:26.856Z"
+      }
+    ],
+    "tags": [
+      "coffee",
+      "latte",
+      "chiller",
+      "uttara",
+      "work cafe",
+      "cheesecake",
+      "breakfast"
+    ],
+    "popularityScore": 890,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.856Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.881Z",
+    "updatedAt": "2026-09-27T16:37:26.881Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bba0",
+    "googlePlaceId": "seed_dhaka_041",
+    "name": "Salam's Kitchen Baily Road",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.4095,
+        23.741
+      ]
+    },
+    "address": {
+      "formatted": "12 New Baily Road, Dhaka 1000",
+      "street": "New Baily Road",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1000"
+    },
+    "categories": [
+      "restaurant",
+      "bangladeshi_restaurant"
+    ],
+    "cuisine": [
+      "bangladeshi",
+      "biryani"
+    ],
+    "priceLevel": 2,
+    "rating": 4.7,
+    "totalRatings": 5100,
+    "phone": "+880 1711-667788",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 12:00 PM – 10:30 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Mahfuzur Rahman",
+        "rating": 5,
+        "text": "Baily Road food walk must-visit! Incredibly tender mutton and buttery potatoes.",
+        "_id": "6ab9464604a23dff5d69bba1",
+        "time": "2026-09-27T16:37:26.856Z"
+      },
+      {
+        "author": "Jannatul Ferdous",
+        "rating": 5,
+        "text": "Always freshly prepared and the spiced borhani is divine.",
+        "_id": "6ab9464604a23dff5d69bba2",
+        "time": "2026-09-27T16:37:26.856Z"
+      }
+    ],
+    "tags": [
+      "kacchi biryani",
+      "baily road",
+      "shahi biryani",
+      "mutton",
+      "borhani",
+      "legendary"
+    ],
+    "popularityScore": 1080,
+    "isFeatured": true,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.856Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.881Z",
+    "updatedAt": "2026-09-27T16:37:26.881Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bba3",
+    "googlePlaceId": "seed_dhaka_042",
+    "name": "Alfresco Khilgaon",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.4215,
+        23.754
+      ]
+    },
+    "address": {
+      "formatted": "Shahid Baki Road, Taltola, Khilgaon, Dhaka 1219",
+      "street": "Shahid Baki Road",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1219"
+    },
+    "categories": [
+      "restaurant",
+      "pizza_restaurant",
+      "italian_restaurant"
+    ],
+    "cuisine": [
+      "pizza",
+      "italian"
+    ],
+    "priceLevel": 2,
+    "rating": 4.5,
+    "totalRatings": 3400,
+    "phone": "+880 1855-443322",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 12:00 PM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Mehedi Maruf",
+        "rating": 5,
+        "text": "Best pizza spot on the Khilgaon food street! Loaded with toppings.",
+        "_id": "6ab9464604a23dff5d69bba4",
+        "time": "2026-09-27T16:37:26.856Z"
+      },
+      {
+        "author": "Mithila Roy",
+        "rating": 4,
+        "text": "Great thin crust pizza and creamy Alfredo pasta at student-friendly prices.",
+        "_id": "6ab9464604a23dff5d69bba5",
+        "time": "2026-09-27T16:37:26.857Z"
+      }
+    ],
+    "tags": [
+      "pizza",
+      "khilgaon",
+      "pasta",
+      "italian",
+      "thin crust",
+      "cheese burst",
+      "budget friendly"
+    ],
+    "popularityScore": 890,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.857Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.881Z",
+    "updatedAt": "2026-09-27T16:37:26.881Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bba6",
+    "googlePlaceId": "seed_dhaka_043",
+    "name": "Tradition BD Khilgaon",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.423,
+        23.7555
+      ]
+    },
+    "address": {
+      "formatted": "Taltola Market, Khilgaon, Dhaka 1219",
+      "street": "Taltola Market",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1219"
+    },
+    "categories": [
+      "restaurant",
+      "bangladeshi_restaurant"
+    ],
+    "cuisine": [
+      "bangladeshi",
+      "kabab"
+    ],
+    "priceLevel": 1,
+    "rating": 4.6,
+    "totalRatings": 4200,
+    "phone": "+880 1711-223399",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 3:00 PM – 12:00 AM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Habibul Bashar",
+        "rating": 5,
+        "text": "Famous beef chaap in Khilgaon. Crunchy, spicy and mouth-watering.",
+        "_id": "6ab9464604a23dff5d69bba7",
+        "time": "2026-09-27T16:37:26.857Z"
+      },
+      {
+        "author": "Fatima Zohra",
+        "rating": 4,
+        "text": "Unmissable street food experience when visiting Khilgaon.",
+        "_id": "6ab9464604a23dff5d69bba8",
+        "time": "2026-09-27T16:37:26.857Z"
+      }
+    ],
+    "tags": [
+      "chaap",
+      "luchi",
+      "sheekh kabab",
+      "khilgaon",
+      "street food",
+      "khilgaon food street"
+    ],
+    "popularityScore": 910,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.857Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.881Z",
+    "updatedAt": "2026-09-27T16:37:26.881Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bba9",
+    "googlePlaceId": "seed_dhaka_044",
+    "name": "Coffee Buzz Baily Road",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.4102,
+        23.7425
+      ]
+    },
+    "address": {
+      "formatted": "Baily Fiesta, New Baily Road, Dhaka 1000",
+      "street": "New Baily Road",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1000"
+    },
+    "categories": [
+      "cafe",
+      "dessert_shop"
+    ],
+    "cuisine": [
+      "coffee",
+      "breakfast",
+      "dessert"
+    ],
+    "priceLevel": 2,
+    "rating": 4.5,
+    "totalRatings": 2100,
+    "phone": "+880 1933-221100",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 9:00 AM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Sadia Afroz",
+        "rating": 5,
+        "text": "Nutella waffles and hazelnut cappuccino are a match made in heaven!",
+        "_id": "6ab9464604a23dff5d69bbaa",
+        "time": "2026-09-27T16:37:26.858Z"
+      },
+      {
+        "author": "Tarek Jamil",
+        "rating": 4,
+        "text": "Lively spot after theater shows on Baily Road.",
+        "_id": "6ab9464604a23dff5d69bbab",
+        "time": "2026-09-27T16:37:26.858Z"
+      }
+    ],
+    "tags": [
+      "coffee",
+      "waffles",
+      "crepes",
+      "baily road",
+      "desserts",
+      "hangout"
+    ],
+    "popularityScore": 780,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.858Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.881Z",
+    "updatedAt": "2026-09-27T16:37:26.881Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bbac",
+    "googlePlaceId": "seed_dhaka_009",
+    "name": "Panshi Restaurant Elephant Road",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.39,
+        23.753
+      ]
+    },
+    "address": {
+      "formatted": "2 Elephant Road, Dhaka 1205",
+      "street": "Elephant Road",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1205"
+    },
+    "categories": [
+      "restaurant",
+      "bangladeshi_restaurant"
+    ],
+    "cuisine": [
+      "bangladeshi",
+      "seafood"
+    ],
+    "priceLevel": 2,
+    "rating": 4.3,
+    "totalRatings": 3900,
+    "phone": "+880 1600-012345",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 11:00 AM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Shahin Mia",
+        "rating": 4,
+        "text": "Traditional Bangladeshi food. Their hilsa curry is to die for!",
+        "_id": "6ab9464604a23dff5d69bbad",
+        "time": "2026-09-27T16:37:26.858Z"
+      },
+      {
+        "author": "Fatema Begum",
+        "rating": 4,
+        "text": "Huge portions, great value. Fish curry is delicious.",
+        "_id": "6ab9464604a23dff5d69bbae",
+        "time": "2026-09-27T16:37:26.858Z"
+      }
+    ],
+    "tags": [
+      "bangladeshi",
+      "sylheti",
+      "hilsa",
+      "fish curry",
+      "dal",
+      "family",
+      "affordable"
+    ],
+    "popularityScore": 750,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.858Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.881Z",
+    "updatedAt": "2026-09-27T16:37:26.881Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bbaf",
+    "googlePlaceId": "seed_dhaka_045",
+    "name": "Kacchi Khadok Mirpur",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.368,
+        23.807
+      ]
+    },
+    "address": {
+      "formatted": "Mirpur 10 Roundabout, Mirpur, Dhaka 1216",
+      "street": "Mirpur 10 Roundabout",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1216"
+    },
+    "categories": [
+      "restaurant",
+      "bangladeshi_restaurant"
+    ],
+    "cuisine": [
+      "bangladeshi",
+      "biryani"
+    ],
+    "priceLevel": 2,
+    "rating": 4.6,
+    "totalRatings": 4400,
+    "phone": "+880 1733-998877",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 12:00 PM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Rasel Ahmed",
+        "rating": 5,
+        "text": "The undisputed king of Kacchi in Mirpur! Tender mutton and tasty aloo.",
+        "_id": "6ab9464604a23dff5d69bbb0",
+        "time": "2026-09-27T16:37:26.859Z"
+      },
+      {
+        "author": "Shahana Akter",
+        "rating": 4,
+        "text": "Huge crowd always. The basmati kacchi is totally worth the queue.",
+        "_id": "6ab9464604a23dff5d69bbb1",
+        "time": "2026-09-27T16:37:26.859Z"
+      }
+    ],
+    "tags": [
+      "kacchi biryani",
+      "mirpur",
+      "mutton",
+      "borhani",
+      "shahi biryani",
+      "affordable"
+    ],
+    "popularityScore": 970,
+    "isFeatured": true,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.859Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.881Z",
+    "updatedAt": "2026-09-27T16:37:26.881Z"
+  },
+  {
+    "_id": "6ab9464604a23dff5d69bbb2",
+    "googlePlaceId": "seed_dhaka_046",
+    "name": "BFC (Best Fried Chicken) Mirpur",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        90.3525,
+        23.796
+      ]
+    },
+    "address": {
+      "formatted": "Plot 3, Block D, Mirpur 1, Dhaka 1216",
+      "street": "Block D, Mirpur 1",
+      "city": "Dhaka",
+      "state": "Dhaka Division",
+      "country": "Bangladesh",
+      "postalCode": "1216"
+    },
+    "categories": [
+      "restaurant",
+      "fast_food",
+      "chicken_restaurant"
+    ],
+    "cuisine": [
+      "chicken",
+      "burger",
+      "fast food"
+    ],
+    "priceLevel": 2,
+    "rating": 4.4,
+    "totalRatings": 3500,
+    "phone": "+880 1711-445588",
+    "openingHours": {
+      "openNow": true,
+      "weekdayText": [
+        "Daily: 11:00 AM – 11:00 PM"
+      ],
+      "periods": []
+    },
+    "primaryPhoto": "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=800&q=80",
+    "reviews": [
+      {
+        "author": "Monirul Islam",
+        "rating": 5,
+        "text": "Crispiest fried chicken in Dhaka! Spicy masala sprinkle is legendary.",
+        "_id": "6ab9464604a23dff5d69bbb3",
+        "time": "2026-09-27T16:37:26.859Z"
+      },
+      {
+        "author": "Dilruba Yasmin",
+        "rating": 4,
+        "text": "Family favorite fried chicken for decades.",
+        "_id": "6ab9464604a23dff5d69bbb4",
+        "time": "2026-09-27T16:37:26.859Z"
+      }
+    ],
+    "tags": [
+      "crispy chicken",
+      "fried chicken",
+      "burger",
+      "mirpur",
+      "fast food",
+      "chips"
+    ],
+    "popularityScore": 820,
+    "isFeatured": false,
+    "source": "seed",
+    "photos": [],
+    "lastFetched": "2026-09-27T16:37:26.859Z",
+    "__v": 0,
+    "createdAt": "2026-09-27T16:37:26.881Z",
+    "updatedAt": "2026-09-27T16:37:26.881Z"
+  }
+]
