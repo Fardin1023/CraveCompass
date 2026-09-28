@@ -107,10 +107,78 @@ export async function reverseGeocode(
   return request(`/location/reverse-geocode?${query}`);
 }
 
-// ── Health ───────────────────────────────────────────────────
+// ── Auth & User Profile ──────────────────────────────────────
 
-export async function checkHealth(): Promise<{ status: string; timestamp: string }> {
-  return request('/health');
+export async function registerUser(data: {
+  name: string;
+  email: string;
+  password: string;
+}): Promise<{ success: boolean; message: string; token: string; user: import('@/types').User }> {
+  return request('/auth/register', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+export async function loginUser(data: {
+  email: string;
+  password: string;
+}): Promise<{ success: boolean; message: string; token: string; user: import('@/types').User }> {
+  return request('/auth/login', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+export async function getCurrentUser(token: string): Promise<{
+  success: boolean;
+  user: import('@/types').User;
+}> {
+  return request('/auth/me', {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
+export async function updateUserProfile(
+  data: Partial<import('@/types').User>,
+  token: string
+): Promise<{ success: boolean; message: string; user: import('@/types').User }> {
+  return request('/auth/profile', {
+    method: 'PUT',
+    headers: { Authorization: `Bearer ${token}` },
+    body: JSON.stringify(data),
+  });
+}
+
+export async function changeUserPassword(
+  data: { currentPassword: string; newPassword: string },
+  token: string
+): Promise<{ success: boolean; message: string }> {
+  return request('/auth/change-password', {
+    method: 'PUT',
+    headers: { Authorization: `Bearer ${token}` },
+    body: JSON.stringify(data),
+  });
+}
+
+export async function togglePlaceFavorite(
+  placeId: string,
+  token: string
+): Promise<{ success: boolean; isFavorite: boolean; favoritesCount: number; message: string }> {
+  return request(`/auth/favorites/${placeId}`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
+export async function getUserFavorites(token: string): Promise<{
+  success: boolean;
+  results: Place[];
+  total: number;
+}> {
+  return request('/auth/favorites', {
+    headers: { Authorization: `Bearer ${token}` },
+  });
 }
 
 export { ApiError };

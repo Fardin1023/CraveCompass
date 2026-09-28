@@ -1,12 +1,14 @@
 'use client';
 
 import type { Place } from '@/types';
+import { useAuth } from '@/context/AuthContext';
 
 interface PlaceCardProps {
   place: Place;
   isActive: boolean;
   animationDelay?: number;
   onClick: () => void;
+  onRequireAuth?: () => void;
 }
 
 const PRICE_LABEL = ['', '$', '$$', '$$$', '$$$$'];
@@ -40,9 +42,28 @@ function getPlaceholderEmoji(place: Place): string {
   return '🍽️';
 }
 
-export default function PlaceCard({ place, isActive, animationDelay = 0, onClick }: PlaceCardProps) {
+export default function PlaceCard({
+  place,
+  isActive,
+  animationDelay = 0,
+  onClick,
+  onRequireAuth,
+}: PlaceCardProps) {
+  const { isFavorite, toggleFavorite, isAuthenticated } = useAuth();
   const isOpen = place.openingHours?.openNow;
   const hasPhoto = !!place.primaryPhoto;
+  const favorite = isFavorite(place._id);
+
+  const handleFavoriteClick = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!isAuthenticated) {
+      onRequireAuth?.();
+      return;
+    }
+    try {
+      await toggleFavorite(place._id);
+    } catch (_) {}
+  };
 
   return (
     <article
@@ -58,6 +79,16 @@ export default function PlaceCard({ place, isActive, animationDelay = 0, onClick
     >
       {/* Image */}
       <div className="place-card-image">
+        {/* Favorite Heart Button */}
+        <button
+          type="button"
+          className={`card-fav-btn ${favorite ? 'active' : ''}`}
+          onClick={handleFavoriteClick}
+          aria-label={favorite ? 'Remove from favorites' : 'Save to favorites'}
+          title={favorite ? 'Saved in favorites' : 'Save to favorites'}
+        >
+          {favorite ? '❤️' : '🤍'}
+        </button>
         {hasPhoto ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img

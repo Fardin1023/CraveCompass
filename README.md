@@ -89,6 +89,14 @@ The query parser extracts: cuisine, price range, open-now, ambience, and rating 
 - **Price tiers** — $ Budget / $$ Mid / $$$ Upscale
 - **Sort** — Nearest / Best Rated / Trending
 
+### 👤 User Authentication & Profile Settings
+- **Secure Registration & Login** — Bcrypt (salt rounds 12) + stateless JWT token authentication
+- **Rate-Limited Endpoints** — Brute force protection on login/register endpoints
+- **Custom Food Preferences** — Select dietary preferences (Halal, Vegan, Vegetarian, Gluten-Free) and favorite cuisines
+- **App & Map Preferences** — Set default OpenStreetMap appearance (🌙 Dark vs 🗺️ Standard) and location privacy
+- **Saved Favorites ❤️** — One-tap bookmarking for restaurants and food carts with instant cloud sync
+- **Account Security** — Change password securely with strict validation and password strength enforcement
+
 ### 📍 Geolocation
 - Browser Geolocation API with permission handling
 - Automatic nearby restaurant loading
@@ -106,11 +114,18 @@ The query parser extracts: cuisine, price range, open-now, ambience, and rating 
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
+| `POST` | `/api/auth/register` | Register new user account |
+| `POST` | `/api/auth/login` | Authenticate user & get JWT token |
+| `GET` | `/api/auth/me` | Fetch authenticated user profile |
+| `PUT` | `/api/auth/profile` | Update profile, dietary preferences & map settings |
+| `PUT` | `/api/auth/change-password` | Secure password change |
+| `POST` | `/api/auth/favorites/:placeId` | Toggle bookmark on restaurant/food cart |
+| `GET` | `/api/auth/favorites` | Fetch user's saved favorite spots |
 | `POST` | `/api/search` | NLP search with geo filter |
 | `GET` | `/api/search/suggestions` | Autocomplete |
-| `GET` | `/api/places/nearby` | Geospatial nearby |
+| `GET` | `/api/places/nearby` | Geospatial nearby (with OSM live discovery) |
 | `GET` | `/api/places/:id` | Place details |
-| `GET` | `/api/location/reverse-geocode` | Lat/lng → city |
+| `GET` | `/api/location/reverse-geocode` | Lat/lng → city (OSM Nominatim) |
 | `GET` | `/api/health` | Health check |
 
 ---

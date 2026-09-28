@@ -59,9 +59,43 @@ export interface Place {
   tags: string[];
   popularityScore: number;
   isFeatured: boolean;
-  source: 'google' | 'yelp' | 'foursquare' | 'seed';
+  source: 'google' | 'yelp' | 'foursquare' | 'seed' | 'openstreetmap';
   createdAt?: string;
   updatedAt?: string;
+}
+
+export interface UserPreferences {
+  dietary?: string[];
+  favoriteCuisines?: string[];
+  defaultSort?: 'distance' | 'rating' | 'popularity';
+}
+
+export interface UserSettings {
+  mapDefaultStyle?: 'dark' | 'standard';
+  locationSharing?: boolean;
+  notifications?: boolean;
+}
+
+export interface User {
+  _id: string;
+  name: string;
+  email: string;
+  avatar?: string;
+  bio?: string;
+  preferences?: UserPreferences;
+  favorites?: (Place | string)[];
+  settings?: UserSettings;
+  lastLogin?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface AuthResponse {
+  success: boolean;
+  message?: string;
+  token?: string;
+  user?: User;
+  error?: string;
 }
 
 export interface SearchResult {

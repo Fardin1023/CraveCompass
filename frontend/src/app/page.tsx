@@ -5,10 +5,14 @@ import dynamic from 'next/dynamic';
 import { useState, useCallback, useEffect } from 'react';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { useSearch } from '@/hooks/useSearch';
+import { useAuth } from '@/context/AuthContext';
 import SearchBar from '@/components/SearchBar';
 import FilterBar from '@/components/FilterBar';
 import PlaceCard from '@/components/PlaceCard';
 import PlaceDetailPanel from '@/components/PlaceDetailPanel';
+import AuthModal from '@/components/AuthModal';
+import UserProfileModal from '@/components/UserProfileModal';
+import FavoritesModal from '@/components/FavoritesModal';
 import { reverseGeocode } from '@/lib/api';
 import type { Place, ActiveFilters } from '@/types';
 
@@ -61,6 +65,14 @@ export default function HomePage() {
   const [activeCuisine, setActiveCuisine]     = useState<string | null>(null);
   const [locationName, setLocationName]       = useState<string>('Dhaka, Bangladesh');
   const [toast, setToast]                     = useState<{ message: string; icon: string } | null>(null);
+
+  // Authentication & User Profile States
+  const { user, isAuthenticated, logout, favoritesCount } = useAuth();
+  const [authModalOpen, setAuthModalOpen]             = useState(false);
+  const [authModalMode, setAuthModalMode]             = useState<'login' | 'register'>('login');
+  const [profileModalOpen, setProfileModalOpen]       = useState(false);
+  const [favoritesModalOpen, setFavoritesModalOpen]   = useState(false);
+  const [userMenuOpen, setUserMenuOpen]               = useState(false);
 
   const showToast = useCallback((message: string, icon = 'ℹ️') => {
     setToast({ message, icon });
@@ -218,6 +230,81 @@ export default function HomePage() {
             )}
             {geoLoading ? 'Locating…' : coords ? 'Near Me ✓' : 'Find Near Me'}
           </button>
+
+          {/* User Profile / Auth Area */}
+          {isAuthenticated && user ? (
+            <div className="user-dropdown-container">
+              <button
+                type="button"
+                className="user-profile-trigger"
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+                aria-label="User profile menu"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={user.avatar || 'https://api.dicebear.com/7.x/bottts/svg?seed=Foodie'}
+                  alt={user.name}
+                  className="user-nav-avatar"
+                />
+                <span className="user-nav-name">{user.name.split(' ')[0]}</span>
+                <span className="user-nav-arrow">{userMenuOpen ? '▴' : '▾'}</span>
+              </button>
+
+              {userMenuOpen && (
+                <div className="user-dropdown-menu">
+                  <div className="user-dropdown-header">
+                    <div style={{ fontWeight: 700, color: 'var(--cream)', fontSize: '13px' }}>{user.name}</div>
+                    <div style={{ fontSize: '11px', color: 'var(--text-muted)' }} className="truncate">{user.email}</div>
+                  </div>
+                  <div className="user-dropdown-divider" />
+                  <button
+                    type="button"
+                    className="user-dropdown-item"
+                    onClick={() => {
+                      setUserMenuOpen(false);
+                      setFavoritesModalOpen(true);
+                    }}
+                  >
+                    <span>❤️ Saved Spots</span>
+                    <span className="dropdown-counter-badge">{favoritesCount}</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="user-dropdown-item"
+                    onClick={() => {
+                      setUserMenuOpen(false);
+                      setProfileModalOpen(true);
+                    }}
+                  >
+                    <span>⚙️ Profile & Preferences</span>
+                  </button>
+                  <div className="user-dropdown-divider" />
+                  <button
+                    type="button"
+                    className="user-dropdown-item danger"
+                    onClick={() => {
+                      setUserMenuOpen(false);
+                      logout();
+                      showToast('Signed out successfully', '👋');
+                    }}
+                  >
+                    <span>🚪 Sign Out</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="navbar-signin-btn"
+              onClick={() => {
+                setAuthModalMode('login');
+                setAuthModalOpen(true);
+              }}
+            >
+              Sign In
+            </button>
+          )}
         </div>
       </nav>
 
@@ -315,6 +402,11 @@ export default function HomePage() {
                     isActive={selectedPlace?._id === place._id}
                     animationDelay={i * 50}
                     onClick={() => handleCardClick(place)}
+                    onRequireAuth={() => {
+                      setAuthModalMode('login');
+                      setAuthModalOpen(true);
+                      showToast('Please sign in to bookmark places', '🔒');
+                    }}
                   />
                 </div>
               ))
@@ -368,10 +460,42 @@ export default function HomePage() {
 
           {/* Place Detail Panel */}
           {selectedPlace && (
-            <PlaceDetailPanel place={selectedPlace} onClose={handleCloseDetail} />
+            <PlaceDetailPanel
+              place={selectedPlace}
+              onClose={handleCloseDetail}
+              onRequireAuth={() => {
+                setAuthModalMode('login');
+                setAuthModalOpen(true);
+                showToast('Please sign in to bookmark places', '🔒');
+              }}
+            />
           )}
         </div>
       </div>
+
+      {/* ── Modals ─────────────────────────── */}
+      <AuthModal
+        isOpen={authModalOpen}
+        initialMode={authModalMode}
+        onClose={() => setAuthModalOpen(false)}
+        onSuccess={() => showToast('Welcome to CraveCompass!', '🎉')}
+      />
+
+      <UserProfileModal
+        isOpen={profileModalOpen}
+        onClose={() => setProfileModalOpen(false)}
+        onToast={showToast}
+      />
+
+      <FavoritesModal
+        isOpen={favoritesModalOpen}
+        onClose={() => setFavoritesModalOpen(false)}
+        onSelectPlace={(p) => {
+          setSelectedPlace(p);
+          showToast(`Viewing ${p.name}`, '📍');
+        }}
+        onToast={showToast}
+      />
 
       {/* ── Toast ─────────────────────────── */}
       <div className="toast-container" aria-live="polite">

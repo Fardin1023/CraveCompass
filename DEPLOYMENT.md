@@ -66,6 +66,7 @@ Deploy CraveCompass on the recommended free-tier stack:
    | `PORT` | `5000` |
    | `MONGODB_URI` | *Your MongoDB Atlas connection string from Step 1* |
    | `CLIENT_URL` | `*` *(or update to your Vercel URL once deployed)* |
+   | `JWT_SECRET` | *A long random secret string (e.g. 32+ characters)* |
 5. Click **Deploy Web Service**.
 6. When deployment finishes, copy your Render service URL:
    `https://cravecompass-backend.onrender.com`

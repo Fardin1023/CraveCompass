@@ -1,10 +1,12 @@
 'use client';
 
 import type { Place } from '@/types';
+import { useAuth } from '@/context/AuthContext';
 
 interface PlaceDetailPanelProps {
   place: Place;
   onClose: () => void;
+  onRequireAuth?: () => void;
 }
 
 const PRICE_LABEL = ['', '$', '$$', '$$$', '$$$$'];
@@ -21,8 +23,24 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-export default function PlaceDetailPanel({ place, onClose }: PlaceDetailPanelProps) {
+export default function PlaceDetailPanel({
+  place,
+  onClose,
+  onRequireAuth,
+}: PlaceDetailPanelProps) {
+  const { isFavorite, toggleFavorite, isAuthenticated } = useAuth();
   const isOpen = place.openingHours?.openNow;
+  const favorite = isFavorite(place._id);
+
+  const handleFavoriteClick = async () => {
+    if (!isAuthenticated) {
+      onRequireAuth?.();
+      return;
+    }
+    try {
+      await toggleFavorite(place._id);
+    } catch (_) {}
+  };
 
   const openDirections = () => {
     const [lng, lat] = place.location.coordinates;
@@ -53,16 +71,27 @@ export default function PlaceDetailPanel({ place, onClose }: PlaceDetailPanelPro
         {/* Header */}
         <div className="detail-panel-header">
           <h2 className="detail-panel-name">{place.name}</h2>
-          <button
-            id="detail-close-btn"
-            className="detail-close-btn"
-            onClick={onClose}
-            aria-label="Close details panel"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path d="M18 6 6 18M6 6l12 12" />
-            </svg>
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <button
+              type="button"
+              className={`detail-fav-btn ${favorite ? 'active' : ''}`}
+              onClick={handleFavoriteClick}
+              title={favorite ? 'Remove from saved spots' : 'Save to favorites'}
+              aria-label={favorite ? 'Remove from saved spots' : 'Save to favorites'}
+            >
+              {favorite ? '❤️ Saved' : '🤍 Save'}
+            </button>
+            <button
+              id="detail-close-btn"
+              className="detail-close-btn"
+              onClick={onClose}
+              aria-label="Close details panel"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M18 6 6 18M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
         </div>
 
         {/* Hero Image */}

@@ -7,6 +7,7 @@ const rateLimit = require('express-rate-limit');
 const placesRouter = require('./routes/places');
 const locationRouter = require('./routes/location');
 const searchRouter = require('./routes/search');
+const authRouter = require('./routes/auth');
 
 const app = express();
 
@@ -57,6 +58,7 @@ app.use('/api/', limiter);
 app.use('/api/places', placesRouter);
 app.use('/api/location', locationRouter);
 app.use('/api/search', searchRouter);
+app.use('/api/auth', authRouter);
 
 // Root & Health check
 app.get('/', (req, res) => {
