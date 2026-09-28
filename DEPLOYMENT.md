@@ -83,7 +83,7 @@ Deploy CraveCompass on the recommended free-tier stack:
    | Key | Value |
    |---|---|
    | `NEXT_PUBLIC_API_URL` | `https://your-render-backend-url.onrender.com/api` |
-   | `NEXT_PUBLIC_MAPBOX_TOKEN` | `<YOUR_MAPBOX_TOKEN>` *(from frontend/.env.local)* |
+   *(Note: OpenStreetMap does not require any map API token!)*
 5. Click **Deploy**.
 6. Vercel will build and deploy your app in under 60 seconds with a production URL:
    `https://cravecompass.vercel.app`

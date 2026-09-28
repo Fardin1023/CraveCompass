@@ -4,6 +4,7 @@ const Place = require('../models/Place');
 const SearchHistory = require('../models/SearchHistory');
 const { parseQuery } = require('../services/queryParser');
 const { searchNearby, textSearch, transformGooglePlace } = require('../services/googlePlaces');
+const { searchOsmNearby, transformOsmPlace } = require('../services/osmPlaces');
 
 const router = express.Router();
 
@@ -106,7 +107,37 @@ router.post(
 
       let total = await Place.countDocuments(baseFilter);
 
-      // If insufficient local results, fetch from Google and cache
+      // If insufficient local results, discover live from OpenStreetMap (100% Free & Keyless)
+      if (places.length < 5 && lat && lng) {
+        try {
+          const keyword = parsed.cuisines.join(' ') || q;
+          const osmResults = await searchOsmNearby({
+            lat: parseFloat(lat),
+            lng: parseFloat(lng),
+            radius: parseInt(radius),
+            limit: parseInt(limit),
+            keyword,
+          });
+
+          if (osmResults && osmResults.length > 0) {
+            const upsertPromises = osmResults.map(async (osmEl) => {
+              const doc = transformOsmPlace(osmEl);
+              return Place.findOneAndUpdate(
+                { googlePlaceId: doc.googlePlaceId },
+                { $set: doc },
+                { upsert: true, new: true, setDefaultsOnInsert: true }
+              );
+            });
+            await Promise.allSettled(upsertPromises);
+            places = await Place.find(baseFilter).limit(parseInt(limit)).lean();
+            total = await Place.countDocuments(baseFilter);
+          }
+        } catch (osmErr) {
+          console.warn('OpenStreetMap search discovery failed:', osmErr.message);
+        }
+      }
+
+      // If still insufficient local results and Google key is available, fetch from Google
       if (places.length < 5 && lat && lng && process.env.GOOGLE_PLACES_API_KEY && process.env.GOOGLE_PLACES_API_KEY !== 'YOUR_GOOGLE_PLACES_API_KEY_HERE') {
         try {
           const keyword = parsed.cuisines.join(' ') || q;

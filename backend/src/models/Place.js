@@ -77,8 +77,8 @@ const placeSchema = new mongoose.Schema(
     // Source tracking
     source: {
       type: String,
-      enum: ['google', 'yelp', 'foursquare', 'seed'],
-      default: 'google',
+      enum: ['google', 'yelp', 'foursquare', 'seed', 'openstreetmap'],
+      default: 'openstreetmap',
     },
     lastFetched: { type: Date, default: Date.now },
   },

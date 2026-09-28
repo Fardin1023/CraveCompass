@@ -32,6 +32,7 @@ const DHAKA_DEFAULT = { lat: 23.8103, lng: 90.4125 };
 const CUISINE_LABELS: Record<string, string> = {
   pizza: 'Pizza 🍕', burger: 'Burgers 🍔', biryani: 'Biryani 🍚',
   kabab: 'Kabab 🍢', bangladeshi: 'Bangladeshi 🍛', chicken: 'Chicken 🍗',
+  street_food: 'Street Food & Carts 🍢',
   coffee: 'Coffee ☕', sushi: 'Sushi 🍣', thai: 'Thai 🍜',
   vegan: 'Vegan 🥗', breakfast: 'Breakfast 🥞', seafood: 'Seafood 🦞',
 };
@@ -149,8 +150,6 @@ export default function HomePage() {
   useEffect(() => {
     if (geoError) showToast(geoError, '⚠️');
   }, [geoError]);
-
-  const hasMapboxToken = !!process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
   return (
     <main className="app-container">
@@ -325,32 +324,12 @@ export default function HomePage() {
 
         {/* ── Map ─────────────────────────── */}
         <div className="map-container">
-          {hasMapboxToken ? (
-            <MapView
-              places={results}
-              selectedPlace={selectedPlace}
-              userLocation={coords}
-              onMarkerClick={handleMarkerClick}
-            />
-          ) : (
-            <div className="map-canvas" style={{
-              background: 'var(--bg-base)', display: 'flex', flexDirection: 'column',
-              alignItems: 'center', justifyContent: 'center', gap: '16px', padding: '32px',
-            }}>
-              <div style={{ fontSize: '64px' }} className="animate-float">🗺️</div>
-              <h3 style={{ color: 'var(--cream)', fontSize: '20px', fontWeight: 800 }}>Map Not Configured</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '14px', textAlign: 'center', maxWidth: '300px', lineHeight: 1.6 }}>
-                Add your Mapbox token to <code style={{ color: 'var(--orange)' }}>.env.local</code>
-              </p>
-              <div style={{
-                padding: '12px 20px', background: 'var(--bg-elevated)',
-                border: '1px solid var(--border-orange)', borderRadius: 'var(--radius-md)',
-                fontFamily: 'monospace', fontSize: '13px', color: 'var(--yellow)',
-              }}>
-                NEXT_PUBLIC_MAPBOX_TOKEN=pk.ey...
-              </div>
-            </div>
-          )}
+          <MapView
+            places={results}
+            selectedPlace={selectedPlace}
+            userLocation={coords}
+            onMarkerClick={handleMarkerClick}
+          />
 
           {/* Locate Me floating */}
           {!coords && (

@@ -9,8 +9,8 @@
 | Frontend  | Next.js 15, TypeScript, CSS    |
 | Backend   | Node.js, Express               |
 | Database  | MongoDB + Mongoose (2dsphere)  |
-| Map       | Mapbox GL JS                   |
-| Food Data | Google Places API              |
+| Map       | OpenStreetMap (via Leaflet)    |
+| Food Data | OpenStreetMap (Overpass API) + Google Places (Optional) |
 | Search    | Natural language query parser  |
 
 ---
@@ -20,8 +20,7 @@
 ### 1. Prerequisites
 - Node.js 18+
 - MongoDB running locally (`mongod`)
-- Mapbox account → [mapbox.com](https://mapbox.com) (free token)
-- Google Places API key → [Google Cloud Console](https://console.cloud.google.com)
+- Google Places API key → [Google Cloud Console](https://console.cloud.google.com) *(Optional for demo seed)*
 
 ### 2. Configure Environment Variables
 
@@ -36,7 +35,7 @@ CLIENT_URL=http://localhost:3000
 **Frontend** — edit `frontend/.env.local`:
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:5000/api
-NEXT_PUBLIC_MAPBOX_TOKEN=YOUR_MAPBOX_TOKEN_HERE
+# OpenStreetMap does not require any API token!
 ```
 
 ### 3. Install Dependencies
@@ -76,11 +75,12 @@ Type natural language like:
 
 The query parser extracts: cuisine, price range, open-now, ambience, and rating preferences.
 
-### 🗺️ Interactive Map
+### 🗺️ Interactive Map (OpenStreetMap)
+- Free, tokenless OpenStreetMap tiles with dark/standard layer switch
 - Cuisine-specific emoji markers (🍣🍕🌮☕...)
-- Click markers to see popups with ratings and status
+- Click markers to see rich popups with ratings, status, and cuisine
 - Animated fly-to when selecting a restaurant
-- User location blue dot
+- Pulsing user location indicator
 
 ### 🏷️ Filter Bar
 - **Open Now** — only show open restaurants
@@ -145,7 +145,7 @@ CraveCompass/
     │   │   ├── page.tsx      # Main page
     │   │   └── globals.css   # Design system
     │   ├── components/
-    │   │   ├── MapView.tsx       # Mapbox map
+    │   │   ├── MapView.tsx       # OpenStreetMap (Leaflet)
     │   │   ├── SearchBar.tsx     # Search input
     │   │   ├── FilterBar.tsx     # Filter chips
     │   │   ├── PlaceCard.tsx     # Result card

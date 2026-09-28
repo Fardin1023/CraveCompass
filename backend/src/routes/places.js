@@ -2,6 +2,7 @@ const express = require('express');
 const { param, query, validationResult } = require('express-validator');
 const Place = require('../models/Place');
 const { getPlaceDetails, transformGooglePlace } = require('../services/googlePlaces');
+const { searchOsmNearby, transformOsmPlace } = require('../services/osmPlaces');
 
 const router = express.Router();
 
@@ -72,7 +73,35 @@ router.get(
 
       let places = await Place.find(geoQuery).sort(sortOption).limit(parseInt(limit) * 2).lean();
 
-      // If outside seeded geo area, fallback to all places matching filters
+      // If few places in this area, discover live food spots via OpenStreetMap Overpass (100% Free)
+      if (places.length < 5) {
+        try {
+          const osmResults = await searchOsmNearby({
+            lat: _lat,
+            lng: _lng,
+            radius: _radius,
+            limit: parseInt(limit),
+            keyword: cuisine || '',
+          });
+
+          if (osmResults && osmResults.length > 0) {
+            const upsertPromises = osmResults.map(async (osmEl) => {
+              const doc = transformOsmPlace(osmEl);
+              return Place.findOneAndUpdate(
+                { googlePlaceId: doc.googlePlaceId },
+                { $set: doc },
+                { upsert: true, new: true, setDefaultsOnInsert: true }
+              );
+            });
+            await Promise.allSettled(upsertPromises);
+            places = await Place.find(geoQuery).sort(sortOption).limit(parseInt(limit) * 2).lean();
+          }
+        } catch (osmErr) {
+          console.warn('OpenStreetMap live discovery error:', osmErr.message);
+        }
+      }
+
+      // If outside seeded geo area and still 0, fallback to all places matching filters
       if (places.length === 0) {
         const fallbackQuery = { ...geoQuery };
         delete fallbackQuery.location;

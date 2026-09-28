@@ -31,10 +31,12 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/logo.jpg" type="image/jpeg" />
         <link rel="apple-touch-icon" href="/logo.jpg" />
-        {/* Mapbox GL CSS */}
+        {/* Leaflet CSS for OpenStreetMap */}
         <link
-          href="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.css"
           rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossOrigin=""
         />
       </head>
       <body>{children}</body>

@@ -14,6 +14,7 @@ const CUISINE_CHIPS = [
   { key: 'burger',      label: 'Burgers',     emoji: '🍔' },
   { key: 'biryani',     label: 'Biryani',     emoji: '🍚' },
   { key: 'kabab',       label: 'Kabab',       emoji: '🍢' },
+  { key: 'street_food', label: 'Street Food & Carts', emoji: '🍢' },
   { key: 'bangladeshi', label: 'Bangladeshi', emoji: '🍛' },
   { key: 'chicken',     label: 'Chicken',     emoji: '🍗' },
   { key: 'coffee',      label: 'Coffee',      emoji: '☕' },

@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useCallback, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type L from 'leaflet';
 import type { Place } from '@/types';
 
 interface MapProps {
@@ -11,9 +12,9 @@ interface MapProps {
   onMapMove?: (center: { lat: number; lng: number }) => void;
 }
 
-const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || '';
-const DEFAULT_CENTER: [number, number] = [90.4125, 23.8103]; // Dhaka, Bangladesh
-const DEFAULT_ZOOM = 12;
+// Dhaka, Bangladesh default center [lat, lng]
+const DEFAULT_CENTER: [number, number] = [23.8103, 90.4125];
+const DEFAULT_ZOOM = 13;
 
 const CUISINE_EMOJI: Record<string, string> = {
   bangladeshi: '🍛', biryani: '🍚', kabab: '🍢', sushi: '🍣',
@@ -22,6 +23,7 @@ const CUISINE_EMOJI: Record<string, string> = {
   chinese: '🥢', korean: '🥘', seafood: '🦞', coffee: '☕',
   dessert: '🍰', breakfast: '🥞', vegan: '🥗',
   mediterranean: '🫒', chicken: '🍗', continental: '🍽️',
+  street_food: '🍢', food_cart: '🛺', cart: '🛺',
   default: '🍽️',
 };
 
@@ -35,111 +37,189 @@ const getEmoji = (place: Place) => {
   return CUISINE_EMOJI.default;
 };
 
-const getPriceLabel = (level?: number) => level ? '৳'.repeat(level) : '';
+const getPriceLabel = (level?: number) => (level ? '৳'.repeat(level) : '');
 
 export default function MapView({
-  places, selectedPlace, userLocation, onMarkerClick, onMapMove,
+  places,
+  selectedPlace,
+  userLocation,
+  onMarkerClick,
+  onMapMove,
 }: MapProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
-  const mapRef       = useRef<mapboxgl.Map | null>(null);
-  const markersRef   = useRef<Map<string, mapboxgl.Marker>>(new Map());
-  const userMarkerRef= useRef<mapboxgl.Marker | null>(null);
-  const popupRef     = useRef<mapboxgl.Popup | null>(null);
-  const [mapLoaded, setMapLoaded]   = useState(false);
-  const [mapboxgl, setMapboxgl]     = useState<typeof import('mapbox-gl') | null>(null);
+  const mapRef = useRef<L.Map | null>(null);
+  const tileLayerRef = useRef<L.TileLayer | null>(null);
+  const markersRef = useRef<Map<string, L.Marker>>(new Map());
+  const userMarkerRef = useRef<L.Marker | null>(null);
+  const [mapLoaded, setMapLoaded] = useState(false);
+  const [leafletInstance, setLeafletInstance] = useState<typeof L | null>(null);
+  const [mapStyle, setMapStyle] = useState<'dark' | 'standard'>('dark');
 
-  // Load mapbox-gl dynamically (client-only)
+  // Load Leaflet dynamically on client side
   useEffect(() => {
-    import('mapbox-gl').then((mod) => {
-      mod.default.accessToken = MAPBOX_TOKEN;
-      setMapboxgl(mod.default as unknown as typeof import('mapbox-gl'));
+    let mounted = true;
+    import('leaflet').then((mod) => {
+      if (mounted) {
+        setLeafletInstance(mod.default || mod);
+      }
     });
+    return () => {
+      mounted = false;
+    };
   }, []);
 
-  // Initialize map
+  // Initialize Leaflet Map
   useEffect(() => {
-    if (!mapboxgl || !mapContainer.current || mapRef.current) return;
-    const map = new (mapboxgl as any).Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/dark-v11',
-      center: userLocation ? [userLocation.lng, userLocation.lat] : DEFAULT_CENTER,
+    if (!leafletInstance || !mapContainer.current || mapRef.current) return;
+    const L = leafletInstance;
+
+    const initialCenter = userLocation
+      ? ([userLocation.lat, userLocation.lng] as [number, number])
+      : DEFAULT_CENTER;
+
+    const map = L.map(mapContainer.current, {
+      center: initialCenter,
       zoom: DEFAULT_ZOOM,
-      antialias: true,
+      zoomControl: false, // We reposition custom controls or add top-right
     });
-    map.on('load', () => setMapLoaded(true));
+
+    // Add zoom control at bottom-right or top-right
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+    // Tile layer (100% Free OpenStreetMap)
+    const osmTileUrl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+    const osmAttribution =
+      '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors';
+
+    const tileLayer = L.tileLayer(osmTileUrl, {
+      maxZoom: 19,
+      attribution: osmAttribution,
+    }).addTo(map);
+
+    tileLayerRef.current = tileLayer;
+
+    map.whenReady(() => {
+      setMapLoaded(true);
+    });
+
     map.on('moveend', () => {
       const center = map.getCenter();
       onMapMove?.({ lat: center.lat, lng: center.lng });
     });
+
     mapRef.current = map;
-    return () => { map.remove(); mapRef.current = null; };
-  }, [mapboxgl]);
+
+    return () => {
+      map.remove();
+      mapRef.current = null;
+      tileLayerRef.current = null;
+    };
+  }, [leafletInstance]);
+
+  // Apply dark mode class to map container based on selected style
+  useEffect(() => {
+    if (!mapContainer.current) return;
+    if (mapStyle === 'dark') {
+      mapContainer.current.classList.add('osm-dark-mode');
+    } else {
+      mapContainer.current.classList.remove('osm-dark-mode');
+    }
+  }, [mapStyle]);
 
   // User location marker
   useEffect(() => {
-    if (!mapRef.current || !mapLoaded || !mapboxgl || !userLocation) return;
+    if (!mapRef.current || !mapLoaded || !leafletInstance || !userLocation) return;
+    const L = leafletInstance;
+    const map = mapRef.current;
+
+    const userLatLng = L.latLng(userLocation.lat, userLocation.lng);
+
     if (userMarkerRef.current) {
-      userMarkerRef.current.setLngLat([userLocation.lng, userLocation.lat]);
+      userMarkerRef.current.setLatLng(userLatLng);
     } else {
-      const el = document.createElement('div');
-      el.style.cssText = `
-        width:20px;height:20px;
-        background:radial-gradient(circle,#60a5fa 0%,#2563eb 55%,rgba(37,99,235,0.25) 100%);
-        border-radius:50%;
-        border:3px solid white;
-        box-shadow:0 0 0 6px rgba(37,99,235,0.2),0 2px 8px rgba(0,0,0,0.5);
-        animation:pulse 2s ease-in-out infinite;
-      `;
-      userMarkerRef.current = new (mapboxgl as any).Marker({ element: el, anchor: 'center' })
-        .setLngLat([userLocation.lng, userLocation.lat])
-        .addTo(mapRef.current!);
+      const userDivIcon = L.divIcon({
+        className: 'user-map-pin',
+        html: `
+          <div style="
+            width: 22px; height: 22px;
+            background: radial-gradient(circle, #60a5fa 0%, #2563eb 55%, rgba(37,99,235,0.25) 100%);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 6px rgba(37,99,235,0.25), 0 2px 8px rgba(0,0,0,0.6);
+            animation: pulse 2s ease-in-out infinite;
+          "></div>
+        `,
+        iconSize: [22, 22],
+        iconAnchor: [11, 11],
+      });
+
+      userMarkerRef.current = L.marker(userLatLng, {
+        icon: userDivIcon,
+        zIndexOffset: 1000,
+      }).addTo(map);
     }
-  }, [userLocation, mapLoaded, mapboxgl]);
+  }, [userLocation, mapLoaded, leafletInstance]);
 
   // Place markers
   useEffect(() => {
-    if (!mapRef.current || !mapLoaded || !mapboxgl) return;
+    if (!mapRef.current || !mapLoaded || !leafletInstance) return;
+    const L = leafletInstance;
     const map = mapRef.current;
+
     const existingIds = new Set(markersRef.current.keys());
-    const newIds      = new Set(places.map((p) => p._id));
+    const newIds = new Set(places.map((p) => p._id));
 
     // Remove stale markers
     existingIds.forEach((id) => {
-      if (!newIds.has(id)) { markersRef.current.get(id)?.remove(); markersRef.current.delete(id); }
+      if (!newIds.has(id)) {
+        markersRef.current.get(id)?.remove();
+        markersRef.current.delete(id);
+      }
     });
 
     places.forEach((place, i) => {
+      // place.location.coordinates is [lng, lat]
       const [lng, lat] = place.location.coordinates;
-      const emoji      = getEmoji(place);
-      const isOpen     = place.openingHours?.openNow;
+      if (!lat || !lng) return;
+
+      const emoji = getEmoji(place);
+      const isOpen = place.openingHours?.openNow;
       const isFeatured = place.isFeatured;
 
       if (markersRef.current.has(place._id)) {
-        markersRef.current.get(place._id)!.setLngLat([lng, lat]);
+        markersRef.current.get(place._id)!.setLatLng([lat, lng]);
         return;
       }
 
-      // Marker element
-      const el = document.createElement('div');
-      el.className = 'map-marker';
-      el.style.animationDelay = `${i * 60}ms`;
-      el.innerHTML = `
-        <div class="marker-pin marker-drop" style="animation-delay:${i * 60}ms">
-          <div class="marker-body ${isFeatured ? 'featured' : ''} ${isOpen === true ? 'open' : ''}">
-            <span class="marker-emoji">${emoji}</span>
+      // Marker HTML
+      const markerHtml = `
+        <div class="map-marker" style="animation-delay: ${i * 50}ms">
+          <div class="marker-pin marker-drop" style="animation-delay: ${i * 50}ms">
+            <div class="marker-body ${isFeatured ? 'featured' : ''} ${isOpen === true ? 'open' : ''}">
+              <span class="marker-emoji">${emoji}</span>
+            </div>
           </div>
         </div>
       `;
 
-      // Popup HTML with photo
+      const divIcon = L.divIcon({
+        className: 'osm-custom-marker',
+        html: markerHtml,
+        iconSize: [40, 48],
+        iconAnchor: [20, 48],
+        popupAnchor: [0, -46],
+      });
+
+      // Popup HTML with photo and details
       const photoHtml = place.primaryPhoto
         ? `<div class="popup-image"><img src="${place.primaryPhoto}" alt="${place.name}" loading="lazy"/></div>`
         : '';
-      const openHtml = isOpen !== undefined
-        ? `<span class="popup-status ${isOpen ? 'open' : 'closed'}">${isOpen ? '● Open' : '● Closed'}</span>`
-        : '';
+      const openHtml =
+        isOpen !== undefined
+          ? `<span class="popup-status ${isOpen ? 'open' : 'closed'}">${isOpen ? '● Open' : '● Closed'}</span>`
+          : '';
 
-      const popup = new (mapboxgl as any).Popup({ offset: 22, closeButton: true, maxWidth: '270px' }).setHTML(`
+      const popupHtml = `
         ${photoHtml}
         <div class="popup-content">
           <div class="popup-name">${place.name}</div>
@@ -151,70 +231,151 @@ export default function MapView({
           ${openHtml ? `<div style="margin-bottom:10px">${openHtml}</div>` : ''}
           <div class="popup-view-btn" data-place-id="${place._id}">View Details →</div>
         </div>
-      `);
+      `;
 
-      popup.on('open', () => {
-        setTimeout(() => {
-          document.querySelector(`[data-place-id="${place._id}"]`)
-            ?.addEventListener('click', () => onMarkerClick(place));
-        }, 80);
+      const marker = L.marker([lat, lng], { icon: divIcon }).addTo(map);
+
+      marker.bindPopup(popupHtml, {
+        maxWidth: 270,
+        minWidth: 230,
+        className: 'crave-osm-popup',
+        closeButton: true,
       });
 
-      const marker = new (mapboxgl as any).Marker({ element: el, anchor: 'bottom' })
-        .setLngLat([lng, lat])
-        .setPopup(popup)
-        .addTo(map);
+      marker.on('popupopen', () => {
+        setTimeout(() => {
+          const btn = document.querySelector(`[data-place-id="${place._id}"]`);
+          btn?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            onMarkerClick(place);
+          });
+        }, 50);
+      });
 
-      el.addEventListener('click', () => {
+      marker.on('click', () => {
         onMarkerClick(place);
-        popupRef.current?.remove();
-        if (marker.getPopup() && !marker.getPopup()?.isOpen()) marker.togglePopup();
-        popupRef.current = popup;
       });
 
       markersRef.current.set(place._id, marker);
     });
-  }, [places, mapLoaded, mapboxgl, onMarkerClick]);
+  }, [places, mapLoaded, leafletInstance, onMarkerClick]);
 
-  // Smoothly fit bounds to show all filtered places when places list changes
+  // Fit bounds to places
   useEffect(() => {
-    if (!mapRef.current || !mapLoaded || !mapboxgl || places.length === 0 || selectedPlace) return;
+    if (!mapRef.current || !mapLoaded || !leafletInstance || places.length === 0 || selectedPlace) {
+      return;
+    }
     try {
-      const bounds = new (mapboxgl as any).LngLatBounds();
-      places.forEach((p) => {
-        if (p.location?.coordinates) {
-          bounds.extend(p.location.coordinates as [number, number]);
-        }
-      });
-      mapRef.current.fitBounds(bounds, {
-        padding: { top: 70, bottom: 70, left: 70, right: 70 },
-        maxZoom: 14.5,
-        duration: 900,
-      });
+      const validPoints = places
+        .filter((p) => p.location?.coordinates && p.location.coordinates.length === 2)
+        .map((p) => [p.location.coordinates[1], p.location.coordinates[0]] as [number, number]);
+
+      if (validPoints.length > 0) {
+        const bounds = leafletInstance.latLngBounds(validPoints);
+        mapRef.current.fitBounds(bounds, {
+          padding: [60, 60],
+          maxZoom: 14.5,
+          animate: true,
+          duration: 0.8,
+        });
+      }
     } catch (_) {}
-  }, [places, mapLoaded, mapboxgl]);
+  }, [places, mapLoaded, leafletInstance]);
+
+  // Fly to selected place
   useEffect(() => {
     if (!mapRef.current || !selectedPlace || !mapLoaded) return;
     const [lng, lat] = selectedPlace.location.coordinates;
-    mapRef.current.flyTo({ center: [lng, lat], zoom: 15, duration: 1200, essential: true });
+    mapRef.current.flyTo([lat, lng], 15, {
+      animate: true,
+      duration: 1.2,
+    });
+
     const marker = markersRef.current.get(selectedPlace._id);
     if (marker) {
       const el = marker.getElement();
-      el.classList.remove('active');
-      void el.offsetWidth; // reflow
-      el.classList.add('active');
-      setTimeout(() => el.classList.remove('active'), 500);
-      if (marker.getPopup() && !marker.getPopup()?.isOpen()) marker.togglePopup();
+      if (el) {
+        const markerPin = el.querySelector('.map-marker');
+        if (markerPin) {
+          markerPin.classList.remove('active');
+          void (markerPin as HTMLElement).offsetWidth;
+          markerPin.classList.add('active');
+          setTimeout(() => markerPin.classList.remove('active'), 600);
+        }
+      }
+      marker.openPopup();
     }
   }, [selectedPlace, mapLoaded]);
 
-  // Fly to user location on first fix
+  // Fly to user location on initial locate
   useEffect(() => {
     if (!mapRef.current || !userLocation || !mapLoaded || places.length > 0) return;
-    mapRef.current.flyTo({ center: [userLocation.lng, userLocation.lat], zoom: 14, duration: 1500 });
+    mapRef.current.flyTo([userLocation.lat, userLocation.lng], 14, {
+      animate: true,
+      duration: 1.5,
+    });
   }, [userLocation, mapLoaded]);
 
   return (
-    <div ref={mapContainer} className="map-canvas" role="region" aria-label="Restaurant map" />
+    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+      {/* OSM Tile Layer Switcher */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 14,
+          right: 14,
+          zIndex: 400,
+          display: 'flex',
+          gap: '6px',
+          background: 'rgba(15, 26, 9, 0.88)',
+          backdropFilter: 'blur(8px)',
+          border: '1px solid var(--border-default)',
+          borderRadius: 'var(--radius-pill)',
+          padding: '4px',
+          boxShadow: 'var(--shadow-md)',
+        }}
+      >
+        <button
+          type="button"
+          onClick={() => setMapStyle('dark')}
+          style={{
+            padding: '5px 11px',
+            borderRadius: 'var(--radius-pill)',
+            fontSize: '11px',
+            fontWeight: 700,
+            background: mapStyle === 'dark' ? 'var(--gradient-brand)' : 'transparent',
+            color: mapStyle === 'dark' ? 'var(--text-inverse)' : 'var(--text-secondary)',
+            transition: 'all 0.2s ease',
+          }}
+          title="OpenStreetMap Dark Tiles"
+        >
+          🌙 OSM Dark
+        </button>
+        <button
+          type="button"
+          onClick={() => setMapStyle('standard')}
+          style={{
+            padding: '5px 11px',
+            borderRadius: 'var(--radius-pill)',
+            fontSize: '11px',
+            fontWeight: 700,
+            background: mapStyle === 'standard' ? 'var(--gradient-brand)' : 'transparent',
+            color: mapStyle === 'standard' ? 'var(--text-inverse)' : 'var(--text-secondary)',
+            transition: 'all 0.2s ease',
+          }}
+          title="OpenStreetMap Standard Tiles"
+        >
+          🗺️ OSM Standard
+        </button>
+      </div>
+
+      <div
+        ref={mapContainer}
+        className="map-canvas"
+        role="region"
+        aria-label="Restaurant OpenStreetMap"
+        style={{ width: '100%', height: '100%' }}
+      />
+    </div>
   );
 }

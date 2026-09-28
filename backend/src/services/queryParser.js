@@ -25,6 +25,7 @@ const CUISINE_KEYWORDS = {
   dessert: ['dessert', 'ice cream', 'cake', 'bakery', 'pastry', 'donut', 'gelato'],
   vegan: ['vegan', 'plant-based', 'vegetarian', 'veggie'],
   korean: ['korean', 'kbbq', 'bibimbap', 'kimchi', 'bulgogi'],
+  street_food: ['food cart', 'foodcart', 'street food', 'cart', 'stall', 'fuchka', 'chotpoti', 'jhalmuri', 'tong', 'snack', 'fast food'],
 };
 
 const PRICE_KEYWORDS = {
