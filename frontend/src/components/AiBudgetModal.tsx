@@ -15,22 +15,29 @@ interface AiBudgetModalProps {
 }
 
 const PRESET_BUDGETS = [
-  { amount: 150, label: '৳150', tag: 'Street Food & Cha', icon: '🍢' },
-  { amount: 250, label: '৳250', tag: 'Food Court Meal', icon: '🍱' },
-  { amount: 400, label: '৳400', tag: 'Casual Burgers & Combos', icon: '🍔' },
-  { amount: 600, label: '৳600', tag: 'Biryani Feast & Cafes', icon: '🍚' },
-  { amount: 1200, label: '৳1200+', tag: 'Buffet & Upscale', icon: '🥩' },
+  { amount: 150, label: '৳150', tag: 'Street & Cha', icon: '🍢', tier: 'Pocket Friendly' },
+  { amount: 250, label: '৳250', tag: 'Food Courts', icon: '🍱', tier: 'High Value' },
+  { amount: 400, label: '৳400', tag: 'Combos & Burgers', icon: '🍔', tier: 'Satisfying' },
+  { amount: 600, label: '৳600', tag: 'Kacchi & Cafes', icon: '🍚', tier: 'Full Feast' },
+  { amount: 1200, label: '৳1200+', tag: 'Gourmet & Buffet', icon: '🥩', tier: 'Luxury' },
 ];
 
 const CRAVING_TAGS = [
-  '🍱 Food Courts',
-  '🍚 Biryani & Kacchi',
-  '🍔 Burgers & Fries',
-  '🍢 Street Food / Chaap',
-  '☕ Coffee & Desserts',
-  '🍕 Cheesy Pizza',
-  '🍛 Bangladeshi Desi',
+  { label: '🍱 Food Courts', value: 'Food Courts' },
+  { label: '🍚 Kacchi Biryani', value: 'Biryani' },
+  { label: '🍔 Burgers & Combos', value: 'Burgers' },
+  { label: '🍢 Street Food & Chaap', value: 'Street Food' },
+  { label: '☕ Coffee & Desserts', value: 'Coffee' },
+  { label: '🍕 Cheesy Pizza', value: 'Pizza' },
+  { label: '🍛 Desi Bangla Khichuri', value: 'Bangladeshi' },
 ];
+
+function getBudgetTierInfo(amount: number) {
+  if (amount < 200) return { label: 'Pocket Friendly · Street Food & Cha', color: '#34d399', icon: '🍢' };
+  if (amount < 450) return { label: 'Sweet Spot · Food Courts & Meal Sets', color: '#fbbf24', icon: '🍱' };
+  if (amount < 900) return { label: 'Popular Choice · Kacchi Feasts & Cafes', color: '#fb923c', icon: '🍔' };
+  return { label: 'Gourmet Selection · Steaks, Buffets & Premium Dining', color: '#c084fc', icon: '👑' };
+}
 
 export default function AiBudgetModal({
   isOpen,
@@ -41,7 +48,7 @@ export default function AiBudgetModal({
   onApplyRecommendations,
   initialBudget,
 }: AiBudgetModalProps) {
-  const [budget, setBudget] = useState<number | string>(initialBudget || 300);
+  const [budget, setBudget] = useState<number>(initialBudget && initialBudget > 0 ? initialBudget : 350);
   const [partySize, setPartySize] = useState<number>(1);
   const [craving, setCraving] = useState<string>('');
   const [userApiKey, setUserApiKey] = useState<string>('');
@@ -54,11 +61,14 @@ export default function AiBudgetModal({
 
   const cardRef = useRef<HTMLDivElement>(null);
 
+  const perPerson = Math.max(Math.round(budget / Math.max(partySize, 1)), 1);
+  const tierInfo = getBudgetTierInfo(perPerson);
+
   const LOADING_MESSAGES = [
-    `Analyzing food courts & restaurants in ${locationName || 'Dhaka'}...`,
-    `Calculating meal combinations under ৳${budget} per person...`,
-    'Gemini AI is finding the highest value dishes & combos...',
-    'Matching authentic ratings and nearby walking distances...',
+    `CraveAI is scanning top food courts & restaurants in ${locationName || 'Dhaka'}...`,
+    `Computing meal combinations under ৳${perPerson} per person...`,
+    'CraveAI is selecting the highest-rated dishes and platters...',
+    'Matching authentic portion sizes and walking distances...',
   ];
 
   // Update budget when initialBudget prop changes
@@ -83,7 +93,7 @@ export default function AiBudgetModal({
       setLoadingMsgIdx((prev) => (prev + 1) % LOADING_MESSAGES.length);
     }, 1800);
     return () => clearInterval(interval);
-  }, [loading]);
+  }, [loading, LOADING_MESSAGES.length]);
 
   // Close on Escape
   useEffect(() => {
@@ -106,11 +116,14 @@ export default function AiBudgetModal({
     } catch (_) {}
   };
 
-  const handleAskGemini = async (e?: React.FormEvent) => {
+  const handleStepBudget = (delta: number) => {
+    setBudget((prev) => Math.min(Math.max(prev + delta, 50), 20000));
+  };
+
+  const handleAskCraveAi = async (e?: React.FormEvent) => {
     e?.preventDefault();
-    const numBudget = parseFloat(String(budget));
-    if (isNaN(numBudget) || numBudget < 40) {
-      setError('Please enter a valid budget amount (minimum ৳40)');
+    if (budget < 40) {
+      setError('Please enter a budget of at least ৳40');
       return;
     }
 
@@ -120,7 +133,7 @@ export default function AiBudgetModal({
 
     try {
       const res = await getAiBudgetSuggestions({
-        budget: numBudget,
+        budget,
         partySize,
         craving: craving.trim(),
         lat: activeCoords?.lat,
@@ -130,7 +143,7 @@ export default function AiBudgetModal({
 
       setResult(res);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to consult Gemini AI. Please try again.');
+      setError(err instanceof Error ? err.message : 'Failed to consult CraveAI. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -144,9 +157,8 @@ export default function AiBudgetModal({
       if (rec.fullPlace) {
         placesToApply.push(rec.fullPlace);
       } else {
-        // Construct place object from recommendation
         placesToApply.push({
-          _id: rec.placeId || `ai_place_${Math.random()}`,
+          _id: rec.placeId || `crave_ai_${Math.random()}`,
           name: rec.name,
           cuisine: [rec.cuisine],
           priceLevel: rec.priceLevel || 1,
@@ -160,7 +172,7 @@ export default function AiBudgetModal({
           photos: rec.primaryPhoto ? [{ url: rec.primaryPhoto }] : [],
           primaryPhoto: rec.primaryPhoto,
           reviews: [],
-          tags: [rec.budgetTag, 'ai_suggested', 'budget_friendly'],
+          tags: [rec.budgetTag, 'crave_ai', 'budget_friendly'],
           popularityScore: 100,
           isFeatured: true,
           source: 'seed',
@@ -168,7 +180,7 @@ export default function AiBudgetModal({
       }
     });
 
-    onApplyRecommendations(placesToApply, `AI Suggestions (৳${result.perPersonBudget}/person)`);
+    onApplyRecommendations(placesToApply, `CraveAI Picks (৳${result.perPersonBudget}/person)`);
     onClose();
   };
 
@@ -178,7 +190,7 @@ export default function AiBudgetModal({
       onClose();
     } else {
       const synthesizedPlace: Place = {
-        _id: rec.placeId || `ai_place_${Date.now()}`,
+        _id: rec.placeId || `crave_ai_${Date.now()}`,
         name: rec.name,
         cuisine: [rec.cuisine],
         priceLevel: rec.priceLevel || 1,
@@ -192,9 +204,9 @@ export default function AiBudgetModal({
         photos: rec.primaryPhoto ? [{ url: rec.primaryPhoto }] : [],
         primaryPhoto: rec.primaryPhoto,
         reviews: [
-          { author: 'Gemini AI Recommendation', rating: 5, text: `${rec.reason} • Suggested Order: ${rec.suggestedOrder}` },
+          { author: 'CraveAI Recommendation', rating: 5, text: `${rec.reason} • Order: ${rec.suggestedOrder}` },
         ],
-        tags: [rec.budgetTag, 'ai_suggested'],
+        tags: [rec.budgetTag, 'crave_ai'],
         popularityScore: 120,
         isFeatured: true,
         source: 'seed',
@@ -216,281 +228,336 @@ export default function AiBudgetModal({
       }}
       role="dialog"
       aria-modal="true"
-      aria-labelledby="ai-modal-title"
+      aria-labelledby="crave-ai-title"
     >
-      <div className="ai-budget-modal-card" ref={cardRef}>
+      <div className="crave-ai-modal-card" ref={cardRef}>
+        {/* Glowing ambient background orbs */}
+        <div className="crave-ambient-glow orb-1" aria-hidden="true" />
+        <div className="crave-ambient-glow orb-2" aria-hidden="true" />
+
         {/* Close Button */}
         <button
           type="button"
           className="modal-close-btn"
           onClick={onClose}
-          aria-label="Close AI budget modal"
+          aria-label="Close CraveAI"
         >
           ✕
         </button>
 
-        {/* Modal Header */}
-        <div className="ai-modal-header">
-          <div className="ai-badge-header">
-            <span className="ai-sparkle-icon">✨</span>
-            <span>Gemini AI Budget Advisor</span>
-            <span className="ai-free-tier-pill">Free Tier</span>
+        {/* Header with Futuristic Hologram Badge */}
+        <div className="crave-ai-header">
+          <div className="crave-ai-badge">
+            <span className="crave-ai-pulse-dot" />
+            <span className="crave-ai-sparkle">✨</span>
+            <span className="crave-ai-brand">CraveAI™</span>
+            <span className="crave-ai-tagline">Smart Taste & Budget Engine</span>
           </div>
-          <h2 id="ai-modal-title" className="ai-modal-title">
-            Find What to Eat Within Your Budget
+
+          <h2 id="crave-ai-title" className="crave-ai-title">
+            Taste Big, Spend Smart
           </h2>
-          <p className="ai-modal-subtitle">
-            Enter how much you want to spend in Bangladeshi Taka (৳). Gemini AI calculates the best food courts,
-            street stalls & restaurants with exact meal combos tailored to your wallet.
+          <p className="crave-ai-subtitle">
+            Enter what you want to spend in Bangladeshi Taka (৳). CraveAI calculates the top food courts,
+            street stalls, and eateries in Dhaka with exact meal combos tailored to your wallet.
           </p>
         </div>
 
-        {/* Form Inputs */}
-        <form onSubmit={handleAskGemini} className="ai-modal-form">
-          {/* Preset Buttons */}
-          <div className="ai-form-group">
-            <label className="ai-input-label">Quick Budget Presets</label>
-            <div className="ai-presets-grid">
+        {/* Main Form */}
+        <form onSubmit={handleAskCraveAi} className="crave-ai-form">
+          {/* Quick Preset Buttons */}
+          <div className="crave-form-section">
+            <div className="crave-section-header">
+              <span className="crave-section-title">⚡ Quick Budget Presets</span>
+              <span className="crave-section-hint">Select a tier or type below</span>
+            </div>
+            <div className="crave-presets-grid">
               {PRESET_BUDGETS.map((p) => {
-                const isSelected = Number(budget) === p.amount;
+                const isSelected = budget === p.amount;
                 return (
                   <button
                     key={p.amount}
                     type="button"
-                    className={`ai-preset-btn ${isSelected ? 'active' : ''}`}
+                    className={`crave-preset-card ${isSelected ? 'active' : ''}`}
                     onClick={() => setBudget(p.amount)}
                   >
-                    <span className="ai-preset-icon">{p.icon}</span>
-                    <span className="ai-preset-amount">{p.label}</span>
-                    <span className="ai-preset-tag">{p.tag}</span>
+                    <span className="crave-preset-icon">{p.icon}</span>
+                    <span className="crave-preset-amount">{p.label}</span>
+                    <span className="crave-preset-tag">{p.tag}</span>
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {/* Custom Budget & Party Size */}
-          <div className="ai-inputs-row">
-            <div className="ai-form-group" style={{ flex: 1.3 }}>
-              <label htmlFor="ai-budget-input" className="ai-input-label">
-                Your Exact Budget (in ৳ BDT)
-              </label>
-              <div className="ai-currency-input-wrapper">
-                <span className="ai-currency-prefix">৳</span>
+          {/* Interactive Hero Budget Cockpit Input */}
+          <div className="crave-budget-hero-box">
+            <div className="crave-budget-hero-top">
+              <span className="crave-budget-hero-label">YOUR TOTAL BUDGET (৳ BDT)</span>
+              <span className="crave-per-person-pill" style={{ color: tierInfo.color }}>
+                {tierInfo.icon} {partySize > 1 ? `৳${perPerson} / person` : 'Solo Meal'}
+              </span>
+            </div>
+
+            <div className="crave-budget-input-cockpit">
+              <button
+                type="button"
+                className="crave-step-btn"
+                onClick={() => handleStepBudget(-50)}
+                title="Decrease ৳50"
+                aria-label="Decrease budget by 50 Taka"
+              >
+                −50
+              </button>
+
+              <div className="crave-budget-input-display">
+                <span className="crave-taka-sign">৳</span>
                 <input
-                  id="ai-budget-input"
+                  id="crave-ai-budget-input"
                   type="number"
                   min="40"
                   max="25000"
                   step="10"
-                  className="ai-currency-input"
+                  className="crave-budget-number-input"
                   value={budget}
-                  onChange={(e) => setBudget(e.target.value)}
-                  placeholder="e.g. 300"
+                  onChange={(e) => setBudget(Math.max(Number(e.target.value) || 0, 0))}
+                  placeholder="350"
                   required
                 />
-                <span className="ai-currency-suffix">Taka</span>
+                <span className="crave-taka-unit">BDT</span>
               </div>
+
+              <button
+                type="button"
+                className="crave-step-btn"
+                onClick={() => handleStepBudget(50)}
+                title="Increase ৳50"
+                aria-label="Increase budget by 50 Taka"
+              >
+                +50
+              </button>
             </div>
 
-            <div className="ai-form-group" style={{ flex: 1 }}>
-              <label className="ai-input-label">Number of People</label>
-              <div className="ai-party-selector">
-                {[1, 2, 4].map((size) => (
-                  <button
-                    key={size}
-                    type="button"
-                    className={`ai-party-btn ${partySize === size ? 'active' : ''}`}
-                    onClick={() => setPartySize(size)}
-                  >
-                    {size === 1 ? '👤 1 Person' : size === 2 ? '👥 2 People' : '👨‍👩‍👧 4+ Group'}
-                  </button>
-                ))}
-              </div>
+            {/* Live Tier Insight Bar */}
+            <div className="crave-tier-indicator-row">
+              <span className="crave-tier-dot" style={{ background: tierInfo.color }} />
+              <span className="crave-tier-text" style={{ color: tierInfo.color }}>
+                {tierInfo.label}
+              </span>
             </div>
           </div>
 
-          {/* Craving / Preference */}
-          <div className="ai-form-group">
-            <label htmlFor="ai-craving-input" className="ai-input-label">
-              Craving or Specific Cuisine (Optional)
-            </label>
-            <input
-              id="ai-craving-input"
-              type="text"
-              className="ai-text-input"
-              value={craving}
-              onChange={(e) => setCraving(e.target.value)}
-              placeholder='e.g. "Food court combo", "Kacchi biryani", "Cheesy burger", or "Khichuri"'
-            />
-            {/* Quick tags */}
-            <div className="ai-tags-row">
-              {CRAVING_TAGS.map((tag) => (
+          {/* Party Size Selector */}
+          <div className="crave-form-section">
+            <label className="crave-section-title">👥 Group Size</label>
+            <div className="crave-party-row">
+              {[
+                { size: 1, label: 'Solo Foodie', icon: '👤', sub: '1 person' },
+                { size: 2, label: 'Duo Meal', icon: '👥', sub: '2 people' },
+                { size: 4, label: 'Squad / Family', icon: '🎉', sub: '4+ group' },
+              ].map((item) => (
                 <button
-                  key={tag}
+                  key={item.size}
                   type="button"
-                  className="ai-craving-pill"
-                  onClick={() => setCraving(tag.replace(/^[^\s]+\s*/, ''))}
+                  className={`crave-party-card ${partySize === item.size ? 'active' : ''}`}
+                  onClick={() => setPartySize(item.size)}
                 >
-                  {tag}
+                  <span className="crave-party-icon">{item.icon}</span>
+                  <div className="crave-party-info">
+                    <span className="crave-party-name">{item.label}</span>
+                    <span className="crave-party-sub">{item.sub}</span>
+                  </div>
                 </button>
               ))}
             </div>
           </div>
 
-          {/* API Key Toggle Section */}
-          <div className="ai-api-key-toggle-container">
+          {/* Craving / Cuisine Chips */}
+          <div className="crave-form-section">
+            <label htmlFor="crave-craving-input" className="crave-section-title">
+              🍜 Desired Craving or Vibe (Optional)
+            </label>
+            <div className="crave-craving-input-wrapper">
+              <span className="crave-search-lens">🔍</span>
+              <input
+                id="crave-craving-input"
+                type="text"
+                className="crave-craving-text-input"
+                value={craving}
+                onChange={(e) => setCraving(e.target.value)}
+                placeholder='e.g. "Kacchi biryani", "Food court combo", "Cheesy burger"'
+              />
+              {craving && (
+                <button
+                  type="button"
+                  className="crave-craving-clear-btn"
+                  onClick={() => setCraving('')}
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+
+            <div className="crave-craving-tags-list">
+              {CRAVING_TAGS.map((t) => {
+                const isActive = craving.toLowerCase().includes(t.value.toLowerCase());
+                return (
+                  <button
+                    key={t.value}
+                    type="button"
+                    className={`crave-craving-pill ${isActive ? 'active' : ''}`}
+                    onClick={() => setCraving(isActive ? '' : t.value)}
+                  >
+                    {t.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Advanced Key Section */}
+          <div className="crave-advanced-section">
             <button
               type="button"
-              className="ai-toggle-key-btn"
+              className="crave-advanced-toggle"
               onClick={() => setShowKeyInput(!showKeyInput)}
             >
-              <span className="key-icon">🔑</span>
-              <span>
-                {userApiKey
-                  ? 'Custom Gemini Key Set (Click to edit)'
-                  : 'Use Free Google AI Studio API Key (Optional)'}
-              </span>
-              <span className="toggle-chevron">{showKeyInput ? '▲' : '▼'}</span>
+              <span>🔑 Have your own AI Key? (Optional)</span>
+              <span className="chevron">{showKeyInput ? '▴' : '▾'}</span>
             </button>
 
             {showKeyInput && (
-              <div className="ai-api-key-box">
-                <p className="ai-api-key-help">
-                  By default, CraveCompass uses its free tier & local food reasoning engine. You can also paste your personal 100% free Gemini API key from Google AI Studio:
+              <div className="crave-key-drawer">
+                <p className="crave-key-help">
+                  CraveAI works automatically with our backend engine. If you want to use your personal quota,
+                  paste your key below:
                 </p>
-                <div className="ai-api-key-input-row">
+                <div className="crave-key-row">
                   <input
                     type="password"
-                    className="ai-key-input"
+                    className="crave-key-input"
                     value={userApiKey}
                     onChange={(e) => handleSaveApiKey(e.target.value)}
-                    placeholder="AIzaSy... (Paste Gemini API Key)"
+                    placeholder="AQ.Ab... or AIzaSy..."
                   />
                   {userApiKey && (
                     <button
                       type="button"
-                      className="ai-clear-key-btn"
+                      className="crave-key-clear"
                       onClick={() => handleSaveApiKey('')}
                     >
                       Clear
                     </button>
                   )}
                 </div>
-                <a
-                  href="https://aistudio.google.com/app/apikey"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ai-get-key-link"
-                >
-                  ↗ Get a free Gemini API key in 30 seconds at Google AI Studio
-                </a>
               </div>
             )}
           </div>
 
           {/* Error Message */}
           {error && (
-            <div className="ai-error-box" role="alert">
-              <span>⚠️</span>
-              <div>{error}</div>
+            <div className="crave-error-alert" role="alert">
+              <span className="error-icon">⚠️</span>
+              <div className="error-text">{error}</div>
             </div>
           )}
 
-          {/* Submit Action */}
+          {/* Hero Submit Button */}
           <button
             type="submit"
-            className={`ai-submit-btn ${loading ? 'loading' : ''}`}
+            id="crave-ai-submit-cta"
+            className={`crave-submit-cta ${loading ? 'loading' : ''}`}
             disabled={loading}
           >
             {loading ? (
-              <div className="ai-loading-indicator">
-                <svg className="animate-spin" width="18" height="18" viewBox="0 0 24 24" fill="none">
-                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" strokeDasharray="30 60" />
-                </svg>
+              <div className="crave-loading-row">
+                <span className="crave-spinner" />
                 <span>{LOADING_MESSAGES[loadingMsgIdx]}</span>
               </div>
             ) : (
-              <div className="ai-btn-content">
-                <span className="sparkle-stars">✨</span>
-                <span>Ask Gemini AI for Best Places within ৳{budget}</span>
-                <span className="arrow-right">→</span>
+              <div className="crave-cta-content">
+                <span className="cta-sparkle">⚡</span>
+                <span className="cta-text">
+                  Discover with CraveAI · <strong>৳{budget}</strong>
+                </span>
+                <span className="cta-arrow">→</span>
               </div>
             )}
           </button>
         </form>
 
-        {/* Results Presentation */}
+        {/* Results Container */}
         {result && (
-          <div className="ai-results-container">
-            {/* Overview Banner */}
-            <div className="ai-overview-card">
-              <div className="ai-overview-badge">
-                <span>✨</span>
-                <strong>
-                  {result.source === 'gemini' ? 'Gemini AI Recommendation' : 'CraveCompass Smart Advisor'}
-                </strong>
-                <span className="ai-source-pill">
-                  {result.source === 'gemini' ? 'Gemini 1.5 Flash' : 'Dhaka Smart Engine'}
-                </span>
+          <div className="crave-results-container">
+            {/* Overview Card */}
+            <div className="crave-results-overview">
+              <div className="crave-results-badge-row">
+                <div className="crave-intel-badge">
+                  <span className="pulse-sparkle">✨</span>
+                  <span>CraveAI Intelligence</span>
+                </div>
+                <div className="crave-budget-capsule">
+                  ৳{result.totalBudget} BDT Total
+                </div>
               </div>
-              <p className="ai-analysis-text">{result.budgetAnalysis}</p>
-              <div className="ai-budget-stat-pills">
-                <span className="stat-pill">
-                  💵 Total: <strong>৳{result.totalBudget}</strong>
+
+              <p className="crave-analysis-text">{result.budgetAnalysis}</p>
+
+              <div className="crave-stat-chips">
+                <span className="crave-stat-chip">
+                  👤 <strong>৳{result.perPersonBudget}</strong> / person
                 </span>
-                <span className="stat-pill">
-                  👤 Per Person: <strong>৳{result.perPersonBudget}</strong> ({result.partySize}{' '}
-                  {result.partySize > 1 ? 'people' : 'person'})
+                <span className="crave-stat-chip">
+                  👥 <strong>{result.partySize}</strong> {result.partySize > 1 ? 'people' : 'person'}
                 </span>
-                <span className="stat-pill highlight">
-                  🎯 Found {result.recommendations?.length || 0} Matches
+                <span className="crave-stat-chip highlight">
+                  🎯 <strong>{result.recommendations?.length || 0}</strong> Curated Picks
                 </span>
               </div>
             </div>
 
-            {/* Recommendations List */}
-            <div className="ai-recommendations-list">
+            {/* Recommendations Grid */}
+            <div className="crave-recs-grid">
               {result.recommendations.map((rec, idx) => (
-                <div key={idx} className="ai-rec-card">
-                  <div className="ai-rec-card-header">
-                    <div className="ai-rec-info">
-                      <span className="ai-rec-tag">{rec.budgetTag}</span>
-                      <h3 className="ai-rec-name">{rec.name}</h3>
-                      <div className="ai-rec-meta">
-                        <span className="ai-rec-cuisine">{rec.cuisine}</span>
-                        <span className="ai-rec-rating">⭐ {rec.rating}</span>
-                        <span className="ai-rec-address">📍 {rec.address}</span>
+                <div key={idx} className="crave-rec-card">
+                  <div className="crave-rec-card-top">
+                    <div className="crave-rec-meta">
+                      <span className="crave-rec-budget-tag">{rec.budgetTag}</span>
+                      <h3 className="crave-rec-name">{rec.name}</h3>
+                      <div className="crave-rec-sub">
+                        <span>{rec.cuisine}</span>
+                        <span>·</span>
+                        <span>⭐ {rec.rating}</span>
+                        <span>·</span>
+                        <span>📍 {rec.address}</span>
                       </div>
                     </div>
-                    <div className="ai-rec-cost-badge">
+
+                    <div className="crave-rec-cost-badge">
                       <span className="cost-label">Est. Cost</span>
-                      <span className="cost-value">{rec.estimatedCost}</span>
+                      <span className="cost-val">{rec.estimatedCost}</span>
                     </div>
                   </div>
 
-                  {/* Suggested Order */}
-                  <div className="ai-suggested-order-box">
-                    <div className="suggested-order-label">
-                      <span>🍽️</span>
-                      <strong>Suggested Order:</strong>
+                  {/* Suggested Combo Box */}
+                  <div className="crave-combo-box">
+                    <div className="crave-combo-header">
+                      <span>🍽️ Suggested Meal Combo:</span>
                     </div>
-                    <div className="suggested-order-text">{rec.suggestedOrder}</div>
+                    <div className="crave-combo-name">{rec.suggestedOrder}</div>
                   </div>
 
-                  {/* AI Match Reason */}
-                  <p className="ai-rec-reason">
-                    <strong>Why it matches:</strong> {rec.reason}
+                  <p className="crave-rec-rationale">
+                    <strong>Why CraveAI picked this:</strong> {rec.reason}
                   </p>
 
-                  {/* Action Button */}
-                  <div className="ai-rec-actions">
+                  <div className="crave-rec-btn-row">
                     <button
                       type="button"
-                      className="ai-view-place-btn"
+                      className="crave-rec-locate-btn"
                       onClick={() => handleSelectRecommendation(rec)}
                     >
-                      <span>🗺️ View Details & Locate</span>
+                      <span>📍 View Place on Map</span>
                       <span>→</span>
                     </button>
                   </div>
@@ -498,11 +565,14 @@ export default function AiBudgetModal({
               ))}
             </div>
 
-            {/* Budget Tips */}
+            {/* Budget Hacks */}
             {result.budgetTips && result.budgetTips.length > 0 && (
-              <div className="ai-budget-tips-box">
-                <h4 className="tips-title">💡 Dhaka Budget Hacks & Tips</h4>
-                <ul className="tips-list">
+              <div className="crave-hacks-card">
+                <div className="crave-hacks-title">
+                  <span>💡</span>
+                  <span>Dhaka Budget & Food Court Hacks</span>
+                </div>
+                <ul className="crave-hacks-list">
                   {result.budgetTips.map((tip, idx) => (
                     <li key={idx}>{tip}</li>
                   ))}
@@ -510,21 +580,22 @@ export default function AiBudgetModal({
               </div>
             )}
 
-            {/* Apply All Action */}
-            <div className="ai-results-footer">
+            {/* Bottom Controls */}
+            <div className="crave-results-footer">
               <button
                 type="button"
-                className="ai-apply-all-btn"
+                className="crave-apply-all-cta"
                 onClick={handleApplyAll}
               >
                 <span>✨ Apply These {result.recommendations.length} Places to Map & List</span>
               </button>
+
               <button
                 type="button"
-                className="ai-reset-btn"
+                className="crave-retry-btn"
                 onClick={() => setResult(null)}
               >
-                Try Another Budget
+                Try Another Budget or Craving
               </button>
             </div>
           </div>

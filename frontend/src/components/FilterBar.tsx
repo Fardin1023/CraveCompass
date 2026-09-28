@@ -144,17 +144,17 @@ export default function FilterBar({
 
   return (
     <div className="filter-bar" role="toolbar" aria-label="Filter restaurants">
-      {/* ── ✨ Gemini AI Budget Advisor Button ─────────────────── */}
+      {/* ── ✨ CraveAI Budget Concierge Button ─────────────────── */}
       <button
         type="button"
         id="ai-budget-trigger-btn"
         className="filter-chip ai-budget-chip"
         onClick={() => onOpenAiBudget()}
-        title="Input your exact budget in Taka and let Gemini AI find matching meals & food courts"
+        title="Input your budget in Taka and let CraveAI find matching meals & food courts"
       >
         <span className="ai-chip-sparkle">✨</span>
-        <span className="ai-chip-text">AI Budget Advisor</span>
-        <span className="ai-chip-badge">Gemini Free</span>
+        <span className="ai-chip-text">CraveAI Concierge</span>
+        <span className="ai-chip-badge">AI Smart</span>
       </button>
 
       <div className="filter-separator" aria-hidden="true" />
@@ -210,11 +210,11 @@ export default function FilterBar({
               <div className="budget-popover-ai-top">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <span className="ai-sparkle">✨</span>
-                  <span className="budget-ai-title">Ask Gemini AI by Budget</span>
+                  <span className="budget-ai-title">CraveAI™ Budget Finder</span>
                 </div>
-                <span className="budget-ai-badge">Free</span>
+                <span className="budget-ai-badge">Instant AI</span>
               </div>
-              <p className="budget-ai-sub">Type your budget (৳) to get AI meal picks:</p>
+              <p className="budget-ai-sub">Type your budget (৳) for CraveAI recommendations:</p>
               <div className="budget-ai-input-row">
                 <span className="budget-bdt-prefix">৳</span>
                 <input
@@ -232,7 +232,7 @@ export default function FilterBar({
                   id="budget-ai-submit-btn"
                   className="budget-ai-submit-btn"
                 >
-                  Ask AI ✨
+                  Ask CraveAI ✨
                 </button>
               </div>
             </form>

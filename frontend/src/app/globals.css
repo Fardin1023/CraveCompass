@@ -2261,77 +2261,81 @@ a { color: inherit; text-decoration: none; }
 .location-hub-card:hover .location-hub-arrow { transform: translateX(3px); }
 
 /* ═══════════════════════════════════════════════════════════════
-   ✨ Gemini AI Budget Filter & Advisor Component Styles
+   ✨ CraveAI™ Taste & Budget Intelligence Design System
    ═══════════════════════════════════════════════════════════════ */
 
-/* AI Budget Chip on Filter Bar */
+/* CraveAI Chip on Filter Bar */
 .filter-chip.ai-budget-chip {
-  background: linear-gradient(135deg, rgba(252, 143, 0, 0.22) 0%, rgba(174, 21, 13, 0.22) 100%);
-  border: 1.5px solid var(--border-orange);
-  color: var(--cream);
+  background: linear-gradient(135deg, rgba(252, 143, 0, 0.24) 0%, rgba(220, 38, 38, 0.2) 100%);
+  border: 1.5px solid rgba(252, 143, 0, 0.55);
+  color: #fff;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  box-shadow: 0 2px 10px rgba(252, 143, 0, 0.15);
+  gap: 8px;
+  box-shadow: 0 4px 16px rgba(252, 143, 0, 0.22);
   font-weight: 700;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
   transition: all var(--t-fast);
 }
 .filter-chip.ai-budget-chip:hover {
-  background: linear-gradient(135deg, rgba(252, 143, 0, 0.35) 0%, rgba(174, 21, 13, 0.35) 100%);
-  border-color: var(--yellow);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(252, 143, 0, 0.3);
+  background: linear-gradient(135deg, rgba(252, 143, 0, 0.4) 0%, rgba(220, 38, 38, 0.35) 100%);
+  border-color: #fbbf24;
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 6px 22px rgba(252, 143, 0, 0.38);
 }
 .ai-chip-sparkle {
   font-size: 14px;
-  animation: pulse 2s infinite ease-in-out;
+  animation: pulse 1.8s infinite ease-in-out;
 }
 .ai-chip-text {
   font-size: 13px;
-  font-weight: 700;
-  color: var(--cream);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.01em;
 }
 .ai-chip-badge {
   font-size: 9px;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 1px 6px;
-  background: rgba(252, 143, 0, 0.25);
-  border: 1px solid var(--orange);
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  background: rgba(252, 143, 0, 0.3);
+  border: 1px solid rgba(252, 143, 0, 0.6);
   border-radius: var(--radius-pill);
-  color: var(--yellow);
+  color: #fbbf24;
 }
 
-/* Active AI Budget Banner in Main Content */
+/* Active CraveAI Budget Banner */
 .active-ai-budget-banner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 18px;
-  background: linear-gradient(90deg, rgba(252, 143, 0, 0.18) 0%, rgba(174, 21, 13, 0.14) 100%);
-  border-bottom: 1.5px solid var(--border-orange);
-  color: var(--cream);
+  padding: 11px 20px;
+  background: linear-gradient(90deg, rgba(252, 143, 0, 0.2) 0%, rgba(20, 16, 14, 0.95) 100%);
+  border-bottom: 1.5px solid rgba(252, 143, 0, 0.45);
+  color: #fff;
   font-size: 13px;
   animation: fadeIn var(--t-fast) both;
 }
 .active-ai-banner-content {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 10px;
 }
 .active-ai-banner-icon {
   font-size: 16px;
-  color: var(--yellow);
+  color: #fbbf24;
+  animation: bounce 2s infinite ease-in-out;
 }
 
 /* Custom Budget Input Box inside Budget Dropdown Popover */
 .budget-popover-ai-card {
-  padding: 10px;
-  background: linear-gradient(135deg, rgba(252, 143, 0, 0.12) 0%, rgba(20, 20, 20, 0.6) 100%);
-  border: 1px solid var(--border-orange);
+  padding: 12px;
+  background: linear-gradient(145deg, rgba(252, 143, 0, 0.16) 0%, rgba(18, 14, 12, 0.85) 100%);
+  border: 1.5px solid rgba(252, 143, 0, 0.45);
   border-radius: var(--radius-md);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .budget-popover-ai-top {
   display: flex;
@@ -2342,15 +2346,15 @@ a { color: inherit; text-decoration: none; }
 .budget-ai-title {
   font-size: 12px;
   font-weight: 800;
-  color: var(--yellow);
+  color: #fbbf24;
   letter-spacing: 0.02em;
 }
 .budget-ai-badge {
   font-size: 9px;
   font-weight: 800;
-  padding: 1px 6px;
-  background: rgba(52, 211, 153, 0.2);
-  border: 1px solid rgba(52, 211, 153, 0.4);
+  padding: 2px 7px;
+  background: rgba(52, 211, 153, 0.22);
+  border: 1px solid rgba(52, 211, 153, 0.5);
   border-radius: var(--radius-pill);
   color: #34d399;
   text-transform: uppercase;
@@ -2358,8 +2362,8 @@ a { color: inherit; text-decoration: none; }
 .budget-ai-sub {
   font-size: 11px;
   color: var(--text-muted);
-  margin-bottom: 8px;
-  line-height: 1.3;
+  margin-bottom: 9px;
+  line-height: 1.35;
 }
 .budget-ai-input-row {
   display: flex;
@@ -2367,38 +2371,38 @@ a { color: inherit; text-decoration: none; }
   gap: 6px;
 }
 .budget-bdt-prefix {
-  font-size: 14px;
-  font-weight: 800;
+  font-size: 15px;
+  font-weight: 900;
   color: var(--orange);
   padding: 0 4px;
 }
 .budget-ai-input {
   flex: 1;
   min-width: 0;
-  height: 34px;
-  background: var(--bg-base);
+  height: 36px;
+  background: rgba(0, 0, 0, 0.45);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-sm);
-  color: var(--cream);
+  color: #fff;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   padding: 0 10px;
   outline: none;
   transition: all var(--t-fast);
 }
 .budget-ai-input:focus {
   border-color: var(--orange);
-  box-shadow: 0 0 8px rgba(252, 143, 0, 0.3);
+  box-shadow: 0 0 10px rgba(252, 143, 0, 0.4);
 }
 .budget-ai-submit-btn {
-  height: 34px;
-  padding: 0 12px;
+  height: 36px;
+  padding: 0 14px;
   background: var(--gradient-brand);
   border: none;
   border-radius: var(--radius-sm);
-  color: var(--text-inverse);
+  color: #fff;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
   white-space: nowrap;
   box-shadow: var(--shadow-orange);
@@ -2406,7 +2410,7 @@ a { color: inherit; text-decoration: none; }
 }
 .budget-ai-submit-btn:hover {
   transform: translateY(-1px);
-  filter: brightness(1.1);
+  filter: brightness(1.15);
 }
 
 .budget-popover-divider {
@@ -2427,430 +2431,829 @@ a { color: inherit; text-decoration: none; }
 }
 .budget-popover-divider span { padding: 0 8px; }
 
-/* ── AI Budget Modal Dialog ─────────────────────────────────── */
-.ai-budget-modal-card {
+/* ── 🚀 CraveAI Futuristic Modal Card ──────────────────────── */
+.crave-ai-modal-card {
   position: relative;
   width: 100%;
-  max-width: 620px;
-  max-height: 88vh;
+  max-width: 660px;
+  max-height: 90vh;
   overflow-y: auto;
-  background: var(--bg-surface);
-  border: 1.5px solid var(--border-orange);
-  border-radius: var(--radius-xl);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 40px rgba(252, 143, 0, 0.25);
-  padding: 26px 24px;
+  background: radial-gradient(circle at 50% 0%, rgba(35, 25, 18, 0.98) 0%, rgba(14, 11, 10, 0.98) 100%);
+  border: 1.5px solid rgba(255, 140, 0, 0.35);
+  border-radius: 28px;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.9),
+    0 0 60px rgba(252, 143, 0, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  padding: 28px 26px 30px;
   animation: scaleIn var(--t-bounce) both;
+  backdrop-filter: blur(28px);
 }
 
-.ai-modal-header {
-  margin-bottom: 18px;
+/* Ambient glow blobs */
+.crave-ambient-glow {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.25;
+}
+.crave-ambient-glow.orb-1 {
+  top: -40px;
+  left: 20%;
+  width: 220px;
+  height: 220px;
+  background: #ff7a00;
+  animation: pulse 4s infinite alternate ease-in-out;
+}
+.crave-ambient-glow.orb-2 {
+  bottom: 20px;
+  right: 10%;
+  width: 180px;
+  height: 180px;
+  background: #ff3b00;
+  animation: pulse 5s infinite alternate-reverse ease-in-out;
+}
+
+/* Modal Header */
+.crave-ai-header {
+  margin-bottom: 20px;
   text-align: left;
 }
-.ai-badge-header {
+.crave-ai-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 4px 12px;
-  background: rgba(252, 143, 0, 0.15);
-  border: 1px solid var(--border-orange);
+  padding: 5px 14px;
+  background: linear-gradient(135deg, rgba(255, 140, 0, 0.18) 0%, rgba(255, 60, 0, 0.14) 100%);
+  border: 1px solid rgba(255, 140, 0, 0.45);
   border-radius: var(--radius-pill);
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--yellow);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 10px rgba(255, 140, 0, 0.15);
 }
-.ai-sparkle-icon { font-size: 13px; }
-.ai-free-tier-pill {
-  font-size: 9px;
-  font-weight: 800;
-  padding: 1px 6px;
-  background: rgba(52, 211, 153, 0.2);
-  border: 1px solid rgba(52, 211, 153, 0.4);
-  border-radius: var(--radius-pill);
-  color: #34d399;
-  text-transform: uppercase;
+.crave-ai-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: pulse 1.5s infinite;
 }
-.ai-modal-title {
-  font-size: 22px;
-  font-weight: 800;
-  color: var(--cream);
-  line-height: 1.25;
-  margin-bottom: 6px;
-}
-.ai-modal-subtitle {
+.crave-ai-sparkle {
   font-size: 13px;
-  color: var(--text-muted);
-  line-height: 1.45;
 }
-
-/* AI Modal Form Elements */
-.ai-modal-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.ai-form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
-.ai-input-label {
+.crave-ai-brand {
   font-size: 12px;
-  font-weight: 700;
-  color: var(--text-secondary);
-  text-transform: uppercase;
+  font-weight: 900;
+  background: linear-gradient(135deg, #fff 0%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   letter-spacing: 0.04em;
 }
-.ai-presets-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 7px;
+.crave-ai-tagline {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
 }
-.ai-preset-btn {
+
+.crave-ai-title {
+  font-size: 26px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+.crave-ai-subtitle {
+  font-size: 13px;
+  color: #a3a3a3;
+  line-height: 1.5;
+  max-width: 580px;
+}
+
+/* Modal Form Structure */
+.crave-ai-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.crave-form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.crave-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.crave-section-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: #d4d4d4;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.crave-section-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Preset Cards Grid */
+.crave-presets-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+@media (max-width: 600px) {
+  .crave-presets-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.crave-preset-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 8px 6px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
+  justify-content: center;
+  padding: 10px 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
   cursor: pointer;
   transition: all var(--t-fast);
   text-align: center;
 }
-.ai-preset-btn:hover {
-  background: var(--bg-glass-hover);
-  border-color: var(--border-orange);
+.crave-preset-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 140, 0, 0.45);
+  transform: translateY(-2px);
+}
+.crave-preset-card.active {
+  background: linear-gradient(145deg, rgba(252, 143, 0, 0.2) 0%, rgba(220, 38, 38, 0.15) 100%);
+  border-color: #ff9900;
+  box-shadow: 0 0 16px rgba(255, 153, 0, 0.28);
+}
+.crave-preset-icon {
+  font-size: 18px;
+  margin-bottom: 3px;
+}
+.crave-preset-amount {
+  font-size: 14px;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+.crave-preset-card.active .crave-preset-amount {
+  color: #fbbf24;
+}
+.crave-preset-tag {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-top: 1px;
+}
+
+/* ── ⚡ Hero Interactive Budget Input Cockpit ─────────────── */
+.crave-budget-hero-box {
+  padding: 20px 22px;
+  background: linear-gradient(145deg, rgba(28, 22, 17, 0.95) 0%, rgba(16, 12, 10, 0.98) 100%);
+  border: 1.5px solid rgba(255, 140, 0, 0.35);
+  border-radius: 20px;
+  box-shadow:
+    inset 0 2px 10px rgba(0, 0, 0, 0.6),
+    0 8px 24px rgba(0, 0, 0, 0.3);
+}
+.crave-budget-hero-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.crave-budget-hero-label {
+  font-size: 11px;
+  font-weight: 900;
+  color: #a3a3a3;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.crave-per-person-pill {
+  font-size: 12px;
+  font-weight: 800;
+  padding: 3px 10px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-pill);
+}
+
+.crave-budget-input-cockpit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.crave-step-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all var(--t-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.crave-step-btn:hover {
+  background: rgba(255, 140, 0, 0.2);
+  border-color: #ff9900;
+  color: #fbbf24;
   transform: translateY(-1px);
 }
-.ai-preset-btn.active {
-  background: rgba(252, 143, 0, 0.16);
-  border-color: var(--orange);
-  box-shadow: 0 0 12px rgba(252, 143, 0, 0.2);
+.crave-step-btn:active {
+  transform: translateY(0);
 }
-.ai-preset-icon { font-size: 16px; margin-bottom: 2px; }
-.ai-preset-amount { font-size: 13px; font-weight: 800; color: var(--cream); }
-.ai-preset-btn.active .ai-preset-amount { color: var(--yellow); }
-.ai-preset-tag { font-size: 10px; color: var(--text-muted); }
 
-.ai-input-wrapper {
+.crave-budget-input-display {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1.5px solid rgba(255, 140, 0, 0.25);
+  border-radius: 16px;
+  transition: border-color var(--t-fast);
+}
+.crave-budget-input-display:focus-within {
+  border-color: #ff9900;
+  box-shadow: 0 0 20px rgba(255, 140, 0, 0.25);
+}
+.crave-taka-sign {
+  font-size: 32px;
+  font-weight: 900;
+  color: #ff9900;
+  user-select: none;
+}
+.crave-budget-number-input {
+  width: 140px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 36px;
+  font-weight: 900;
+  color: #fff;
+  text-align: center;
+  letter-spacing: -0.02em;
+  font-family: inherit;
+  -moz-appearance: textfield;
+}
+.crave-budget-number-input::-webkit-outer-spin-button,
+.crave-budget-number-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.crave-taka-unit {
+  font-size: 12px;
+  font-weight: 800;
+  color: #a3a3a3;
+  padding: 2px 7px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  user-select: none;
+}
+
+.crave-tier-indicator-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  padding-top: 4px;
+}
+.crave-tier-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px currentColor;
+}
+.crave-tier-text {
+  letter-spacing: 0.01em;
+}
+
+/* Party Size Cards */
+.crave-party-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.crave-party-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--t-fast);
+  text-align: left;
+}
+.crave-party-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 140, 0, 0.35);
+}
+.crave-party-card.active {
+  background: linear-gradient(135deg, rgba(255, 140, 0, 0.18) 0%, rgba(220, 38, 38, 0.12) 100%);
+  border-color: #ff9900;
+  box-shadow: 0 0 16px rgba(255, 153, 0, 0.22);
+}
+.crave-party-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.crave-party-info {
+  display: flex;
+  flex-direction: column;
+}
+.crave-party-name {
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+}
+.crave-party-card.active .crave-party-name {
+  color: #fbbf24;
+}
+.crave-party-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Craving & Vibe Input */
+.crave-craving-input-wrapper {
   position: relative;
   display: flex;
   align-items: center;
+  margin-bottom: 6px;
 }
-.ai-currency-symbol {
+.crave-search-lens {
   position: absolute;
-  left: 12px;
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--orange);
+  left: 14px;
+  font-size: 14px;
+  color: var(--text-muted);
   pointer-events: none;
 }
-.ai-text-input {
+.crave-craving-text-input {
   width: 100%;
   height: 42px;
-  padding: 0 14px 0 32px;
-  background: var(--bg-elevated);
-  border: 1.5px solid var(--border-default);
-  border-radius: var(--radius-md);
-  color: var(--cream);
-  font-size: 15px;
-  font-weight: 700;
+  padding: 0 36px 0 38px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-lg);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
   outline: none;
   transition: all var(--t-fast);
 }
-.ai-text-input:focus {
-  border-color: var(--orange);
-  box-shadow: 0 0 12px rgba(252, 143, 0, 0.25);
+.crave-craving-text-input:focus {
+  border-color: #ff9900;
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 14px rgba(255, 153, 0, 0.25);
 }
-
-.ai-party-selector {
-  display: flex;
-  gap: 8px;
-}
-.ai-party-btn {
-  flex: 1;
-  padding: 8px 10px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  color: var(--text-secondary);
+.crave-craving-clear-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
   font-size: 12px;
-  font-weight: 700;
   cursor: pointer;
-  transition: all var(--t-fast);
 }
-.ai-party-btn:hover {
-  background: var(--bg-glass-hover);
-  border-color: var(--border-orange);
-}
-.ai-party-btn.active {
-  background: rgba(252, 143, 0, 0.16);
-  border-color: var(--orange);
-  color: var(--yellow);
-}
+.crave-craving-clear-btn:hover { color: #fff; }
 
-.ai-craving-chips {
+.crave-craving-tags-list {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
 }
-.ai-craving-chip {
-  padding: 5px 11px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-subtle);
+.crave-craving-pill {
+  padding: 5px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-pill);
   font-size: 11px;
-  font-weight: 600;
-  color: var(--text-secondary);
+  font-weight: 700;
+  color: #d4d4d4;
   cursor: pointer;
   transition: all var(--t-fast);
 }
-.ai-craving-chip:hover {
-  border-color: var(--orange);
-  color: var(--cream);
+.crave-craving-pill:hover {
+  background: rgba(255, 140, 0, 0.15);
+  border-color: #ff9900;
+  color: #fff;
+  transform: translateY(-1px);
 }
-.ai-craving-chip.active {
-  background: rgba(252, 143, 0, 0.2);
-  border-color: var(--orange);
-  color: var(--yellow);
+.crave-craving-pill.active {
+  background: linear-gradient(135deg, rgba(255, 140, 0, 0.3) 0%, rgba(255, 60, 0, 0.25) 100%);
+  border-color: #ff9900;
+  color: #fbbf24;
+  box-shadow: 0 0 10px rgba(255, 153, 0, 0.3);
 }
 
-/* Optional API Key Section */
-.ai-api-toggle {
+/* Optional Key Drawer */
+.crave-advanced-section {
+  padding-top: 4px;
+}
+.crave-advanced-toggle {
   background: none;
   border: none;
   color: var(--text-muted);
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 4px 0;
-  text-align: left;
+  gap: 6px;
+  padding: 0;
+  transition: color var(--t-fast);
 }
-.ai-api-toggle:hover { color: var(--cream); }
-.ai-api-box {
-  padding: 10px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-subtle);
+.crave-advanced-toggle:hover { color: #fff; }
+.crave-key-drawer {
+  margin-top: 8px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-md);
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
+}
+.crave-key-help {
   font-size: 11px;
   color: var(--text-muted);
+  line-height: 1.4;
+  margin: 0;
 }
-.ai-api-box a { color: var(--orange); text-decoration: underline; }
-.ai-api-input {
-  height: 32px;
-  padding: 0 10px;
-  background: var(--bg-base);
-  border: 1px solid var(--border-default);
+.crave-key-row {
+  display: flex;
+  gap: 8px;
+}
+.crave-key-input {
+  flex: 1;
+  height: 34px;
+  padding: 0 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-sm);
-  color: var(--cream);
+  color: #fff;
   font-size: 12px;
   outline: none;
 }
-
-/* Submit & Loading */
-.ai-submit-btn {
-  height: 44px;
-  width: 100%;
-  background: var(--gradient-brand);
-  border: none;
-  border-radius: var(--radius-md);
-  color: var(--text-inverse);
-  font-size: 14px;
-  font-weight: 800;
+.crave-key-clear {
+  padding: 0 12px;
+  background: rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(220, 38, 38, 0.4);
+  color: #ff8888;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  box-shadow: var(--shadow-orange);
+}
+
+/* Error box */
+.crave-error-alert {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(220, 38, 38, 0.5);
+  border-radius: var(--radius-md);
+  color: #ff9999;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ── 🚀 Hero Submit CTA Button ──────────────────────────────── */
+.crave-submit-cta {
+  width: 100%;
+  height: 50px;
+  background: linear-gradient(135deg, #ff7a00 0%, #ff4500 50%, #e62e00 100%);
+  border: none;
+  border-radius: var(--radius-lg);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(255, 90, 0, 0.45);
+  transition: all var(--t-fast);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  transition: all var(--t-fast);
+  overflow: hidden;
+  position: relative;
 }
-.ai-submit-btn:hover:not(:disabled) {
+.crave-submit-cta:hover:not(:disabled) {
   transform: translateY(-2px);
   filter: brightness(1.1);
-  box-shadow: 0 8px 24px rgba(252, 143, 0, 0.5);
+  box-shadow: 0 14px 38px rgba(255, 90, 0, 0.6);
 }
-.ai-submit-btn:disabled {
-  opacity: 0.6;
+.crave-submit-cta:disabled {
+  opacity: 0.7;
   cursor: not-allowed;
 }
 
-.ai-loading-container {
+.crave-cta-content {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 24px 16px;
-  text-align: center;
-  gap: 12px;
+  gap: 8px;
 }
-.ai-loading-spinner {
-  width: 36px;
-  height: 36px;
-  border: 3px solid rgba(252, 143, 0, 0.2);
-  border-top-color: var(--orange);
+.cta-sparkle {
+  font-size: 16px;
+  animation: pulse 1.5s infinite;
+}
+.cta-text strong {
+  color: #ffe066;
+}
+.cta-arrow {
+  font-size: 16px;
+  transition: transform var(--t-fast);
+}
+.crave-submit-cta:hover .cta-arrow {
+  transform: translateX(4px);
+}
+
+.crave-loading-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.crave-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
-.ai-loading-msg {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--cream);
-  animation: fadeIn 0.4s ease-in-out;
-}
 
-/* AI Recommendation Results Section */
-.ai-results-card {
-  margin-top: 18px;
+/* ── 🎯 CraveAI Results Presentation ───────────────────────── */
+.crave-results-container {
+  margin-top: 22px;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  animation: fadeIn var(--t-base) both;
+  animation: fadeIn 0.4s ease-in-out;
 }
-.ai-summary-box {
-  padding: 12px 14px;
-  background: rgba(252, 143, 0, 0.12);
-  border: 1px solid var(--border-orange);
-  border-radius: var(--radius-md);
+
+.crave-results-overview {
+  padding: 16px 18px;
+  background: linear-gradient(135deg, rgba(255, 140, 0, 0.16) 0%, rgba(18, 14, 12, 0.9) 100%);
+  border: 1.5px solid rgba(255, 140, 0, 0.45);
+  border-radius: var(--radius-xl);
+}
+.crave-results-badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.crave-intel-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 900;
+  color: #fbbf24;
+}
+.crave-budget-capsule {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 9px;
+  background: rgba(255, 140, 0, 0.2);
+  border: 1px solid rgba(255, 140, 0, 0.4);
+  border-radius: var(--radius-pill);
+  color: #ffd166;
+}
+.crave-analysis-text {
   font-size: 13px;
+  color: #f5f5f5;
   line-height: 1.45;
-  color: var(--cream);
+  margin-bottom: 12px;
 }
-.ai-recs-list {
+.crave-stat-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.crave-stat-chip {
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  color: #d4d4d4;
+}
+.crave-stat-chip.highlight {
+  background: rgba(52, 211, 153, 0.18);
+  border-color: rgba(52, 211, 153, 0.4);
+  color: #34d399;
+}
+
+/* Recommendations Cards Grid */
+.crave-recs-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.crave-rec-card {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid rgba(255, 255, 255, 0.09);
+  border-radius: var(--radius-xl);
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-.ai-rec-card {
-  padding: 12px 14px;
-  background: var(--bg-elevated);
-  border: 1.5px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
   transition: all var(--t-fast);
 }
-.ai-rec-card:hover {
-  border-color: var(--border-orange);
-  transform: translateY(-1px);
+.crave-rec-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 140, 0, 0.45);
+  transform: translateY(-2px);
 }
-.ai-rec-header {
+.crave-rec-card-top {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 8px;
+  gap: 12px;
 }
-.ai-rec-name {
-  font-size: 15px;
-  font-weight: 800;
-  color: var(--cream);
+.crave-rec-meta {
+  flex: 1;
 }
-.ai-rec-tag {
+.crave-rec-budget-tag {
+  display: inline-block;
   font-size: 10px;
   font-weight: 800;
+  text-transform: uppercase;
   padding: 2px 8px;
-  background: rgba(252, 143, 0, 0.2);
-  border: 1px solid var(--border-orange);
+  background: rgba(255, 140, 0, 0.22);
+  border: 1px solid rgba(255, 140, 0, 0.45);
   border-radius: var(--radius-pill);
-  color: var(--yellow);
-  white-space: nowrap;
+  color: #fbbf24;
+  margin-bottom: 4px;
 }
-.ai-rec-meta {
+.crave-rec-name {
+  font-size: 16px;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 2px;
+}
+.crave-rec-sub {
   font-size: 11px;
   color: var(--text-muted);
-}
-.ai-rec-order-box {
-  padding: 8px 10px;
-  background: var(--bg-base);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
 }
-.ai-rec-order-text {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--cream);
+
+.crave-rec-cost-badge {
+  text-align: right;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(52, 211, 153, 0.3);
 }
-.ai-rec-order-cost {
-  font-size: 13px;
+.cost-label {
+  display: block;
+  font-size: 9px;
+  text-transform: uppercase;
+  color: var(--text-muted);
   font-weight: 800;
+}
+.cost-val {
+  font-size: 15px;
+  font-weight: 900;
   color: #34d399;
-  white-space: nowrap;
 }
-.ai-rec-reason {
+
+/* Suggested combo box */
+.crave-combo-box {
+  padding: 10px 14px;
+  background: linear-gradient(135deg, rgba(255, 140, 0, 0.12) 0%, rgba(20, 16, 14, 0.6) 100%);
+  border: 1px solid rgba(255, 140, 0, 0.28);
+  border-radius: var(--radius-md);
+}
+.crave-combo-header {
+  font-size: 11px;
+  font-weight: 800;
+  color: #fbbf24;
+  margin-bottom: 2px;
+}
+.crave-combo-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+}
+.crave-rec-rationale {
   font-size: 12px;
-  color: var(--text-secondary);
-  line-height: 1.35;
+  color: #a3a3a3;
+  line-height: 1.4;
+  margin: 0;
 }
-.ai-rec-actions {
+.crave-rec-rationale strong {
+  color: #d4d4d4;
+}
+
+.crave-rec-btn-row {
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
-  margin-top: 4px;
+  padding-top: 4px;
 }
-.ai-rec-select-btn {
-  padding: 6px 14px;
-  background: var(--bg-glass);
-  border: 1px solid var(--border-default);
+.crave-rec-locate-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-pill);
-  color: var(--cream);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all var(--t-fast);
+}
+.crave-rec-locate-btn:hover {
+  background: var(--gradient-brand);
+  border-color: transparent;
+  transform: translateY(-1px);
+}
+
+/* Budget Hacks Box */
+.crave-hacks-card {
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid #ff9900;
+  border-radius: var(--radius-md);
+}
+.crave-hacks-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #fbbf24;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.crave-hacks-list {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 12px;
+  color: #a3a3a3;
+  line-height: 1.5;
+}
+
+/* Bottom Apply & Reset */
+.crave-results-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 6px;
+}
+.crave-apply-all-cta {
+  width: 100%;
+  height: 48px;
+  background: var(--gradient-brand);
+  border: none;
+  border-radius: var(--radius-lg);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 8px 26px rgba(255, 90, 0, 0.4);
+  transition: all var(--t-fast);
+}
+.crave-apply-all-cta:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.12);
+}
+.crave-retry-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
-  transition: all var(--t-fast);
+  padding: 6px;
 }
-.ai-rec-select-btn:hover {
-  background: var(--gradient-brand);
-  border-color: transparent;
-  color: var(--text-inverse);
-}
+.crave-retry-btn:hover { color: #fff; }
 
-.ai-tips-card {
-  padding: 10px 14px;
-  background: var(--bg-elevated);
-  border-radius: var(--radius-md);
-  border-left: 3px solid var(--orange);
-}
-.ai-tips-title {
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-  color: var(--orange);
-  margin-bottom: 4px;
-}
-.ai-tips-list {
-  margin: 0;
-  padding-left: 18px;
-  font-size: 12px;
-  color: var(--text-secondary);
-  line-height: 1.4;
-}
-
-.ai-apply-all-btn {
-  width: 100%;
-  height: 42px;
-  background: var(--gradient-brand);
-  border: none;
-  border-radius: var(--radius-md);
-  color: var(--text-inverse);
-  font-size: 14px;
-  font-weight: 800;
-  cursor: pointer;
-  box-shadow: var(--shadow-orange);
-  transition: all var(--t-fast);
-}
-.ai-apply-all-btn:hover {
-  transform: translateY(-1px);
-  filter: brightness(1.1);
-}

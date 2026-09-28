@@ -445,13 +445,13 @@ export default function HomePage() {
         onOpenAiBudget={handleOpenAiBudgetWithInitial}
       />
 
-      {/* ── Active AI Budget Banner ──────────────────────────── */}
+      {/* ── Active CraveAI Budget Banner ──────────────────────── */}
       {aiBudgetText && (
         <div className="active-ai-budget-banner">
           <div className="active-ai-banner-content">
-            <span className="active-ai-banner-icon">✨</span>
+            <span className="active-ai-banner-icon">⚡</span>
             <span>
-              Gemini AI Suggestions: <strong>{aiBudgetText}</strong> ({displayPlaces.length} places recommended)
+              CraveAI Recommendations: <strong>{aiBudgetText}</strong> ({displayPlaces.length} places found)
             </span>
           </div>
           <button
@@ -460,7 +460,7 @@ export default function HomePage() {
               setAiBudgetText(null);
               setAiCustomResults(null);
             }}
-            aria-label="Clear AI budget recommendations"
+            aria-label="Clear CraveAI budget recommendations"
           >
             ✕ Reset
           </button>
@@ -515,7 +515,7 @@ export default function HomePage() {
           <div className="sidebar-header">
             <div className="sidebar-title">
               {aiBudgetText
-                ? '✨ AI Budget Recommendations'
+                ? '⚡ CraveAI Recommendations'
                 : activeCuisine
                 ? `${CUISINE_LABELS[activeCuisine] ?? activeCuisine} Spots`
                 : hasSearched
@@ -554,7 +554,7 @@ export default function HomePage() {
                 </div>
                 <div className="empty-state-message">
                   {aiBudgetText
-                    ? 'Try increasing your budget amount or click "AI Budget Advisor" above.'
+                    ? 'Try adjusting your budget or click "CraveAI Concierge" above.'
                     : activeCuisine
                     ? 'Try a different cuisine or clear the filter.'
                     : hasSearched
@@ -677,7 +677,7 @@ export default function HomePage() {
           setAiCustomResults(places);
           setAiBudgetText(text);
           if (places.length > 0) setSelectedPlace(places[0]);
-          showToast(`Applied ${places.length} AI budget picks!`, '✨');
+          showToast(`Applied ${places.length} CraveAI picks!`, '⚡');
         }}
       />
 
