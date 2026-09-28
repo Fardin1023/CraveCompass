@@ -149,3 +149,30 @@ export interface ActiveFilters {
   cuisine?: string[];
   sortBy: 'distance' | 'rating' | 'popularity';
 }
+
+export interface AiBudgetRecommendation {
+  placeId?: string;
+  name: string;
+  cuisine: string;
+  rating?: number;
+  priceLevel?: number;
+  estimatedCost: string;
+  suggestedOrder: string;
+  reason: string;
+  budgetTag: string;
+  address?: string;
+  primaryPhoto?: string;
+  fullPlace?: Place;
+}
+
+export interface AiBudgetResponse {
+  success: boolean;
+  source: 'gemini' | 'fallback';
+  budgetAnalysis: string;
+  totalBudget: number;
+  perPersonBudget: number;
+  partySize: number;
+  recommendations: AiBudgetRecommendation[];
+  budgetTips: string[];
+}
+

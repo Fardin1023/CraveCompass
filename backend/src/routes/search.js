@@ -12,6 +12,15 @@ const router = express.Router();
  * POST /api/search
  * Natural language search with query parsing
  */
+function escapeRegex(text) {
+  if (!text || typeof text !== 'string') return '';
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+}
+
+/**
+ * POST /api/search
+ * Natural language search with query parsing and name matching
+ */
 router.post(
   '/',
   [
@@ -34,7 +43,7 @@ router.post(
         lat,
         lng,
         radius = 25000,
-        limit = 20,
+        limit = 30,
         page = 1,
         priceLevel,
         openNow,
@@ -46,41 +55,51 @@ router.post(
 
       const parsed = parseQuery(q);
       const skip = (parseInt(page) - 1) * parseInt(limit);
-
-      // MongoDB: $near and $text cannot be used together.
-      // Strategy: use $geoWithin for spatial filter, then apply text/cuisine filters.
       const hasGeo = lat !== undefined && lng !== undefined;
       const _lat = lat ? parseFloat(lat) : undefined;
       const _lng = lng ? parseFloat(lng) : undefined;
       const _radius = parseInt(radius);
 
-      // Build base filter
+      // Build filter
       const baseFilter = {};
       const orConditions = [];
 
-      if (parsed.cuisines && parsed.cuisines.length > 0) {
+      const cleanQ = (q || '').trim();
+
+      if (cleanQ) {
+        const escapedQ = escapeRegex(cleanQ);
+        const qRegex = new RegExp(escapedQ, 'i');
+
+        // High-priority matches on restaurant name
         orConditions.push(
-          { cuisine: { $in: parsed.cuisines } },
-          { tags: { $in: parsed.cuisines } },
-          { categories: { $in: parsed.cuisines.map((c) => new RegExp(c, 'i')) } },
-          { name: { $in: parsed.cuisines.map((c) => new RegExp(c, 'i')) } }
+          { name: qRegex },
+          { cuisine: qRegex },
+          { tags: qRegex },
+          { categories: qRegex },
+          { 'address.formatted': qRegex },
+          { 'address.street': qRegex },
+          { 'address.city': qRegex }
         );
+
+        // Individual word terms in name or cuisine (for "Star Kabab" -> "Star", "Kabab")
+        const terms = cleanQ.split(/\s+/).filter((t) => t.length > 1);
+        terms.forEach((term) => {
+          const escapedTerm = escapeRegex(term);
+          orConditions.push({ name: new RegExp(escapedTerm, 'i') });
+          orConditions.push({ cuisine: new RegExp(escapedTerm, 'i') });
+          orConditions.push({ tags: new RegExp(escapedTerm, 'i') });
+        });
       }
 
-      if (q && q.trim()) {
-        const cleanQ = q.trim();
-        const terms = cleanQ.split(/\s+/).filter((t) => t.length > 1);
-        orConditions.push(
-          { name: new RegExp(cleanQ, 'i') },
-          { cuisine: new RegExp(cleanQ, 'i') },
-          { tags: new RegExp(cleanQ, 'i') },
-          { categories: new RegExp(cleanQ, 'i') },
-          { 'address.formatted': new RegExp(cleanQ, 'i') },
-          { 'address.city': new RegExp(cleanQ, 'i') }
-        );
-        terms.forEach((term) => {
-          orConditions.push({ name: new RegExp(term, 'i') });
-          orConditions.push({ cuisine: new RegExp(term, 'i') });
+      if (parsed.cuisines && parsed.cuisines.length > 0) {
+        parsed.cuisines.forEach((c) => {
+          const cRegex = new RegExp(escapeRegex(c), 'i');
+          orConditions.push(
+            { cuisine: c },
+            { tags: c },
+            { categories: cRegex },
+            { name: cRegex }
+          );
         });
       }
 
@@ -103,9 +122,10 @@ router.post(
       const ratingThreshold = minRating ? parseFloat(minRating) : parsed.rating;
       if (ratingThreshold) baseFilter.rating = { $gte: ratingThreshold };
 
-      // Add geo bounding box if available
-      if (hasGeo) {
-        const earthRadius = 6371000; // meters
+      // When searching by name/text, search city-wide so places aren't cut off by small radius.
+      // Only apply spatial bounding box if user did NOT provide a specific search text query.
+      if (hasGeo && !cleanQ) {
+        const earthRadius = 6371000;
         const latDelta = (_radius / earthRadius) * (180 / Math.PI);
         const lngDelta = (_radius / earthRadius) * (180 / Math.PI) / Math.cos((_lat * Math.PI) / 180);
         baseFilter.location = {
@@ -120,38 +140,27 @@ router.post(
 
       let places = await Place.find(baseFilter)
         .skip(skip)
-        .limit(parseInt(limit))
+        .limit(parseInt(limit) * 2)
         .lean();
 
-      // If geo bounding box yielded 0 results, retry without geo restriction (e.g. testing outside Dhaka)
-      if (places.length === 0 && hasGeo) {
+      // If spatial bounding box yielded 0 results, retry without geo restriction
+      if (places.length === 0 && baseFilter.location) {
         const fallbackFilter = { ...baseFilter };
         delete fallbackFilter.location;
         places = await Place.find(fallbackFilter)
           .skip(skip)
-          .limit(parseInt(limit))
+          .limit(parseInt(limit) * 2)
           .lean();
       }
 
-      // Sort by distance client-side when geo available
-      if (hasGeo && places.length > 0) {
-        places = places.sort((a, b) => {
-          const distA = Math.pow(a.location.coordinates[0] - _lng, 2) + Math.pow(a.location.coordinates[1] - _lat, 2);
-          const distB = Math.pow(b.location.coordinates[0] - _lng, 2) + Math.pow(b.location.coordinates[1] - _lat, 2);
-          return distA - distB;
-        });
-      }
-
-      let total = await Place.countDocuments(baseFilter);
-
-      // If insufficient local results, discover live from OpenStreetMap (100% Free & Keyless)
-      if (places.length < 5 && lat && lng) {
+      // Live discovery from OpenStreetMap if fewer than 3 results
+      if (places.length < 3 && hasGeo) {
         try {
-          const keyword = parsed.cuisines.join(' ') || q;
+          const keyword = cleanQ || parsed.cuisines?.join(' ') || '';
           const osmResults = await searchOsmNearby({
-            lat: parseFloat(lat),
-            lng: parseFloat(lng),
-            radius: parseInt(radius),
+            lat: _lat,
+            lng: _lng,
+            radius: Math.max(_radius, 6000),
             limit: parseInt(limit),
             keyword,
           });
@@ -166,43 +175,55 @@ router.post(
               );
             });
             await Promise.allSettled(upsertPromises);
-            places = await Place.find(baseFilter).limit(parseInt(limit)).lean();
-            total = await Place.countDocuments(baseFilter);
+
+            // Re-query without strict bounding box to capture new items
+            const relaxedFilter = { ...baseFilter };
+            delete relaxedFilter.location;
+            places = await Place.find(relaxedFilter).limit(parseInt(limit) * 2).lean();
           }
         } catch (osmErr) {
           console.warn('OpenStreetMap search discovery failed:', osmErr.message);
         }
       }
 
-      // If still insufficient local results and Google key is available, fetch from Google
-      if (places.length < 5 && lat && lng && process.env.GOOGLE_PLACES_API_KEY && process.env.GOOGLE_PLACES_API_KEY !== 'YOUR_GOOGLE_PLACES_API_KEY_HERE') {
-        try {
-          const keyword = parsed.cuisines.join(' ') || q;
-          const googleResults = await searchNearby({
-            lat: parseFloat(lat),
-            lng: parseFloat(lng),
-            radius: parseInt(radius),
-            keyword,
-          });
+      // Ranking & Sorting:
+      // 1. Direct name match (starts with or includes query)
+      // 2. Proximity to user if coordinates available
+      if (cleanQ || hasGeo) {
+        const lowerQ = cleanQ.toLowerCase();
+        places.sort((a, b) => {
+          const aName = (a.name || '').toLowerCase();
+          const bName = (b.name || '').toLowerCase();
 
-          const upsertPromises = (googleResults.results || []).map(async (gPlace) => {
-            const transformed = transformGooglePlace(gPlace);
-            return Place.findOneAndUpdate(
-              { googlePlaceId: transformed.googlePlaceId },
-              { $set: transformed },
-              { upsert: true, new: true, setDefaultsOnInsert: true }
-            );
-          });
+          if (lowerQ) {
+            const aExact = aName === lowerQ;
+            const bExact = bName === lowerQ;
+            if (aExact && !bExact) return -1;
+            if (!aExact && bExact) return 1;
 
-          await Promise.allSettled(upsertPromises);
+            const aStarts = aName.startsWith(lowerQ);
+            const bStarts = bName.startsWith(lowerQ);
+            if (aStarts && !bStarts) return -1;
+            if (!aStarts && bStarts) return 1;
 
-          // Re-query DB after caching
-          places = await Place.find(baseFilter).limit(parseInt(limit)).lean();
-          total = await Place.countDocuments(baseFilter);
-        } catch (googleErr) {
-          console.warn('Google Places fetch failed, serving from DB only:', googleErr.message);
-        }
+            const aContains = aName.includes(lowerQ);
+            const bContains = bName.includes(lowerQ);
+            if (aContains && !bContains) return -1;
+            if (!aContains && bContains) return 1;
+          }
+
+          if (hasGeo && a.location?.coordinates && b.location?.coordinates) {
+            const distA = Math.pow(a.location.coordinates[0] - _lng, 2) + Math.pow(a.location.coordinates[1] - _lat, 2);
+            const distB = Math.pow(b.location.coordinates[0] - _lng, 2) + Math.pow(b.location.coordinates[1] - _lat, 2);
+            return distA - distB;
+          }
+
+          return (b.rating || 0) - (a.rating || 0);
+        });
       }
+
+      const total = places.length;
+      const paginatedPlaces = places.slice(0, parseInt(limit));
 
       // Log search history
       try {
@@ -210,8 +231,8 @@ router.post(
           sessionId: req.headers['x-session-id'] || 'anonymous',
           query: q,
           parsedIntent: parsed,
-          location: lat && lng
-            ? { type: 'Point', coordinates: [parseFloat(lng), parseFloat(lat)] }
+          location: hasGeo
+            ? { type: 'Point', coordinates: [_lng, _lat] }
             : undefined,
           resultsCount: total,
         });
@@ -224,8 +245,8 @@ router.post(
         total,
         page: parseInt(page),
         limit: parseInt(limit),
-        pages: Math.ceil(total / parseInt(limit)),
-        results: places,
+        pages: Math.ceil(total / parseInt(limit)) || 1,
+        results: paginatedPlaces,
       });
     } catch (err) {
       console.error('Search error:', err);
@@ -243,26 +264,42 @@ router.get('/suggestions', async (req, res) => {
     const { q = '' } = req.query;
     if (!q || q.length < 2) return res.json({ suggestions: [] });
 
-    const regex = new RegExp(q.trim(), 'i');
+    const escaped = escapeRegex(q.trim());
+    const regex = new RegExp(escaped, 'i');
     const places = await Place.find(
       {
         $or: [
           { name: regex },
           { cuisine: regex },
           { tags: regex },
+          { 'address.street': regex },
+          { 'address.city': regex },
         ],
       },
-      { name: 1, 'address.city': 1, cuisine: 1, rating: 1 }
+      { name: 1, 'address.city': 1, 'address.formatted': 1, cuisine: 1, rating: 1, priceLevel: 1 }
     )
-      .limit(8)
+      .limit(10)
       .lean();
+
+    // Sort direct name matches first
+    const lowerQ = q.trim().toLowerCase();
+    places.sort((a, b) => {
+      const aName = (a.name || '').toLowerCase();
+      const bName = (b.name || '').toLowerCase();
+      const aStarts = aName.startsWith(lowerQ);
+      const bStarts = bName.startsWith(lowerQ);
+      if (aStarts && !bStarts) return -1;
+      if (!aStarts && bStarts) return 1;
+      return 0;
+    });
 
     const suggestions = places.map((p) => ({
       id: p._id,
       name: p.name,
-      city: p.address?.city,
-      cuisine: p.cuisine?.[0],
+      city: p.address?.city || p.address?.formatted || 'Dhaka',
+      cuisine: Array.isArray(p.cuisine) ? p.cuisine[0] : p.cuisine,
       rating: p.rating,
+      priceLevel: p.priceLevel,
     }));
 
     res.json({ suggestions });

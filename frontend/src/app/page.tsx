@@ -14,6 +14,7 @@ import AuthModal from '@/components/AuthModal';
 import UserProfileModal from '@/components/UserProfileModal';
 import FavoritesModal from '@/components/FavoritesModal';
 import LocationModal from '@/components/LocationModal';
+import AiBudgetModal from '@/components/AiBudgetModal';
 import { reverseGeocode } from '@/lib/api';
 import type { Place, ActiveFilters } from '@/types';
 
@@ -69,6 +70,11 @@ export default function HomePage() {
   const [toast, setToast]                     = useState<{ message: string; icon: string } | null>(null);
   const [locationModalOpen, setLocationModalOpen] = useState(false);
   const [customCoords, setCustomCoords]       = useState<{ lat: number; lng: number } | null>(null);
+
+  // Gemini AI Budget Advisor States
+  const [aiBudgetModalOpen, setAiBudgetModalOpen]     = useState(false);
+  const [aiBudgetText, setAiBudgetText]               = useState<string | null>(null);
+  const [aiCustomResults, setAiCustomResults]         = useState<Place[] | null>(null);
 
   // Active coordinates: real GPS or selected Dhaka hub
   const activeCoords = coords || customCoords || null;
@@ -138,6 +144,8 @@ export default function HomePage() {
     (cuisine: string | null) => {
       setActiveCuisine(cuisine);
       setSelectedPlace(null);
+      setAiCustomResults(null);
+      setAiBudgetText(null);
       const loc = activeCoords || DHAKA_DEFAULT;
       if (!cuisine) {
         // Clear cuisine filter → show all nearby
@@ -154,6 +162,8 @@ export default function HomePage() {
     (q: string) => {
       if (searchDebounceRef.current) clearTimeout(searchDebounceRef.current);
       setActiveCuisine(null);
+      setAiCustomResults(null);
+      setAiBudgetText(null);
       const loc = activeCoords || DHAKA_DEFAULT;
       search(q, loc, activeFilters);
     },
@@ -165,6 +175,8 @@ export default function HomePage() {
     (q: string) => {
       setQuery(q);
       fetchSuggestions(q);
+      setAiCustomResults(null);
+      setAiBudgetText(null);
 
       if (searchDebounceRef.current) clearTimeout(searchDebounceRef.current);
 
@@ -190,6 +202,8 @@ export default function HomePage() {
   const handleClear = useCallback(() => {
     if (searchDebounceRef.current) clearTimeout(searchDebounceRef.current);
     setActiveCuisine(null);
+    setAiCustomResults(null);
+    setAiBudgetText(null);
     clearResults();
     const loc = activeCoords || DHAKA_DEFAULT;
     fetchNearby(loc, activeFilters);
@@ -200,6 +214,8 @@ export default function HomePage() {
   }, []);
 
   const handleFilterChange = useCallback((filters: ActiveFilters) => {
+    setAiCustomResults(null);
+    setAiBudgetText(null);
     setActiveFilters(filters);
   }, []);
 
@@ -346,22 +362,36 @@ export default function HomePage() {
               className="navbar-signin-btn"
               onClick={() => {
                 setAuthModalMode('login');
-                setAuthModalOpen(true);
-              }}
-            >
-              Sign In
-            </button>
-          )}
-        </div>
-      </nav>
-
-      {/* ── Filter Bar ─────────────────────── */}
+                    {/* ── Filter Bar ─────────────────────── */}
       <FilterBar
         activeFilters={activeFilters}
         onFilterChange={handleFilterChange}
         onCuisineSearch={handleCuisineSearch}
         activeCuisine={activeCuisine}
+        onOpenAiBudget={() => setAiBudgetModalOpen(true)}
       />
+
+      {/* ── Active AI Budget Banner ───────────── */}
+      {aiBudgetText && (
+        <div className="active-ai-budget-banner">
+          <div className="active-ai-banner-content">
+            <span className="active-ai-banner-icon">✨</span>
+            <span>
+              Gemini AI Suggestions: <strong>{aiBudgetText}</strong> ({displayPlaces.length} places recommended)
+            </span>
+          </div>
+          <button
+            className="active-budget-clear"
+            onClick={() => {
+              setAiBudgetText(null);
+              setAiCustomResults(null);
+            }}
+            aria-label="Clear AI budget recommendations"
+          >
+            ✕ Reset
+          </button>
+        </div>
+      )}
 
       {/* ── Active cuisine banner ───────────── */}
       {activeCuisine && (
@@ -411,7 +441,9 @@ export default function HomePage() {
         <aside className="results-sidebar" aria-label="Search results">
           <div className="sidebar-header">
             <div className="sidebar-title">
-              {activeCuisine
+              {aiBudgetText
+                ? '✨ AI Budget Recommendations'
+                : activeCuisine
                 ? `${CUISINE_LABELS[activeCuisine] ?? activeCuisine} Spots`
                 : hasSearched ? 'Search Results' : 'Nearby Restaurants'}
             </div>
@@ -422,33 +454,37 @@ export default function HomePage() {
                 </span>
               ) : (
                 <>
-                  <span>{total || results.length}</span> places
+                  <span>{displayTotal}</span> places
                 </>
               )}
             </div>
           </div>
 
           <div className="sidebar-list" role="list">
-            {loading && !results.length ? (
+            {loading && !displayPlaces.length ? (
               Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} delay={i * 80} />)
-            ) : results.length === 0 ? (
+            ) : displayPlaces.length === 0 ? (
               <div className="empty-state">
                 <div className="empty-state-icon">
-                  {activeCuisine ? '🔍' : hasSearched ? '😕' : '📍'}
+                  {aiBudgetText ? '✨' : activeCuisine ? '🔍' : hasSearched ? '😕' : '📍'}
                 </div>
                 <div className="empty-state-title">
-                  {activeCuisine
+                  {aiBudgetText
+                    ? 'No matching places found for this budget'
+                    : activeCuisine
                     ? `No ${CUISINE_LABELS[activeCuisine] ?? activeCuisine} found`
                     : hasSearched ? 'No results found' : 'Discover food near you'}
                 </div>
                 <div className="empty-state-message">
-                  {activeCuisine
+                  {aiBudgetText
+                    ? 'Try increasing your budget amount or click "AI Budget Advisor" above.'
+                    : activeCuisine
                     ? 'Try a different cuisine or clear the filter.'
                     : hasSearched
                     ? 'Try a different search or broaden your filters.'
                     : 'Click "Find Near Me" to discover restaurants, or type a cuisine above.'}
                 </div>
-                {!coords && !activeCuisine && (
+                {!coords && !activeCuisine && !aiBudgetText && (
                   <button
                     id="locate-me-empty-btn"
                     style={{
@@ -468,7 +504,7 @@ export default function HomePage() {
                 )}
               </div>
             ) : (
-              results.map((place, i) => (
+              displayPlaces.map((place, i) => (
                 <div key={place._id} role="listitem">
                   <PlaceCard
                     place={place}
@@ -490,7 +526,7 @@ export default function HomePage() {
         {/* ── Map ─────────────────────────── */}
         <div className="map-container">
           <MapView
-            places={results}
+            places={displayPlaces}
             selectedPlace={selectedPlace}
             userLocation={activeCoords}
             onMarkerClick={handleMarkerClick}
@@ -510,7 +546,7 @@ export default function HomePage() {
                 </svg>
               ) : (
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                  <circle cx="12" cy="12" r="3" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
+                  <circle cx="12" cy="10" r="3" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
                 </svg>
               )}
               Use My Location
@@ -547,6 +583,37 @@ export default function HomePage() {
       </div>
 
       {/* ── Modals ─────────────────────────── */}
+      <LocationModal
+        isOpen={locationModalOpen}
+        onClose={() => setLocationModalOpen(false)}
+        onAllowLocation={getLocation}
+        onSelectHub={(hubCoords, hubName) => {
+          setCustomCoords(hubCoords);
+          setLocationName(hubName);
+          showToast(`Browsing ${hubName}`, '📍');
+        }}
+        loading={geoLoading}
+        error={geoError}
+        coords={activeCoords}
+        locationName={locationName}
+      />
+
+      <AiBudgetModal
+        isOpen={aiBudgetModalOpen}
+        onClose={() => setAiBudgetModalOpen(false)}
+        activeCoords={activeCoords}
+        locationName={locationName}
+        onSelectPlace={(p) => {
+          setSelectedPlace(p);
+          showToast(`Viewing ${p.name}`, '📍');
+        }}
+        onApplyRecommendations={(places, text) => {
+          setAiCustomResults(places);
+          setAiBudgetText(text);
+          if (places.length > 0) setSelectedPlace(places[0]);
+          showToast(`Applied ${places.length} AI budget picks!`, '✨');
+        }}
+      />�────────────────── */}
       <LocationModal
         isOpen={locationModalOpen}
         onClose={() => setLocationModalOpen(false)}

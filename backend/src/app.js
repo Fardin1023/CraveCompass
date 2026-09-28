@@ -8,6 +8,7 @@ const placesRouter = require('./routes/places');
 const locationRouter = require('./routes/location');
 const searchRouter = require('./routes/search');
 const authRouter = require('./routes/auth');
+const aiRouter = require('./routes/ai');
 
 const app = express();
 
@@ -59,6 +60,7 @@ app.use('/api/places', placesRouter);
 app.use('/api/location', locationRouter);
 app.use('/api/search', searchRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/ai', aiRouter);
 
 // Root & Health check
 app.get('/', (req, res) => {

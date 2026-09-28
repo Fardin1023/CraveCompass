@@ -184,4 +184,19 @@ export async function getUserFavorites(token: string): Promise<{
   });
 }
 
+// ── Gemini AI Budget Advisor ────────────────────────────────
+export async function getAiBudgetSuggestions(params: {
+  budget: number | string;
+  partySize?: number;
+  craving?: string;
+  lat?: number;
+  lng?: number;
+  apiKey?: string;
+}): Promise<import('@/types').AiBudgetResponse> {
+  return request('/ai/budget-suggest', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}
+
 export { ApiError };

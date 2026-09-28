@@ -8,6 +8,7 @@ interface FilterBarProps {
   onFilterChange: (filters: ActiveFilters) => void;
   onCuisineSearch: (cuisine: string | null) => void;
   activeCuisine: string | null;
+  onOpenAiBudget: () => void;
 }
 
 export const BUDGET_TIERS = [
@@ -81,6 +82,7 @@ export default function FilterBar({
   onFilterChange,
   onCuisineSearch,
   activeCuisine,
+  onOpenAiBudget,
 }: FilterBarProps) {
   const [budgetOpen, setBudgetOpen] = useState(false);
   const budgetRef = useRef<HTMLDivElement>(null);
@@ -130,6 +132,21 @@ export default function FilterBar({
 
   return (
     <div className="filter-bar" role="toolbar" aria-label="Filter restaurants">
+      {/* ── ✨ Gemini AI Budget Advisor Button ─────────────────── */}
+      <button
+        type="button"
+        id="ai-budget-trigger-btn"
+        className="filter-chip ai-budget-chip"
+        onClick={onOpenAiBudget}
+        title="Input your exact budget in Taka and let Gemini AI find matching meals & food courts"
+      >
+        <span className="ai-chip-sparkle">✨</span>
+        <span className="ai-chip-text">AI Budget Advisor</span>
+        <span className="ai-chip-badge">Gemini Free</span>
+      </button>
+
+      <div className="filter-separator" aria-hidden="true" />
+
       {/* Open Now */}
       <button
         id="filter-open-now"
@@ -174,6 +191,28 @@ export default function FilterBar({
                   Clear
                 </button>
               )}
+            </div>
+
+            {/* AI Advisor Banner inside dropdown */}
+            <div
+              className="budget-ai-banner"
+              onClick={() => {
+                setBudgetOpen(false);
+                onOpenAiBudget();
+              }}
+              role="button"
+              tabIndex={0}
+            >
+              <div className="budget-ai-banner-content">
+                <span className="ai-sparkle">✨</span>
+                <div>
+                  <div className="budget-ai-banner-title">Input Custom Budget to AI</div>
+                  <div className="budget-ai-banner-desc">
+                    Type e.g. ৳300 or ৳500 for Gemini AI custom suggestions
+                  </div>
+                </div>
+              </div>
+              <span className="budget-ai-banner-arrow">→</span>
             </div>
 
             <div className="budget-tiers-list">
