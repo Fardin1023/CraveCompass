@@ -41,9 +41,9 @@ app.use(
 // Logging
 app.use(morgan('dev'));
 
-// Body parser
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Body parser (with payload size limits to prevent memory exhaustion attacks)
+app.use(express.json({ limit: '100kb' }));
+app.use(express.urlencoded({ extended: true, limit: '100kb' }));
 
 // Global rate limiter
 const limiter = rateLimit({

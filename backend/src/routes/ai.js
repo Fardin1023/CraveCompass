@@ -1,10 +1,23 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
+const rateLimit = require('express-rate-limit');
 const Place = require('../models/Place');
 const { getGeminiBudgetSuggestions } = require('../services/geminiService');
 const { reverseGeocode } = require('../services/googlePlaces');
 
 const router = express.Router();
+
+// Dedicated rate limiter for AI queries to prevent quota exhaustion & spam
+const aiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 30, // 30 AI requests per 15 min per IP
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    error: 'Too many AI budget requests from this IP. Please wait a few minutes before asking again.',
+  },
+});
 
 /**
  * POST /api/ai/budget-suggest
@@ -12,6 +25,7 @@ const router = express.Router();
  */
 router.post(
   '/budget-suggest',
+  aiLimiter,
   [
     body('budget').notEmpty().withMessage('Budget amount is required'),
     body('partySize').optional().isInt({ min: 1, max: 20 }),
