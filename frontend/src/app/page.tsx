@@ -13,6 +13,7 @@ import PlaceDetailPanel from '@/components/PlaceDetailPanel';
 import AuthModal from '@/components/AuthModal';
 import UserProfileModal from '@/components/UserProfileModal';
 import FavoritesModal from '@/components/FavoritesModal';
+import LocationModal from '@/components/LocationModal';
 import { reverseGeocode } from '@/lib/api';
 import type { Place, ActiveFilters } from '@/types';
 
@@ -66,6 +67,11 @@ export default function HomePage() {
   const [activeCuisine, setActiveCuisine]     = useState<string | null>(null);
   const [locationName, setLocationName]       = useState<string>('Dhaka, Bangladesh');
   const [toast, setToast]                     = useState<{ message: string; icon: string } | null>(null);
+  const [locationModalOpen, setLocationModalOpen] = useState(false);
+  const [customCoords, setCustomCoords]       = useState<{ lat: number; lng: number } | null>(null);
+
+  // Active coordinates: real GPS or selected Dhaka hub
+  const activeCoords = coords || customCoords || null;
 
   // Authentication & User Profile States
   const { user, isAuthenticated, logout, favoritesCount } = useAuth();
@@ -75,6 +81,7 @@ export default function HomePage() {
   const [favoritesModalOpen, setFavoritesModalOpen]   = useState(false);
   const [userMenuOpen, setUserMenuOpen]               = useState(false);
   const userMenuRef                                   = useRef<HTMLDivElement>(null);
+  const searchDebounceRef                             = useRef<ReturnType<typeof setTimeout>>(null);
 
   // Close user dropdown on outside click
   useEffect(() => {
@@ -93,27 +100,30 @@ export default function HomePage() {
     setTimeout(() => setToast(null), 3500);
   }, []);
 
-  // Attempt to locate user on initial visit
+  // When GPS location is acquired, dismiss the location popup
   useEffect(() => {
-    getLocation();
-  }, [getLocation]);
+    if (coords && locationModalOpen) {
+      setLocationModalOpen(false);
+      showToast('Location acquired! Showing nearby food spots', '📍');
+    }
+  }, [coords, locationModalOpen, showToast]);
 
-  // Load places on initial mount or when user location changes
+  // Load places on initial mount or when active coordinates change
   useEffect(() => {
-    const loc = coords || DHAKA_DEFAULT;
+    const loc = activeCoords || DHAKA_DEFAULT;
     fetchNearby(loc, activeFilters);
-    if (coords) {
-      reverseGeocode(coords.lat, coords.lng)
+    if (activeCoords) {
+      reverseGeocode(activeCoords.lat, activeCoords.lng)
         .then((res) => setLocationName(res.city || res.address))
-        .catch(() => setLocationName('Current Location'));
+        .catch(() => setLocationName(customCoords ? locationName : 'Current Location'));
     } else {
       setLocationName('Dhaka, Bangladesh');
     }
-  }, [coords]);
+  }, [activeCoords]);
 
   // Re-fetch when non-cuisine filters change (openNow, price, sort)
   useEffect(() => {
-    const loc = coords || DHAKA_DEFAULT;
+    const loc = activeCoords || DHAKA_DEFAULT;
     if (activeCuisine) {
       search(activeCuisine, loc, activeFilters);
     } else if (query) {
@@ -128,7 +138,7 @@ export default function HomePage() {
     (cuisine: string | null) => {
       setActiveCuisine(cuisine);
       setSelectedPlace(null);
-      const loc = coords || DHAKA_DEFAULT;
+      const loc = activeCoords || DHAKA_DEFAULT;
       if (!cuisine) {
         // Clear cuisine filter → show all nearby
         fetchNearby(loc, activeFilters);
@@ -137,38 +147,57 @@ export default function HomePage() {
       showToast(`Showing ${CUISINE_LABELS[cuisine] ?? cuisine} places`, '🔍');
       search(cuisine, loc, activeFilters);
     },
-    [coords, activeFilters, fetchNearby, search, showToast]
+    [activeCoords, activeFilters, fetchNearby, search, showToast]
   );
 
   const handleSearch = useCallback(
     (q: string) => {
+      if (searchDebounceRef.current) clearTimeout(searchDebounceRef.current);
       setActiveCuisine(null);
-      const loc = coords || DHAKA_DEFAULT;
+      const loc = activeCoords || DHAKA_DEFAULT;
       search(q, loc, activeFilters);
     },
-    [coords, activeFilters, search]
+    [activeCoords, activeFilters, search]
   );
 
+  // Live as-you-type search
   const handleQueryChange = useCallback(
     (q: string) => {
       setQuery(q);
       fetchSuggestions(q);
+
+      if (searchDebounceRef.current) clearTimeout(searchDebounceRef.current);
+
+      if (!q.trim()) {
+        const loc = activeCoords || DHAKA_DEFAULT;
+        if (activeCuisine) {
+          search(activeCuisine, loc, activeFilters);
+        } else {
+          fetchNearby(loc, activeFilters);
+        }
+        return;
+      }
+
+      searchDebounceRef.current = setTimeout(() => {
+        setActiveCuisine(null);
+        const loc = activeCoords || DHAKA_DEFAULT;
+        search(q.trim(), loc, activeFilters);
+      }, 300);
     },
-    [setQuery, fetchSuggestions]
+    [setQuery, fetchSuggestions, activeCoords, activeCuisine, activeFilters, search, fetchNearby]
   );
 
   const handleClear = useCallback(() => {
+    if (searchDebounceRef.current) clearTimeout(searchDebounceRef.current);
     setActiveCuisine(null);
     clearResults();
-    const loc = coords || DHAKA_DEFAULT;
+    const loc = activeCoords || DHAKA_DEFAULT;
     fetchNearby(loc, activeFilters);
-  }, [clearResults, coords, activeFilters, fetchNearby]);
+  }, [clearResults, activeCoords, activeFilters, fetchNearby]);
 
   const handleLocateMe = useCallback(() => {
-    if (geoLoading) return;
-    getLocation();
-    showToast('Finding your location…', '📍');
-  }, [getLocation, geoLoading, showToast]);
+    setLocationModalOpen(true);
+  }, []);
 
   const handleFilterChange = useCallback((filters: ActiveFilters) => {
     setActiveFilters(filters);
@@ -224,19 +253,18 @@ export default function HomePage() {
             style={{
               display: 'flex', alignItems: 'center', gap: '6px',
               padding: '8px 16px',
-              background: coords ? 'var(--bg-glass)' : 'var(--gradient-brand)',
-              border: `1.5px solid ${coords ? 'var(--border-default)' : 'transparent'}`,
+              background: activeCoords ? 'var(--bg-glass)' : 'var(--gradient-brand)',
+              border: `1.5px solid ${activeCoords ? 'var(--border-default)' : 'transparent'}`,
               borderRadius: 'var(--radius-pill)',
               fontSize: '13px', fontWeight: 700,
-              color: coords ? 'var(--text-secondary)' : 'var(--text-inverse)',
+              color: activeCoords ? 'var(--text-secondary)' : 'var(--text-inverse)',
               cursor: 'pointer',
               transition: 'all var(--t-base)',
-              boxShadow: coords ? 'none' : 'var(--shadow-orange)',
+              boxShadow: activeCoords ? 'none' : 'var(--shadow-orange)',
               flexShrink: 0,
             }}
             onClick={handleLocateMe}
-            disabled={geoLoading}
-            aria-label="Find restaurants near my location"
+            aria-label="Open location permission modal"
           >
             {geoLoading ? (
               <svg className="animate-spin" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -247,7 +275,7 @@ export default function HomePage() {
                 <circle cx="12" cy="12" r="3" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
               </svg>
             )}
-            {geoLoading ? 'Locating…' : coords ? 'Near Me ✓' : 'Find Near Me'}
+            {geoLoading ? 'Locating…' : activeCoords ? 'Near Me ✓' : 'Find Near Me'}
           </button>
 
           {/* User Profile / Auth Area */}
@@ -350,6 +378,32 @@ export default function HomePage() {
         </div>
       )}
 
+      {/* ── Active budget banner ───────────── */}
+      {activeFilters.priceLevel && activeFilters.priceLevel.length > 0 && (
+        <div className="active-budget-banner">
+          <span className="active-budget-banner-icon">💰</span>
+          <span>
+            Filtering by Budget:{' '}
+            <strong>
+              {activeFilters.priceLevel[0] === 1
+                ? 'Under ৳250 (Food Courts & Street Food)'
+                : activeFilters.priceLevel[0] === 2
+                ? '৳250 – ৳600 (Mid-Range & Cafes)'
+                : activeFilters.priceLevel[0] === 3
+                ? '৳600 – ৳1500 (Upscale Dining)'
+                : '৳1500+ (Luxury Dining)'}
+            </strong>
+          </span>
+          <button
+            className="active-budget-clear"
+            onClick={() => handleFilterChange({ ...activeFilters, priceLevel: undefined })}
+            aria-label="Clear budget filter"
+          >
+            ✕ Clear
+          </button>
+        </div>
+      )}
+
       {/* ── Main Layout ─────────────────────── */}
       <div className="map-layout">
 
@@ -438,12 +492,12 @@ export default function HomePage() {
           <MapView
             places={results}
             selectedPlace={selectedPlace}
-            userLocation={coords}
+            userLocation={activeCoords}
             onMarkerClick={handleMarkerClick}
           />
 
           {/* Locate Me floating */}
-          {!coords && (
+          {!activeCoords && (
             <button
               id="locate-me-map-btn"
               className={`locate-me-btn ${geoLoading ? 'loading' : ''}`}
@@ -493,6 +547,21 @@ export default function HomePage() {
       </div>
 
       {/* ── Modals ─────────────────────────── */}
+      <LocationModal
+        isOpen={locationModalOpen}
+        onClose={() => setLocationModalOpen(false)}
+        onAllowLocation={getLocation}
+        onSelectHub={(hubCoords, hubName) => {
+          setCustomCoords(hubCoords);
+          setLocationName(hubName);
+          showToast(`Browsing ${hubName}`, '📍');
+        }}
+        loading={geoLoading}
+        error={geoError}
+        coords={activeCoords}
+        locationName={locationName}
+      />
+
       <AuthModal
         isOpen={authModalOpen}
         initialMode={authModalMode}

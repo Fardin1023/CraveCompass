@@ -42,6 +42,9 @@ export function useSearch() {
           lng: coords?.lng,
           radius,
           limit: 30,
+          priceLevel: filters?.priceLevel,
+          openNow: filters?.openNow,
+          minRating: filters?.minRating,
         });
         setState((s) => ({
           ...s,

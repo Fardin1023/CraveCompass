@@ -49,6 +49,9 @@ export interface SearchParams {
   radius?: number;
   limit?: number;
   page?: number;
+  priceLevel?: number[];
+  openNow?: boolean;
+  minRating?: number;
 }
 
 export async function searchPlaces(params: SearchParams): Promise<SearchResult> {

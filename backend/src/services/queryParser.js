@@ -26,6 +26,7 @@ const CUISINE_KEYWORDS = {
   vegan: ['vegan', 'plant-based', 'vegetarian', 'veggie'],
   korean: ['korean', 'kbbq', 'bibimbap', 'kimchi', 'bulgogi'],
   street_food: ['food cart', 'foodcart', 'street food', 'cart', 'stall', 'fuchka', 'chotpoti', 'jhalmuri', 'tong', 'snack', 'fast food'],
+  food_court: ['food court', 'foodcourt', 'food village', 'food park', 'food square', 'court'],
 };
 
 const PRICE_KEYWORDS = {

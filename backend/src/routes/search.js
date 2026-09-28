@@ -29,7 +29,17 @@ router.post(
     }
 
     try {
-      const { q = '', lat, lng, radius = 25000, limit = 20, page = 1 } = {
+      const {
+        q = '',
+        lat,
+        lng,
+        radius = 25000,
+        limit = 20,
+        page = 1,
+        priceLevel,
+        openNow,
+        minRating,
+      } = {
         ...req.query,
         ...req.body,
       };
@@ -46,25 +56,52 @@ router.post(
 
       // Build base filter
       const baseFilter = {};
+      const orConditions = [];
+
       if (parsed.cuisines && parsed.cuisines.length > 0) {
-        baseFilter.$or = [
+        orConditions.push(
           { cuisine: { $in: parsed.cuisines } },
           { tags: { $in: parsed.cuisines } },
           { categories: { $in: parsed.cuisines.map((c) => new RegExp(c, 'i')) } },
-          { name: { $in: parsed.cuisines.map((c) => new RegExp(c, 'i')) } },
-        ];
-      } else if (q && q.trim()) {
-        baseFilter.$or = [
-          { name: new RegExp(q.trim(), 'i') },
-          { cuisine: new RegExp(q.trim(), 'i') },
-          { tags: new RegExp(q.trim(), 'i') },
-          { categories: new RegExp(q.trim(), 'i') },
-        ];
+          { name: { $in: parsed.cuisines.map((c) => new RegExp(c, 'i')) } }
+        );
       }
 
-      if (parsed.priceLevel) baseFilter.priceLevel = { $in: parsed.priceLevel };
-      if (parsed.openNow) baseFilter['openingHours.openNow'] = true;
-      if (parsed.rating) baseFilter.rating = { $gte: parsed.rating };
+      if (q && q.trim()) {
+        const cleanQ = q.trim();
+        const terms = cleanQ.split(/\s+/).filter((t) => t.length > 1);
+        orConditions.push(
+          { name: new RegExp(cleanQ, 'i') },
+          { cuisine: new RegExp(cleanQ, 'i') },
+          { tags: new RegExp(cleanQ, 'i') },
+          { categories: new RegExp(cleanQ, 'i') },
+          { 'address.formatted': new RegExp(cleanQ, 'i') },
+          { 'address.city': new RegExp(cleanQ, 'i') }
+        );
+        terms.forEach((term) => {
+          orConditions.push({ name: new RegExp(term, 'i') });
+          orConditions.push({ cuisine: new RegExp(term, 'i') });
+        });
+      }
+
+      if (orConditions.length > 0) {
+        baseFilter.$or = orConditions;
+      }
+
+      // Budget / Price Level filter
+      const activePriceLevel = priceLevel !== undefined && priceLevel !== ''
+        ? (Array.isArray(priceLevel) ? priceLevel.map(Number) : String(priceLevel).split(',').map(Number))
+        : parsed.priceLevel;
+
+      if (activePriceLevel && activePriceLevel.length > 0) {
+        baseFilter.priceLevel = { $in: activePriceLevel };
+      }
+
+      const isOpenNow = openNow === true || openNow === 'true' || parsed.openNow;
+      if (isOpenNow) baseFilter['openingHours.openNow'] = true;
+
+      const ratingThreshold = minRating ? parseFloat(minRating) : parsed.rating;
+      if (ratingThreshold) baseFilter.rating = { $gte: ratingThreshold };
 
       // Add geo bounding box if available
       if (hasGeo) {
