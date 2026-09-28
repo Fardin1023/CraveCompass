@@ -288,7 +288,7 @@ export default function MapView({
       marker.bindPopup(() => {
         const div = document.createElement('div');
         div.innerHTML = popupHtml;
-        const btn = div.querySelector('.popup-view-btn');
+        const btn = div.querySelector<HTMLElement>('.popup-view-btn');
         if (btn) {
           L.DomEvent.on(btn, 'click', (e) => {
             L.DomEvent.stopPropagation(e);
