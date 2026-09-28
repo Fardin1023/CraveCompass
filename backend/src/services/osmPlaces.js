@@ -120,13 +120,22 @@ const searchOsmNearby = async ({ lat, lng, radius = 3000, limit = 25, keyword = 
   const _radius = Math.min(Math.max(parseInt(radius), 500), 20000);
   const _limit = Math.min(parseInt(limit), 50);
 
+  const cleanKw = (keyword || '').trim().replace(/['"\\;]/g, '');
+  const searchRadius = cleanKw ? Math.max(_radius, 25000) : _radius;
+
   // Build Overpass query
-  // Looks for nodes and ways tagged as restaurant, cafe, fast_food, food_court, ice_cream
+  // When a keyword/place name is given, explicitly search by name as well as food amenity
+  const nameClauses = cleanKw
+    ? `node["name"~"${cleanKw}",i](around:${searchRadius},${_lat},${_lng});
+       way["name"~"${cleanKw}",i](around:${searchRadius},${_lat},${_lng});`
+    : '';
+
   const query = `
     [out:json][timeout:25];
     (
-      node["amenity"~"restaurant|cafe|fast_food|food_court|ice_cream"](around:${_radius},${_lat},${_lng});
-      way["amenity"~"restaurant|cafe|fast_food|food_court|ice_cream"](around:${_radius},${_lat},${_lng});
+      ${nameClauses}
+      node["amenity"~"restaurant|cafe|fast_food|food_court|ice_cream"](around:${searchRadius},${_lat},${_lng});
+      way["amenity"~"restaurant|cafe|fast_food|food_court|ice_cream"](around:${searchRadius},${_lat},${_lng});
     );
     out center ${_limit * 2};
   `.trim();

@@ -21,11 +21,17 @@ import type { Place, ActiveFilters } from '@/types';
 const MapView = dynamic(() => import('@/components/MapView'), {
   ssr: false,
   loading: () => (
-    <div className="map-canvas" style={{
-      background: 'var(--bg-base)',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      flexDirection: 'column', gap: '16px',
-    }}>
+    <div
+      className="map-canvas"
+      style={{
+        background: 'var(--bg-base)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        gap: '16px',
+      }}
+    >
       <div className="loading-spinner" />
       <p style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Loading map…</p>
     </div>
@@ -36,12 +42,20 @@ const DEFAULT_FILTERS: ActiveFilters = { openNow: false, sortBy: 'distance' };
 const DHAKA_DEFAULT = { lat: 23.8103, lng: 90.4125 };
 
 const CUISINE_LABELS: Record<string, string> = {
-  pizza: 'Pizza 🍕', burger: 'Burgers 🍔', biryani: 'Biryani 🍚',
-  kabab: 'Kabab 🍢', bangladeshi: 'Bangladeshi 🍛', chicken: 'Chicken 🍗',
+  pizza: 'Pizza 🍕',
+  burger: 'Burgers 🍔',
+  biryani: 'Biryani 🍚',
+  kabab: 'Kabab 🍢',
+  bangladeshi: 'Bangladeshi 🍛',
+  chicken: 'Chicken 🍗',
   street_food: 'Street Food & Carts 🍢',
   food_court: 'Food Courts 🍱',
-  coffee: 'Coffee ☕', sushi: 'Sushi 🍣', thai: 'Thai 🍜',
-  vegan: 'Vegan 🥗', breakfast: 'Breakfast 🥞', seafood: 'Seafood 🦞',
+  coffee: 'Coffee ☕',
+  sushi: 'Sushi 🍣',
+  thai: 'Thai 🍜',
+  vegan: 'Vegan 🥗',
+  breakfast: 'Breakfast 🥞',
+  seafood: 'Seafood 🦞',
 };
 
 function SkeletonCard({ delay = 0 }: { delay?: number }) {
@@ -59,35 +73,49 @@ function SkeletonCard({ delay = 0 }: { delay?: number }) {
 export default function HomePage() {
   const { coords, error: geoError, loading: geoLoading, getLocation } = useGeolocation();
   const {
-    query, results, suggestions, loading, total, hasSearched,
-    search, fetchNearby, fetchSuggestions, setQuery, clearResults,
+    query,
+    results,
+    suggestions,
+    loading,
+    total,
+    hasSearched,
+    search,
+    fetchNearby,
+    fetchSuggestions,
+    setQuery,
+    clearResults,
   } = useSearch();
 
-  const [selectedPlace, setSelectedPlace]     = useState<Place | null>(null);
-  const [activeFilters, setActiveFilters]     = useState<ActiveFilters>(DEFAULT_FILTERS);
-  const [activeCuisine, setActiveCuisine]     = useState<string | null>(null);
-  const [locationName, setLocationName]       = useState<string>('Dhaka, Bangladesh');
-  const [toast, setToast]                     = useState<{ message: string; icon: string } | null>(null);
+  const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
+  const [activeFilters, setActiveFilters] = useState<ActiveFilters>(DEFAULT_FILTERS);
+  const [activeCuisine, setActiveCuisine] = useState<string | null>(null);
+  const [locationName, setLocationName] = useState<string>('Dhaka, Bangladesh');
+  const [toast, setToast] = useState<{ message: string; icon: string } | null>(null);
   const [locationModalOpen, setLocationModalOpen] = useState(false);
-  const [customCoords, setCustomCoords]       = useState<{ lat: number; lng: number } | null>(null);
+  const [customCoords, setCustomCoords] = useState<{ lat: number; lng: number } | null>(null);
 
   // Gemini AI Budget Advisor States
-  const [aiBudgetModalOpen, setAiBudgetModalOpen]     = useState(false);
-  const [aiBudgetText, setAiBudgetText]               = useState<string | null>(null);
-  const [aiCustomResults, setAiCustomResults]         = useState<Place[] | null>(null);
+  const [aiBudgetModalOpen, setAiBudgetModalOpen] = useState(false);
+  const [aiBudgetInitial, setAiBudgetInitial] = useState<number | null>(null);
+  const [aiBudgetText, setAiBudgetText] = useState<string | null>(null);
+  const [aiCustomResults, setAiCustomResults] = useState<Place[] | null>(null);
 
   // Active coordinates: real GPS or selected Dhaka hub
   const activeCoords = coords || customCoords || null;
 
   // Authentication & User Profile States
   const { user, isAuthenticated, logout, favoritesCount } = useAuth();
-  const [authModalOpen, setAuthModalOpen]             = useState(false);
-  const [authModalMode, setAuthModalMode]             = useState<'login' | 'register'>('login');
-  const [profileModalOpen, setProfileModalOpen]       = useState(false);
-  const [favoritesModalOpen, setFavoritesModalOpen]   = useState(false);
-  const [userMenuOpen, setUserMenuOpen]               = useState(false);
-  const userMenuRef                                   = useRef<HTMLDivElement>(null);
-  const searchDebounceRef                             = useRef<ReturnType<typeof setTimeout>>(null);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authModalMode, setAuthModalMode] = useState<'login' | 'register'>('login');
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
+  const [favoritesModalOpen, setFavoritesModalOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+  const searchDebounceRef = useRef<ReturnType<typeof setTimeout>>(null);
+
+  // Effective places list: AI Custom Results take precedence if active, else search results
+  const displayPlaces: Place[] = aiCustomResults || results;
+  const displayTotal: number = aiCustomResults ? aiCustomResults.length : (total || results.length);
 
   // Close user dropdown on outside click
   useEffect(() => {
@@ -101,7 +129,7 @@ export default function HomePage() {
     return () => document.removeEventListener('mousedown', handleOutsideClick);
   }, [userMenuOpen]);
 
-  const showToast = useCallback((message: string, icon = 'ℹ️') => {
+  const showToast = useCallback((message: string, icon = '✨') => {
     setToast({ message, icon });
     setTimeout(() => setToast(null), 3500);
   }, []);
@@ -148,24 +176,36 @@ export default function HomePage() {
       setAiBudgetText(null);
       const loc = activeCoords || DHAKA_DEFAULT;
       if (!cuisine) {
-        // Clear cuisine filter → show all nearby
         fetchNearby(loc, activeFilters);
         return;
       }
-      showToast(`Showing ${CUISINE_LABELS[cuisine] ?? cuisine} places`, '🔍');
+      showToast(`Showing ${CUISINE_LABELS[cuisine] ?? cuisine} places`, '🍽️');
       search(cuisine, loc, activeFilters);
     },
     [activeCoords, activeFilters, fetchNearby, search, showToast]
   );
 
+  // Search by query (supports restaurant names, place names, cuisines, or natural language)
   const handleSearch = useCallback(
-    (q: string) => {
+    async (q: string, placeToSelectId?: string) => {
       if (searchDebounceRef.current) clearTimeout(searchDebounceRef.current);
       setActiveCuisine(null);
       setAiCustomResults(null);
       setAiBudgetText(null);
       const loc = activeCoords || DHAKA_DEFAULT;
-      search(q, loc, activeFilters);
+      const fetched = await search(q, loc, activeFilters);
+
+      // If a specific place ID or exact restaurant match exists, auto-select it for instant output
+      if (placeToSelectId && fetched && fetched.length > 0) {
+        const found = fetched.find((p) => p._id === placeToSelectId || p.googlePlaceId === placeToSelectId);
+        if (found) setSelectedPlace(found);
+      } else if (fetched && fetched.length > 0) {
+        const lowerQ = q.toLowerCase().trim();
+        const exactMatch = fetched.find((p) => p.name.toLowerCase() === lowerQ);
+        if (exactMatch) {
+          setSelectedPlace(exactMatch);
+        }
+      }
     },
     [activeCoords, activeFilters, search]
   );
@@ -219,9 +259,18 @@ export default function HomePage() {
     setActiveFilters(filters);
   }, []);
 
-  const handleMarkerClick  = useCallback((place: Place) => setSelectedPlace(place), []);
-  const handleCardClick    = useCallback((place: Place) => setSelectedPlace(place), []);
-  const handleCloseDetail  = useCallback(() => setSelectedPlace(null), []);
+  const handleMarkerClick = useCallback((place: Place) => setSelectedPlace(place), []);
+  const handleCardClick = useCallback((place: Place) => setSelectedPlace(place), []);
+  const handleCloseDetail = useCallback(() => setSelectedPlace(null), []);
+
+  const handleOpenAiBudgetWithInitial = useCallback((budgetVal?: number) => {
+    if (budgetVal && budgetVal > 0) {
+      setAiBudgetInitial(budgetVal);
+    } else {
+      setAiBudgetInitial(null);
+    }
+    setAiBudgetModalOpen(true);
+  }, []);
 
   useEffect(() => {
     if (geoError) showToast(geoError, '⚠️');
@@ -229,7 +278,7 @@ export default function HomePage() {
 
   return (
     <main className="app-container">
-      {/* ── Navbar ─────────────────────────── */}
+      {/* ── Navbar ────────────────────────────────────────── */}
       <nav className="navbar" role="navigation" aria-label="Main navigation">
         <div className="navbar-logo">
           <div className="navbar-logo-icon">
@@ -245,20 +294,30 @@ export default function HomePage() {
             suggestions={suggestions}
             loading={loading}
             onChange={handleQueryChange}
-            onSearch={handleSearch}
-            onSuggestionSelect={(s) => { setQuery(s.name); handleSearch(s.name); }}
+            onSearch={(q) => handleSearch(q)}
+            onSuggestionSelect={(s) => {
+              setQuery(s.name);
+              handleSearch(s.name, s.id);
+            }}
             onClear={handleClear}
           />
         </div>
 
         <div className="navbar-actions">
           {locationName && (
-            <div style={{
-              display: 'flex', alignItems: 'center', gap: '5px',
-              fontSize: '12px', color: 'var(--text-secondary)', flexShrink: 0,
-            }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px',
+                fontSize: '12px',
+                color: 'var(--text-secondary)',
+                flexShrink: 0,
+              }}
+            >
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" />
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                <circle cx="12" cy="10" r="3" />
               </svg>
               {locationName}
             </div>
@@ -267,12 +326,15 @@ export default function HomePage() {
           <button
             id="locate-me-btn-nav"
             style={{
-              display: 'flex', alignItems: 'center', gap: '6px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
               padding: '8px 16px',
               background: activeCoords ? 'var(--bg-glass)' : 'var(--gradient-brand)',
               border: `1.5px solid ${activeCoords ? 'var(--border-default)' : 'transparent'}`,
               borderRadius: 'var(--radius-pill)',
-              fontSize: '13px', fontWeight: 700,
+              fontSize: '13px',
+              fontWeight: 700,
               color: activeCoords ? 'var(--text-secondary)' : 'var(--text-inverse)',
               cursor: 'pointer',
               transition: 'all var(--t-base)',
@@ -288,10 +350,11 @@ export default function HomePage() {
               </svg>
             ) : (
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <circle cx="12" cy="12" r="3" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
+                <circle cx="12" cy="12" r="3" />
+                <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
               </svg>
             )}
-            {geoLoading ? 'Locating…' : activeCoords ? 'Near Me ✓' : 'Find Near Me'}
+            {geoLoading ? 'Locating…' : activeCoords ? 'Near Me 📍' : 'Find Near Me'}
           </button>
 
           {/* User Profile / Auth Area */}
@@ -317,7 +380,9 @@ export default function HomePage() {
                 <div className="user-dropdown-menu">
                   <div className="user-dropdown-header">
                     <div style={{ fontWeight: 700, color: 'var(--cream)', fontSize: '13px' }}>{user.name}</div>
-                    <div style={{ fontSize: '11px', color: 'var(--text-muted)' }} className="truncate">{user.email}</div>
+                    <div style={{ fontSize: '11px', color: 'var(--text-muted)' }} className="truncate">
+                      {user.email}
+                    </div>
                   </div>
                   <div className="user-dropdown-divider" />
                   <button
@@ -362,16 +427,25 @@ export default function HomePage() {
               className="navbar-signin-btn"
               onClick={() => {
                 setAuthModalMode('login');
-                    {/* ── Filter Bar ─────────────────────── */}
+                setAuthModalOpen(true);
+              }}
+            >
+              Sign In
+            </button>
+          )}
+        </div>
+      </nav>
+
+      {/* ── Filter Bar ────────────────────────────────────────── */}
       <FilterBar
         activeFilters={activeFilters}
         onFilterChange={handleFilterChange}
         onCuisineSearch={handleCuisineSearch}
         activeCuisine={activeCuisine}
-        onOpenAiBudget={() => setAiBudgetModalOpen(true)}
+        onOpenAiBudget={handleOpenAiBudgetWithInitial}
       />
 
-      {/* ── Active AI Budget Banner ───────────── */}
+      {/* ── Active AI Budget Banner ──────────────────────────── */}
       {aiBudgetText && (
         <div className="active-ai-budget-banner">
           <div className="active-ai-banner-content">
@@ -393,10 +467,10 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* ── Active cuisine banner ───────────── */}
+      {/* ── Active cuisine banner ───────────────────────────── */}
       {activeCuisine && (
         <div className="active-cuisine-banner">
-          <span className="active-cuisine-banner-icon">{CUISINE_LABELS[activeCuisine]?.split(' ')[1] ?? '🔍'}</span>
+          <span className="active-cuisine-banner-icon">{CUISINE_LABELS[activeCuisine]?.split(' ')[1] ?? '🍽️'}</span>
           Showing <strong>{CUISINE_LABELS[activeCuisine] ?? activeCuisine}</strong> restaurants
           <button
             className="active-cuisine-clear"
@@ -408,7 +482,7 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* ── Active budget banner ───────────── */}
+      {/* ── Active budget banner ───────────────────────────── */}
       {activeFilters.priceLevel && activeFilters.priceLevel.length > 0 && (
         <div className="active-budget-banner">
           <span className="active-budget-banner-icon">💰</span>
@@ -434,10 +508,9 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* ── Main Layout ─────────────────────── */}
+      {/* ── Main Layout ──────────────────────────────────────── */}
       <div className="map-layout">
-
-        {/* ── Sidebar ─────────────────────── */}
+        {/* ── Sidebar ─────────────────────────────────────────── */}
         <aside className="results-sidebar" aria-label="Search results">
           <div className="sidebar-header">
             <div className="sidebar-title">
@@ -445,12 +518,14 @@ export default function HomePage() {
                 ? '✨ AI Budget Recommendations'
                 : activeCuisine
                 ? `${CUISINE_LABELS[activeCuisine] ?? activeCuisine} Spots`
-                : hasSearched ? 'Search Results' : 'Nearby Restaurants'}
+                : hasSearched
+                ? 'Search Results'
+                : 'Nearby Restaurants'}
             </div>
             <div className="sidebar-count">
               {loading ? (
-                <span style={{ fontSize: '15px', color: 'var(--text-muted)' }} className="animate-pulse">
-                  Searching…
+                <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <span className="loading-spinner-sm" /> Searching…
                 </span>
               ) : (
                 <>
@@ -473,7 +548,9 @@ export default function HomePage() {
                     ? 'No matching places found for this budget'
                     : activeCuisine
                     ? `No ${CUISINE_LABELS[activeCuisine] ?? activeCuisine} found`
-                    : hasSearched ? 'No results found' : 'Discover food near you'}
+                    : hasSearched
+                    ? 'No results found'
+                    : 'Discover food near you'}
                 </div>
                 <div className="empty-state-message">
                   {aiBudgetText
@@ -481,25 +558,30 @@ export default function HomePage() {
                     : activeCuisine
                     ? 'Try a different cuisine or clear the filter.'
                     : hasSearched
-                    ? 'Try a different search or broaden your filters.'
-                    : 'Click "Find Near Me" to discover restaurants, or type a cuisine above.'}
+                    ? 'Try searching by restaurant name (e.g. "Takeout", "Star Kabab") or cuisine.'
+                    : 'Click "Find Near Me" to discover restaurants, or type a restaurant name above.'}
                 </div>
                 {!coords && !activeCuisine && !aiBudgetText && (
                   <button
                     id="locate-me-empty-btn"
                     style={{
-                      marginTop: '16px', padding: '10px 22px',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '7px',
+                      marginTop: '16px',
+                      padding: '10px 22px',
                       background: 'var(--gradient-brand)',
                       borderRadius: 'var(--radius-pill)',
-                      fontSize: '14px', fontWeight: 700,
+                      fontSize: '13px',
+                      fontWeight: 700,
                       color: 'var(--text-inverse)',
                       cursor: 'pointer',
-                      boxShadow: 'var(--shadow-orange)',
                       border: 'none',
+                      boxShadow: 'var(--shadow-orange)',
                     }}
                     onClick={handleLocateMe}
                   >
-                    📍 Find Near Me
+                    📍 Set My Location
                   </button>
                 )}
               </div>
@@ -509,13 +591,8 @@ export default function HomePage() {
                   <PlaceCard
                     place={place}
                     isActive={selectedPlace?._id === place._id}
-                    animationDelay={i * 50}
                     onClick={() => handleCardClick(place)}
-                    onRequireAuth={() => {
-                      setAuthModalMode('login');
-                      setAuthModalOpen(true);
-                      showToast('Please sign in to bookmark places', '🔒');
-                    }}
+                    animationDelay={i * 40}
                   />
                 </div>
               ))
@@ -523,7 +600,7 @@ export default function HomePage() {
           </div>
         </aside>
 
-        {/* ── Map ─────────────────────────── */}
+        {/* ── Map ─────────────────────────────────────────────── */}
         <div className="map-container">
           <MapView
             places={displayPlaces}
@@ -532,13 +609,14 @@ export default function HomePage() {
             onMarkerClick={handleMarkerClick}
           />
 
-          {/* Locate Me floating */}
-          {!activeCoords && (
+          {/* Quick GPS Re-center button on map */}
+          <div className="map-controls">
             <button
-              id="locate-me-map-btn"
-              className={`locate-me-btn ${geoLoading ? 'loading' : ''}`}
+              id="locate-me-btn"
+              className="map-control-btn"
               onClick={handleLocateMe}
-              aria-label="Use my location"
+              title="Use GPS or select a Dhaka area"
+              aria-label="Set location"
             >
               {geoLoading ? (
                 <svg className="animate-spin" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -546,24 +624,11 @@ export default function HomePage() {
                 </svg>
               ) : (
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                  <circle cx="12" cy="10" r="3" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
+                  <circle cx="12" cy="10" r="3" />
+                  <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
                 </svg>
               )}
               Use My Location
-            </button>
-          )}
-
-          {/* Map Controls */}
-          <div className="map-controls">
-            <button id="map-zoom-in"  className="map-control-btn" aria-label="Zoom in">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
-              </svg>
-            </button>
-            <button id="map-zoom-out" className="map-control-btn" aria-label="Zoom out">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <line x1="5" y1="12" x2="19" y2="12" />
-              </svg>
             </button>
           </div>
 
@@ -582,7 +647,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* ── Modals ─────────────────────────── */}
+      {/* ── Modals ──────────────────────────────────────────── */}
       <LocationModal
         isOpen={locationModalOpen}
         onClose={() => setLocationModalOpen(false)}
@@ -603,6 +668,7 @@ export default function HomePage() {
         onClose={() => setAiBudgetModalOpen(false)}
         activeCoords={activeCoords}
         locationName={locationName}
+        initialBudget={aiBudgetInitial}
         onSelectPlace={(p) => {
           setSelectedPlace(p);
           showToast(`Viewing ${p.name}`, '📍');
@@ -613,20 +679,6 @@ export default function HomePage() {
           if (places.length > 0) setSelectedPlace(places[0]);
           showToast(`Applied ${places.length} AI budget picks!`, '✨');
         }}
-      />�────────────────── */}
-      <LocationModal
-        isOpen={locationModalOpen}
-        onClose={() => setLocationModalOpen(false)}
-        onAllowLocation={getLocation}
-        onSelectHub={(hubCoords, hubName) => {
-          setCustomCoords(hubCoords);
-          setLocationName(hubName);
-          showToast(`Browsing ${hubName}`, '📍');
-        }}
-        loading={geoLoading}
-        error={geoError}
-        coords={activeCoords}
-        locationName={locationName}
       />
 
       <AuthModal
@@ -652,7 +704,7 @@ export default function HomePage() {
         onToast={showToast}
       />
 
-      {/* ── Toast ─────────────────────────── */}
+      {/* ── Toast ──────────────────────────────────────────── */}
       <div className="toast-container" aria-live="polite">
         {toast && (
           <div className="toast animate-fadeIn">

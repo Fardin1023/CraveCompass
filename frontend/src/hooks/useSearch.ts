@@ -32,8 +32,8 @@ export function useSearch() {
       query: string,
       coords?: { lat: number; lng: number },
       filters?: ActiveFilters,
-      radius = 5000
-    ) => {
+      radius = 25000
+    ): Promise<Place[]> => {
       setState((s) => ({ ...s, loading: true, error: null, hasSearched: true }));
       try {
         const result = await searchPlaces({
@@ -52,12 +52,14 @@ export function useSearch() {
           total: result.total,
           loading: false,
         }));
+        return result.results;
       } catch (err: unknown) {
         setState((s) => ({
           ...s,
           error: err instanceof Error ? err.message : 'Search failed',
           loading: false,
         }));
+        return [];
       }
     },
     []

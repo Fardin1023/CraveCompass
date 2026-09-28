@@ -4,7 +4,8 @@
  * Provides budget-aware food court and restaurant recommendations in Dhaka
  */
 
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+const GEMINI_MODELS = ['gemini-3.8-flash', 'gemini-3.5-flash-lite', 'gemini-3.1-flash-lite', 'gemini-flash-latest', 'gemini-3.5-flash'];
+const getGeminiEndpoint = (model) => `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
 /**
  * Format a list of candidate places for prompt grounding
@@ -176,39 +177,46 @@ TASK & OUTPUT RULES:
 }`;
 
   try {
-    const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [{ text: systemPrompt }],
-          },
-        ],
-        generationConfig: {
-          temperature: 0.4,
-          maxOutputTokens: 1200,
-          responseMimeType: 'application/json',
+    let rawContent = null;
+
+  for (const model of GEMINI_MODELS) {
+    try {
+      const endpoint = `${getGeminiEndpoint(model)}?key=${apiKey}`;
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      }),
-    });
-
-    if (!response.ok) {
-      const errText = await response.text();
-      console.warn('Gemini API call returned non-200 status:', response.status, errText);
-      return generateLocalBudgetRecommendations({
-        budget: numericBudget,
-        partySize,
-        craving,
-        places,
-        area,
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [{ text: systemPrompt }],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.4,
+            maxOutputTokens: 1200,
+            responseMimeType: 'application/json',
+          },
+        }),
       });
-    }
 
-    const data = await response.json();
-    const rawContent = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!response.ok) {
+        const errText = await response.text();
+        console.warn(`Gemini (${model}) returned status ${response.status}:`, errText.slice(0, 150));
+        continue;
+      }
+
+      const data = await response.json();
+      rawContent = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (rawContent) {
+        console.log(`Successfully generated budget recommendations using Gemini (${model})`);
+        break;
+      }
+    } catch (modelErr) {
+      console.warn(`Gemini model ${model} request error:`, modelErr.message);
+    }
+  }
 
     if (!rawContent) {
       return generateLocalBudgetRecommendations({

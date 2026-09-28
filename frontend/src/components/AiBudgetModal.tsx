@@ -11,6 +11,7 @@ interface AiBudgetModalProps {
   locationName: string;
   onSelectPlace: (place: Place) => void;
   onApplyRecommendations: (places: Place[], budgetText: string) => void;
+  initialBudget?: number | null;
 }
 
 const PRESET_BUDGETS = [
@@ -38,8 +39,9 @@ export default function AiBudgetModal({
   locationName,
   onSelectPlace,
   onApplyRecommendations,
+  initialBudget,
 }: AiBudgetModalProps) {
-  const [budget, setBudget] = useState<number | string>(300);
+  const [budget, setBudget] = useState<number | string>(initialBudget || 300);
   const [partySize, setPartySize] = useState<number>(1);
   const [craving, setCraving] = useState<string>('');
   const [userApiKey, setUserApiKey] = useState<string>('');
@@ -58,6 +60,13 @@ export default function AiBudgetModal({
     'Gemini AI is finding the highest value dishes & combos...',
     'Matching authentic ratings and nearby walking distances...',
   ];
+
+  // Update budget when initialBudget prop changes
+  useEffect(() => {
+    if (initialBudget && initialBudget > 0) {
+      setBudget(initialBudget);
+    }
+  }, [initialBudget]);
 
   // Load saved API key from localStorage
   useEffect(() => {

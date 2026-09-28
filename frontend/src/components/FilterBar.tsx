@@ -8,7 +8,7 @@ interface FilterBarProps {
   onFilterChange: (filters: ActiveFilters) => void;
   onCuisineSearch: (cuisine: string | null) => void;
   activeCuisine: string | null;
-  onOpenAiBudget: () => void;
+  onOpenAiBudget: (initialBudget?: number) => void;
 }
 
 export const BUDGET_TIERS = [
@@ -85,6 +85,7 @@ export default function FilterBar({
   onOpenAiBudget,
 }: FilterBarProps) {
   const [budgetOpen, setBudgetOpen] = useState(false);
+  const [customBudgetInput, setCustomBudgetInput] = useState('');
   const budgetRef = useRef<HTMLDivElement>(null);
 
   // Close budget dropdown on outside click
@@ -120,6 +121,17 @@ export default function FilterBar({
     onFilterChange({ ...activeFilters, sortBy });
   };
 
+  const handleCustomAiSubmit = (e?: React.FormEvent) => {
+    e?.preventDefault();
+    const val = parseFloat(customBudgetInput.trim());
+    setBudgetOpen(false);
+    if (!isNaN(val) && val > 0) {
+      onOpenAiBudget(val);
+    } else {
+      onOpenAiBudget();
+    }
+  };
+
   // Find currently active budget tier
   const currentTier = BUDGET_TIERS.find((t) => {
     if (!t.levels && (!activeFilters.priceLevel || activeFilters.priceLevel.length === 0)) {
@@ -137,7 +149,7 @@ export default function FilterBar({
         type="button"
         id="ai-budget-trigger-btn"
         className="filter-chip ai-budget-chip"
-        onClick={onOpenAiBudget}
+        onClick={() => onOpenAiBudget()}
         title="Input your exact budget in Taka and let Gemini AI find matching meals & food courts"
       >
         <span className="ai-chip-sparkle">✨</span>
@@ -193,26 +205,40 @@ export default function FilterBar({
               )}
             </div>
 
-            {/* AI Advisor Banner inside dropdown */}
-            <div
-              className="budget-ai-banner"
-              onClick={() => {
-                setBudgetOpen(false);
-                onOpenAiBudget();
-              }}
-              role="button"
-              tabIndex={0}
-            >
-              <div className="budget-ai-banner-content">
-                <span className="ai-sparkle">✨</span>
-                <div>
-                  <div className="budget-ai-banner-title">Input Custom Budget to AI</div>
-                  <div className="budget-ai-banner-desc">
-                    Type e.g. ৳300 or ৳500 for Gemini AI custom suggestions
-                  </div>
+            {/* Direct AI Custom Budget Input Form right inside dropdown */}
+            <form onSubmit={handleCustomAiSubmit} className="budget-popover-ai-card">
+              <div className="budget-popover-ai-top">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span className="ai-sparkle">✨</span>
+                  <span className="budget-ai-title">Ask Gemini AI by Budget</span>
                 </div>
+                <span className="budget-ai-badge">Free</span>
               </div>
-              <span className="budget-ai-banner-arrow">→</span>
+              <p className="budget-ai-sub">Type your budget (৳) to get AI meal picks:</p>
+              <div className="budget-ai-input-row">
+                <span className="budget-bdt-prefix">৳</span>
+                <input
+                  type="number"
+                  min="50"
+                  max="10000"
+                  placeholder="e.g. 250, 400"
+                  value={customBudgetInput}
+                  onChange={(e) => setCustomBudgetInput(e.target.value)}
+                  className="budget-ai-input"
+                  aria-label="Input budget in Taka"
+                />
+                <button
+                  type="submit"
+                  id="budget-ai-submit-btn"
+                  className="budget-ai-submit-btn"
+                >
+                  Ask AI ✨
+                </button>
+              </div>
+            </form>
+
+            <div className="budget-popover-divider">
+              <span>OR SELECT TIER</span>
             </div>
 
             <div className="budget-tiers-list">
