@@ -33,6 +33,7 @@ const CUISINE_PLACEHOLDER: Record<string, string> = {
   indian: '🍛', thai: '🍜', chinese: '🥢', korean: '🥘',
   seafood: '🦞', coffee: '☕', dessert: '🍰', vegan: '🥗',
   american: '🍖', italian: '🍝', mediterranean: '🫒', breakfast: '🥞',
+  food_court: '🍱',
 };
 
 function getPlaceholderEmoji(place: Place): string {
@@ -160,6 +161,21 @@ export default function PlaceCard({
             </span>
           </div>
         )}
+
+        <div className="place-card-footer">
+          <button
+            type="button"
+            className="card-view-details-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              onClick();
+            }}
+            aria-label={`View details for ${place.name}`}
+          >
+            <span>View Details</span>
+            <span className="btn-arrow">→</span>
+          </button>
+        </div>
       </div>
     </article>
   );

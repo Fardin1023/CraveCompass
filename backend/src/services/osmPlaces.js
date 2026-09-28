@@ -47,6 +47,10 @@ const CUISINE_PHOTOS = {
   bangladeshi: [
     'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&auto=format&fit=crop&q=80',
   ],
+  food_court: [
+    'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop&q=80',
+  ],
   default: [
     'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&auto=format&fit=crop&q=80',
@@ -81,6 +85,10 @@ const extractCuisines = (tags = {}) => {
     result.add('street_food');
   }
   if (amenity === 'ice_cream') result.add('dessert');
+  if (amenity === 'food_court') {
+    result.add('food_court');
+    result.add('street_food');
+  }
 
   // Check name for keywords
   const nameLower = (tags.name || tags['name:en'] || '').toLowerCase();
@@ -92,6 +100,9 @@ const extractCuisines = (tags = {}) => {
   if (nameLower.includes('fuchka') || nameLower.includes('chotpoti') || nameLower.includes('cart') || nameLower.includes('stall')) result.add('street_food');
   if (nameLower.includes('sushi') || nameLower.includes('japanese')) result.add('sushi');
   if (nameLower.includes('chicken')) result.add('chicken');
+  if (nameLower.includes('food court') || nameLower.includes('foodcourt') || nameLower.includes('food village') || nameLower.includes('food park') || nameLower.includes('food square')) {
+    result.add('food_court');
+  }
 
   if (result.size === 0) {
     result.add(amenity === 'cafe' ? 'coffee' : 'bangladeshi');
@@ -143,12 +154,17 @@ const searchOsmNearby = async ({ lat, lng, radius = 3000, limit = 25, keyword = 
 
         // Filter by keyword if provided
         if (keyword && keyword.trim()) {
-          const kw = keyword.toLowerCase().trim();
+          const rawKw = keyword.toLowerCase().trim();
+          const cleanKw = rawKw.replace(/_/g, ' ');
           elements = elements.filter((e) => {
             const name = (e.tags?.name || e.tags?.['name:en'] || '').toLowerCase();
             const cuisine = (e.tags?.cuisine || '').toLowerCase();
             const amenity = (e.tags?.amenity || '').toLowerCase();
-            return name.includes(kw) || cuisine.includes(kw) || amenity.includes(kw);
+            return (
+              name.includes(rawKw) || name.includes(cleanKw) ||
+              cuisine.includes(rawKw) || cuisine.includes(cleanKw) ||
+              amenity.includes(rawKw) || amenity.includes(cleanKw)
+            );
           });
         }
 

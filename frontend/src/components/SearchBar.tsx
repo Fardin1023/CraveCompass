@@ -68,6 +68,7 @@ export default function SearchBar({
     sushi: '🍣', pizza: '🍕', burger: '🍔', mexican: '🌮',
     indian: '🍛', thai: '🍜', chinese: '🥢', korean: '🥘',
     seafood: '🦞', coffee: '☕', dessert: '🍰', vegan: '🥗',
+    food_court: '🍱',
   };
 
   return (

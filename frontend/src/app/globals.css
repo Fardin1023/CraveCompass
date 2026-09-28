@@ -79,12 +79,14 @@
   --t-spring: 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
   /* Z-index */
-  --z-map:     0;
-  --z-sidebar: 10;
-  --z-navbar:  20;
-  --z-search:  30;
-  --z-modal:   40;
-  --z-toast:   50;
+  --z-map:      1;
+  --z-filter:   10;
+  --z-sidebar:  20;
+  --z-navbar:   1000;
+  --z-search:   1010;
+  --z-dropdown: 1020;
+  --z-modal:    2000;
+  --z-toast:    3000;
 }
 
 /* ── Reset & Base ───────────────────────────────────────── */
@@ -165,6 +167,98 @@ a { color: inherit; text-decoration: none; }
 .leaflet-control-zoom a:hover {
   background: var(--bg-glass-hover) !important;
   color: var(--orange) !important;
+}
+
+/* ── User Location Beacon & Pin ──────────────────────────── */
+.user-map-pin-container {
+  background: transparent !important;
+  border: none !important;
+}
+.user-location-beacon {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.user-beacon-pulse {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(14, 165, 233, 0.35);
+  animation: beaconPulse 2.2s ease-out infinite;
+}
+.user-beacon-wave {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid rgba(56, 189, 248, 0.7);
+  animation: beaconWave 2.2s cubic-bezier(0.2, 0.6, 0.35, 1) infinite;
+}
+.user-beacon-core {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 16px rgba(14, 165, 233, 0.95), 0 2px 8px rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+.user-beacon-center {
+  width: 6px;
+  height: 6px;
+  background: #ffffff;
+  border-radius: 50%;
+}
+.user-beacon-label {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 26, 9, 0.94);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(56, 189, 248, 0.7);
+  color: #38bdf8;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6), 0 0 10px rgba(14, 165, 233, 0.35);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  pointer-events: none;
+  letter-spacing: 0.02em;
+}
+.user-beacon-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 6px #38bdf8;
+  animation: beaconDotPulse 1.2s infinite ease-in-out;
+}
+
+@keyframes beaconPulse {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+@keyframes beaconWave {
+  0% { transform: scale(0.6); opacity: 0.95; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+@keyframes beaconDotPulse {
+  0%, 100% { transform: scale(0.85); opacity: 0.7; }
+  50% { transform: scale(1.25); opacity: 1; }
 }
 
 /* ── Utilities ──────────────────────────────────────────── */
@@ -291,6 +385,8 @@ a { color: inherit; text-decoration: none; }
   flex: 1;
   overflow: hidden;
   position: relative;
+  z-index: var(--z-map);
+  isolation: isolate;
 }
 
 /* ── Navbar ─────────────────────────────────────────────── */
@@ -473,6 +569,7 @@ a { color: inherit; text-decoration: none; }
   flex-shrink: 0;
   scrollbar-width: none;
   position: relative;
+  z-index: var(--z-filter);
 }
 .filter-bar::before,
 .filter-bar::after {
@@ -555,7 +652,13 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ── Map ─────────────────────────────────────────────── */
-.map-container { flex: 1; position: relative; overflow: hidden; }
+.map-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  z-index: 1;
+}
 .map-canvas    { width: 100%; height: 100%; }
 
 /* Locate Me */
@@ -820,6 +923,39 @@ a { color: inherit; text-decoration: none; }
   font-size: 12px; color: var(--text-muted);
   margin-top: 3px;
 }
+.place-card-footer {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border-subtle);
+  display: flex;
+  justify-content: flex-end;
+}
+.card-view-details-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--orange);
+  cursor: pointer;
+  transition: all var(--t-fast);
+}
+.card-view-details-btn .btn-arrow {
+  transition: transform var(--t-fast);
+}
+.card-view-details-btn:hover {
+  background: var(--gradient-brand);
+  color: var(--text-inverse);
+  border-color: transparent;
+  box-shadow: var(--shadow-orange);
+}
+.card-view-details-btn:hover .btn-arrow {
+  transform: translateX(3px);
+}
 
 /* Star Rating */
 .star-rating { display: flex; align-items: center; gap: 1px; }
@@ -830,14 +966,28 @@ a { color: inherit; text-decoration: none; }
 .detail-panel {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  max-height: 72vh;
+  max-height: 75vh;
   background: var(--bg-elevated);
-  border-top: 1px solid var(--border-orange);
+  border-top: 1.5px solid var(--border-orange);
   border-radius: var(--radius-xl) var(--radius-xl) 0 0;
   overflow-y: auto;
   z-index: var(--z-modal);
-  box-shadow: 0 -12px 40px rgba(0,0,0,0.7), 0 -1px 0 rgba(252,143,0,0.3);
-  animation: slideInUp 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+  box-shadow: 0 -12px 40px rgba(0,0,0,0.75), 0 -1px 0 rgba(252,143,0,0.3);
+  animation: slideInUp 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+@media (min-width: 769px) {
+  .detail-panel {
+    bottom: 20px;
+    right: 20px;
+    left: auto;
+    width: 440px;
+    max-height: calc(100% - 40px);
+    border: 1.5px solid var(--border-orange);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.85), 0 0 30px rgba(252,143,0,0.25);
+    animation: slideInRight 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
 }
 
 .detail-panel-drag {
@@ -1156,7 +1306,7 @@ a { color: inherit; text-decoration: none; }
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 999;
+  z-index: var(--z-modal);
   background: rgba(8, 15, 5, 0.82);
   backdrop-filter: blur(8px);
   display: flex;
@@ -1381,9 +1531,9 @@ a { color: inherit; text-decoration: none; }
   background: var(--bg-elevated);
   border: 1.5px solid var(--border-orange);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg), 0 0 20px rgba(252, 143, 0, 0.15);
+  box-shadow: var(--shadow-lg), 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(252, 143, 0, 0.2);
   padding: 8px;
-  z-index: 100;
+  z-index: var(--z-dropdown);
   animation: fadeInFast var(--t-fast) both;
 }
 .user-dropdown-header { padding: 8px 10px 10px; }

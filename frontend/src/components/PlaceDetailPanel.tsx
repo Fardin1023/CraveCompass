@@ -1,7 +1,8 @@
 'use client';
-
+import { useState, useEffect } from 'react';
 import type { Place } from '@/types';
 import { useAuth } from '@/context/AuthContext';
+import { getPlaceById } from '@/lib/api';
 
 interface PlaceDetailPanelProps {
   place: Place;
@@ -24,10 +25,23 @@ function StarRating({ rating }: { rating: number }) {
 }
 
 export default function PlaceDetailPanel({
-  place,
+  place: initialPlace,
   onClose,
   onRequireAuth,
 }: PlaceDetailPanelProps) {
+  const [place, setPlace] = useState<Place>(initialPlace);
+
+  useEffect(() => {
+    setPlace(initialPlace);
+    if (initialPlace?._id) {
+      getPlaceById(initialPlace._id)
+        .then((res) => {
+          if (res?.place) setPlace(res.place);
+        })
+        .catch(() => {});
+    }
+  }, [initialPlace]);
+
   const { isFavorite, toggleFavorite, isAuthenticated } = useAuth();
   const isOpen = place.openingHours?.openNow;
   const favorite = isFavorite(place._id);

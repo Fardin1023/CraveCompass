@@ -23,7 +23,7 @@ const CUISINE_EMOJI: Record<string, string> = {
   chinese: '🥢', korean: '🥘', seafood: '🦞', coffee: '☕',
   dessert: '🍰', breakfast: '🥞', vegan: '🥗',
   mediterranean: '🫒', chicken: '🍗', continental: '🍽️',
-  street_food: '🍢', food_cart: '🛺', cart: '🛺',
+  street_food: '🍢', food_cart: '🛺', cart: '🛺', food_court: '🍱',
   default: '🍽️',
 };
 
@@ -51,6 +51,7 @@ export default function MapView({
   const tileLayerRef = useRef<L.TileLayer | null>(null);
   const markersRef = useRef<Map<string, L.Marker>>(new Map());
   const userMarkerRef = useRef<L.Marker | null>(null);
+  const userCircleRef = useRef<L.Circle | null>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [leafletInstance, setLeafletInstance] = useState<typeof L | null>(null);
   const [mapStyle, setMapStyle] = useState<'dark' | 'standard'>('dark');
@@ -126,7 +127,7 @@ export default function MapView({
     }
   }, [mapStyle]);
 
-  // User location marker
+  // User location marker & proximity range circle
   useEffect(() => {
     if (!mapRef.current || !mapLoaded || !leafletInstance || !userLocation) return;
     const L = leafletInstance;
@@ -134,31 +135,79 @@ export default function MapView({
 
     const userLatLng = L.latLng(userLocation.lat, userLocation.lng);
 
+    // Walking proximity circle (350m radius)
+    if (userCircleRef.current) {
+      userCircleRef.current.setLatLng(userLatLng);
+    } else {
+      userCircleRef.current = L.circle(userLatLng, {
+        radius: 350,
+        color: '#38bdf8',
+        fillColor: '#0284c7',
+        fillOpacity: 0.1,
+        weight: 1.5,
+        dashArray: '5, 5',
+      }).addTo(map);
+    }
+
+    // High-visibility beacon marker
     if (userMarkerRef.current) {
       userMarkerRef.current.setLatLng(userLatLng);
     } else {
       const userDivIcon = L.divIcon({
-        className: 'user-map-pin',
+        className: 'user-map-pin-container',
         html: `
-          <div style="
-            width: 22px; height: 22px;
-            background: radial-gradient(circle, #60a5fa 0%, #2563eb 55%, rgba(37,99,235,0.25) 100%);
-            border-radius: 50%;
-            border: 3px solid white;
-            box-shadow: 0 0 0 6px rgba(37,99,235,0.25), 0 2px 8px rgba(0,0,0,0.6);
-            animation: pulse 2s ease-in-out infinite;
-          "></div>
+          <div class="user-location-beacon" title="Your current location">
+            <div class="user-beacon-pulse"></div>
+            <div class="user-beacon-wave"></div>
+            <div class="user-beacon-core">
+              <div class="user-beacon-center"></div>
+            </div>
+            <div class="user-beacon-label">
+              <span class="user-beacon-dot"></span>
+              <span>You Are Here</span>
+            </div>
+          </div>
         `,
-        iconSize: [22, 22],
-        iconAnchor: [11, 11],
+        iconSize: [48, 48],
+        iconAnchor: [24, 24],
+        popupAnchor: [0, -28],
       });
 
       userMarkerRef.current = L.marker(userLatLng, {
         icon: userDivIcon,
-        zIndexOffset: 1000,
+        zIndexOffset: 1200,
       }).addTo(map);
+
+      userMarkerRef.current.bindPopup(
+        `<div style="text-align:center;padding:6px 8px;font-family:inherit">
+          <div style="font-weight:800;color:#38bdf8;font-size:13px;margin-bottom:3px">📍 You Are Here</div>
+          <div style="font-size:11px;color:#cbd5e1">Showing nearby restaurants & food courts</div>
+        </div>`,
+        { className: 'crave-osm-popup', offset: [0, -22] }
+      );
     }
   }, [userLocation, mapLoaded, leafletInstance]);
+
+  // Delegated click listener for popup "View Details" button
+  useEffect(() => {
+    const container = mapContainer.current;
+    if (!container) return;
+    const handlePopupClick = (e: MouseEvent) => {
+      const btn = (e.target as HTMLElement).closest('.popup-view-btn');
+      if (btn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const placeId = btn.getAttribute('data-place-id');
+        const place = places.find((p) => p._id === placeId);
+        if (place) {
+          mapRef.current?.closePopup();
+          onMarkerClick(place);
+        }
+      }
+    };
+    container.addEventListener('click', handlePopupClick);
+    return () => container.removeEventListener('click', handlePopupClick);
+  }, [places, onMarkerClick]);
 
   // Place markers
   useEffect(() => {
@@ -235,21 +284,24 @@ export default function MapView({
 
       const marker = L.marker([lat, lng], { icon: divIcon }).addTo(map);
 
-      marker.bindPopup(popupHtml, {
-        maxWidth: 270,
+      // Direct DOM creation with bound click handler
+      marker.bindPopup(() => {
+        const div = document.createElement('div');
+        div.innerHTML = popupHtml;
+        const btn = div.querySelector('.popup-view-btn');
+        if (btn) {
+          L.DomEvent.on(btn, 'click', (e) => {
+            L.DomEvent.stopPropagation(e);
+            map.closePopup();
+            onMarkerClick(place);
+          });
+        }
+        return div;
+      }, {
+        maxWidth: 280,
         minWidth: 230,
         className: 'crave-osm-popup',
         closeButton: true,
-      });
-
-      marker.on('popupopen', () => {
-        setTimeout(() => {
-          const btn = document.querySelector(`[data-place-id="${place._id}"]`);
-          btn?.addEventListener('click', (e) => {
-            e.stopPropagation();
-            onMarkerClick(place);
-          });
-        }, 50);
       });
 
       marker.on('click', () => {
@@ -260,35 +312,48 @@ export default function MapView({
     });
   }, [places, mapLoaded, leafletInstance, onMarkerClick]);
 
-  // Fit bounds to places
+  // Auto-center or fit bounds to user location + nearby places
   useEffect(() => {
-    if (!mapRef.current || !mapLoaded || !leafletInstance || places.length === 0 || selectedPlace) {
-      return;
-    }
-    try {
-      const validPoints = places
-        .filter((p) => p.location?.coordinates && p.location.coordinates.length === 2)
-        .map((p) => [p.location.coordinates[1], p.location.coordinates[0]] as [number, number]);
+    if (!mapRef.current || !mapLoaded || !leafletInstance || selectedPlace) return;
+    const L = leafletInstance;
 
-      if (validPoints.length > 0) {
-        const bounds = leafletInstance.latLngBounds(validPoints);
-        mapRef.current.fitBounds(bounds, {
-          padding: [60, 60],
-          maxZoom: 14.5,
-          animate: true,
-          duration: 0.8,
-        });
+    const validPoints: [number, number][] = [];
+    if (userLocation) {
+      validPoints.push([userLocation.lat, userLocation.lng]);
+    }
+
+    places.forEach((p) => {
+      if (p.location?.coordinates && p.location.coordinates.length === 2) {
+        const [lng, lat] = p.location.coordinates;
+        if (!isNaN(lat) && !isNaN(lng)) {
+          validPoints.push([lat, lng]);
+        }
       }
-    } catch (_) {}
-  }, [places, mapLoaded, leafletInstance]);
+    });
+
+    if (validPoints.length > 1) {
+      const bounds = L.latLngBounds(validPoints);
+      mapRef.current.fitBounds(bounds, {
+        padding: [60, 60],
+        maxZoom: 15,
+        animate: true,
+        duration: 1.0,
+      });
+    } else if (userLocation) {
+      mapRef.current.flyTo([userLocation.lat, userLocation.lng], 15, {
+        animate: true,
+        duration: 1.2,
+      });
+    }
+  }, [userLocation, places, mapLoaded, leafletInstance, selectedPlace]);
 
   // Fly to selected place
   useEffect(() => {
     if (!mapRef.current || !selectedPlace || !mapLoaded) return;
     const [lng, lat] = selectedPlace.location.coordinates;
-    mapRef.current.flyTo([lat, lng], 15, {
+    mapRef.current.flyTo([lat, lng], 16, {
       animate: true,
-      duration: 1.2,
+      duration: 1.0,
     });
 
     const marker = markersRef.current.get(selectedPlace._id);
@@ -303,18 +368,8 @@ export default function MapView({
           setTimeout(() => markerPin.classList.remove('active'), 600);
         }
       }
-      marker.openPopup();
     }
   }, [selectedPlace, mapLoaded]);
-
-  // Fly to user location on initial locate
-  useEffect(() => {
-    if (!mapRef.current || !userLocation || !mapLoaded || places.length > 0) return;
-    mapRef.current.flyTo([userLocation.lat, userLocation.lng], 14, {
-      animate: true,
-      duration: 1.5,
-    });
-  }, [userLocation, mapLoaded]);
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>

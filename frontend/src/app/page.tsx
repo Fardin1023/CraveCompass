@@ -2,7 +2,7 @@
 
 // CraveCompass Dhaka — Live Production
 import dynamic from 'next/dynamic';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { useSearch } from '@/hooks/useSearch';
 import { useAuth } from '@/context/AuthContext';
@@ -37,6 +37,7 @@ const CUISINE_LABELS: Record<string, string> = {
   pizza: 'Pizza 🍕', burger: 'Burgers 🍔', biryani: 'Biryani 🍚',
   kabab: 'Kabab 🍢', bangladeshi: 'Bangladeshi 🍛', chicken: 'Chicken 🍗',
   street_food: 'Street Food & Carts 🍢',
+  food_court: 'Food Courts 🍱',
   coffee: 'Coffee ☕', sushi: 'Sushi 🍣', thai: 'Thai 🍜',
   vegan: 'Vegan 🥗', breakfast: 'Breakfast 🥞', seafood: 'Seafood 🦞',
 };
@@ -73,11 +74,29 @@ export default function HomePage() {
   const [profileModalOpen, setProfileModalOpen]       = useState(false);
   const [favoritesModalOpen, setFavoritesModalOpen]   = useState(false);
   const [userMenuOpen, setUserMenuOpen]               = useState(false);
+  const userMenuRef                                   = useRef<HTMLDivElement>(null);
+
+  // Close user dropdown on outside click
+  useEffect(() => {
+    if (!userMenuOpen) return;
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, [userMenuOpen]);
 
   const showToast = useCallback((message: string, icon = 'ℹ️') => {
     setToast({ message, icon });
     setTimeout(() => setToast(null), 3500);
   }, []);
+
+  // Attempt to locate user on initial visit
+  useEffect(() => {
+    getLocation();
+  }, [getLocation]);
 
   // Load places on initial mount or when user location changes
   useEffect(() => {
@@ -233,7 +252,7 @@ export default function HomePage() {
 
           {/* User Profile / Auth Area */}
           {isAuthenticated && user ? (
-            <div className="user-dropdown-container">
+            <div className="user-dropdown-container" ref={userMenuRef}>
               <button
                 type="button"
                 className="user-profile-trigger"
