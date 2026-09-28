@@ -1283,23 +1283,297 @@ a { color: inherit; text-decoration: none; }
 }
 .active-cuisine-clear:hover { color: var(--red); border-color: var(--red); }
 
-/* ── Responsive ──────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .results-sidebar {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    width: 100%; height: 45vh;
-    border-right: none;
-    border-top: 1px solid var(--border-orange);
-    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-    z-index: var(--z-sidebar);
-  }
-  .navbar-logo-text { display: none; }
-  .map-layout { flex-direction: column; }
-  .sidebar-list { padding-bottom: 80px; }
+/* ── Responsive & Mobile First Enhancements ────────────────── */
+.navbar-top-row {
+  display: contents;
 }
+
+.mobile-view-toggle-bar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* Navbar Mobile Layout */
+  .navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px 14px;
+  }
+  .navbar-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 8px;
+  }
+  .navbar-logo {
+    gap: 8px;
+  }
+  .navbar-logo-icon {
+    width: 36px;
+    height: 36px;
+  }
+  .navbar-logo-text {
+    font-size: 18px;
+    display: block;
+  }
+  .navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+  }
+  .navbar-location-badge {
+    display: none !important;
+  }
+  #locate-me-btn-nav {
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+  }
+  .navbar-search {
+    width: 100%;
+    max-width: none;
+  }
+  .search-bar {
+    padding: 6px 8px 6px 12px;
+  }
+  .search-submit-btn {
+    padding: 6px 14px;
+    font-size: 12px;
+  }
+
+  /* Filter Bar Mobile Scroll */
+  .filter-bar {
+    padding: 8px 12px;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .filter-bar::-webkit-scrollbar {
+    display: none;
+  }
+  .filter-chip {
+    padding: 6px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .ai-budget-chip {
+    padding: 6px 14px;
+  }
+
+  /* Map & Sidebar Responsive View Switcher */
+  .map-layout {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* When mobileTab is 'map', hide the sidebar and show full map */
+  .mobile-tab-map .results-sidebar {
+    display: none !important;
+  }
+  .mobile-tab-map .map-container {
+    display: flex !important;
+    width: 100% !important;
+    height: 100% !important;
+    flex: 1;
+  }
+
+  /* When mobileTab is 'list', hide the map and show full-height scrolling list */
+  .mobile-tab-list .map-container {
+    display: none !important;
+  }
+  .mobile-tab-list .results-sidebar {
+    display: flex !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: relative !important;
+    border-right: none !important;
+    border-radius: 0 !important;
+    z-index: 10;
+  }
+  .sidebar-list {
+    padding: 12px 14px 100px;
+    overflow-y: auto;
+  }
+
+  /* Floating Bottom Mobile Toggle Pill */
+  .mobile-view-toggle-bar {
+    display: flex;
+    position: fixed;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1005;
+    pointer-events: auto;
+    animation: scaleIn var(--t-bounce) both;
+  }
+  .mobile-view-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    background: linear-gradient(135deg, rgba(23, 36, 16, 0.98) 0%, rgba(12, 20, 8, 0.98) 100%);
+    border: 1.5px solid var(--orange);
+    border-radius: var(--radius-pill);
+    color: var(--cream);
+    font-family: 'Outfit', sans-serif;
+    font-size: 13.5px;
+    font-weight: 800;
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.9), 0 0 20px rgba(252, 143, 0, 0.4);
+    cursor: pointer;
+    backdrop-filter: blur(16px);
+    transition: transform var(--t-fast);
+  }
+  .mobile-view-pill-btn:active {
+    transform: scale(0.96);
+  }
+  .mobile-view-pill-btn .pill-icon {
+    font-size: 16px;
+  }
+  .mobile-view-pill-btn .pill-text {
+    letter-spacing: 0.02em;
+  }
+
+  /* Place Detail Panel (Mobile Bottom Sheet) */
+  .detail-panel {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-height: 85vh !important;
+    border-radius: 22px 22px 0 0 !important;
+    border: none !important;
+    border-top: 2px solid var(--orange) !important;
+    z-index: 1020 !important;
+    box-shadow: 0 -12px 48px rgba(0, 0, 0, 0.92) !important;
+  }
+  .detail-panel-content {
+    padding: 14px 18px 36px;
+  }
+  .detail-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .detail-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .detail-action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Active Filter / AI Banners */
+  .active-ai-budget-banner,
+  .active-cuisine-banner,
+  .active-budget-banner {
+    padding: 8px 12px;
+    font-size: 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  /* CraveAI Modal Mobile Overhaul */
+  .crave-ai-modal-card {
+    max-width: 100% !important;
+    max-height: 92vh !important;
+    padding: 20px 16px 24px !important;
+    border-radius: 22px !important;
+  }
+  .crave-ai-title {
+    font-size: 20px !important;
+  }
+  .crave-ai-subtitle {
+    font-size: 12px !important;
+  }
+  .crave-presets-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+  }
+  .crave-preset-card {
+    padding: 8px 4px !important;
+  }
+  .crave-preset-amount {
+    font-size: 13px !important;
+  }
+  .crave-budget-hero-box {
+    padding: 14px 12px !important;
+    border-radius: 16px !important;
+  }
+  .crave-step-btn {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 12px !important;
+    border-radius: 10px !important;
+  }
+  .crave-taka-sign {
+    font-size: 24px !important;
+  }
+  .crave-budget-number-input {
+    font-size: 26px !important;
+    width: 100px !important;
+  }
+  .crave-party-cards {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+  }
+  .crave-party-card {
+    padding: 8px 4px !important;
+  }
+  .crave-party-title {
+    font-size: 11px !important;
+  }
+  .crave-recs-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  .crave-rec-card-top {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+  .crave-rec-cost-badge {
+    align-self: flex-start !important;
+  }
+  .crave-rec-btn-row {
+    width: 100% !important;
+  }
+  .crave-rec-locate-btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .crave-apply-all-cta {
+    font-size: 13px !important;
+    padding: 12px 16px !important;
+  }
+
+  /* Modals General */
+  .modal-backdrop {
+    padding: 12px !important;
+  }
+  .hub-chips-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
 @media (max-width: 480px) {
-  .detail-stats { grid-template-columns: repeat(2, 1fr); }
-  .detail-actions { flex-direction: column; }
+  .crave-presets-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  .crave-party-cards {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  .crave-budget-input-cockpit {
+    gap: 6px !important;
+  }
 }
 
 /* ── Modal Common ────────────────────────────────────────── */

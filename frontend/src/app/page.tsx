@@ -103,6 +103,9 @@ export default function HomePage() {
   // Active coordinates: real GPS or selected Dhaka hub
   const activeCoords = coords || customCoords || null;
 
+  // Mobile Map vs List View State
+  const [mobileTab, setMobileTab] = useState<'map' | 'list'>('list');
+
   // Authentication & User Profile States
   const { user, isAuthenticated, logout, favoritesCount } = useAuth();
   const [authModalOpen, setAuthModalOpen] = useState(false);
@@ -260,7 +263,10 @@ export default function HomePage() {
   }, []);
 
   const handleMarkerClick = useCallback((place: Place) => setSelectedPlace(place), []);
-  const handleCardClick = useCallback((place: Place) => setSelectedPlace(place), []);
+  const handleCardClick = useCallback((place: Place) => {
+    setSelectedPlace(place);
+    setMobileTab('map');
+  }, []);
   const handleCloseDetail = useCallback(() => setSelectedPlace(null), []);
 
   const handleOpenAiBudgetWithInitial = useCallback((budgetVal?: number) => {
@@ -280,12 +286,147 @@ export default function HomePage() {
     <main className="app-container">
       {/* ── Navbar ────────────────────────────────────────── */}
       <nav className="navbar" role="navigation" aria-label="Main navigation">
-        <div className="navbar-logo">
-          <div className="navbar-logo-icon">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.jpg" alt="CraveCompass Logo" />
+        <div className="navbar-top-row">
+          <div className="navbar-logo">
+            <div className="navbar-logo-icon">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.jpg" alt="CraveCompass Logo" />
+            </div>
+            <span className="navbar-logo-text">CraveCompass</span>
           </div>
-          <span className="navbar-logo-text">CraveCompass</span>
+
+          <div className="navbar-actions">
+            {locationName && (
+              <div
+                className="navbar-location-badge"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '5px',
+                  fontSize: '12px',
+                  color: 'var(--text-secondary)',
+                  flexShrink: 0,
+                }}
+              >
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                <span className="location-text-truncate">{locationName}</span>
+              </div>
+            )}
+
+            <button
+              id="locate-me-btn-nav"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '8px 16px',
+                background: activeCoords ? 'var(--bg-glass)' : 'var(--gradient-brand)',
+                border: `1.5px solid ${activeCoords ? 'var(--border-default)' : 'transparent'}`,
+                borderRadius: 'var(--radius-pill)',
+                fontSize: '13px',
+                fontWeight: 700,
+                color: activeCoords ? 'var(--text-secondary)' : 'var(--text-inverse)',
+                cursor: 'pointer',
+                transition: 'all var(--t-base)',
+                boxShadow: activeCoords ? 'none' : 'var(--shadow-orange)',
+                flexShrink: 0,
+              }}
+              onClick={handleLocateMe}
+              aria-label="Open location permission modal"
+            >
+              {geoLoading ? (
+                <svg className="animate-spin" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                </svg>
+              ) : (
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                  <circle cx="12" cy="12" r="3" />
+                  <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
+                </svg>
+              )}
+              {geoLoading ? 'Locating…' : activeCoords ? 'Near Me 📍' : 'Find Near Me'}
+            </button>
+
+            {/* User Profile / Auth Area */}
+            {isAuthenticated && user ? (
+              <div className="user-dropdown-container" ref={userMenuRef}>
+                <button
+                  type="button"
+                  className="user-profile-trigger"
+                  onClick={() => setUserMenuOpen(!userMenuOpen)}
+                  aria-label="User profile menu"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={user.avatar || 'https://api.dicebear.com/7.x/bottts/svg?seed=Foodie'}
+                    alt={user.name}
+                    className="user-nav-avatar"
+                  />
+                  <span className="user-nav-name">{user.name.split(' ')[0]}</span>
+                  <span className="user-nav-arrow">{userMenuOpen ? '▴' : '▾'}</span>
+                </button>
+
+                {userMenuOpen && (
+                  <div className="user-dropdown-menu">
+                    <div className="user-dropdown-header">
+                      <div style={{ fontWeight: 700, color: 'var(--cream)', fontSize: '13px' }}>{user.name}</div>
+                      <div style={{ fontSize: '11px', color: 'var(--text-muted)' }} className="truncate">
+                        {user.email}
+                      </div>
+                    </div>
+                    <div className="user-dropdown-divider" />
+                    <button
+                      type="button"
+                      className="user-dropdown-item"
+                      onClick={() => {
+                        setUserMenuOpen(false);
+                        setFavoritesModalOpen(true);
+                      }}
+                    >
+                      <span>❤️ Saved Spots</span>
+                      <span className="dropdown-counter-badge">{favoritesCount}</span>
+                    </button>
+                    <button
+                      type="button"
+                      className="user-dropdown-item"
+                      onClick={() => {
+                        setUserMenuOpen(false);
+                        setProfileModalOpen(true);
+                      }}
+                    >
+                      <span>⚙️ Profile & Preferences</span>
+                    </button>
+                    <div className="user-dropdown-divider" />
+                    <button
+                      type="button"
+                      className="user-dropdown-item danger"
+                      onClick={() => {
+                        setUserMenuOpen(false);
+                        logout();
+                        showToast('Signed out successfully', '👋');
+                      }}
+                    >
+                      <span>🚪 Sign Out</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button
+                type="button"
+                className="navbar-signin-btn"
+                onClick={() => {
+                  setAuthModalMode('login');
+                  setAuthModalOpen(true);
+                }}
+              >
+                Sign In
+              </button>
+            )}
+          </div>
         </div>
 
         <div className="navbar-search">
@@ -301,138 +442,6 @@ export default function HomePage() {
             }}
             onClear={handleClear}
           />
-        </div>
-
-        <div className="navbar-actions">
-          {locationName && (
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '5px',
-                fontSize: '12px',
-                color: 'var(--text-secondary)',
-                flexShrink: 0,
-              }}
-            >
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-                <circle cx="12" cy="10" r="3" />
-              </svg>
-              {locationName}
-            </div>
-          )}
-
-          <button
-            id="locate-me-btn-nav"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '8px 16px',
-              background: activeCoords ? 'var(--bg-glass)' : 'var(--gradient-brand)',
-              border: `1.5px solid ${activeCoords ? 'var(--border-default)' : 'transparent'}`,
-              borderRadius: 'var(--radius-pill)',
-              fontSize: '13px',
-              fontWeight: 700,
-              color: activeCoords ? 'var(--text-secondary)' : 'var(--text-inverse)',
-              cursor: 'pointer',
-              transition: 'all var(--t-base)',
-              boxShadow: activeCoords ? 'none' : 'var(--shadow-orange)',
-              flexShrink: 0,
-            }}
-            onClick={handleLocateMe}
-            aria-label="Open location permission modal"
-          >
-            {geoLoading ? (
-              <svg className="animate-spin" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-              </svg>
-            ) : (
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <circle cx="12" cy="12" r="3" />
-                <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
-              </svg>
-            )}
-            {geoLoading ? 'Locating…' : activeCoords ? 'Near Me 📍' : 'Find Near Me'}
-          </button>
-
-          {/* User Profile / Auth Area */}
-          {isAuthenticated && user ? (
-            <div className="user-dropdown-container" ref={userMenuRef}>
-              <button
-                type="button"
-                className="user-profile-trigger"
-                onClick={() => setUserMenuOpen(!userMenuOpen)}
-                aria-label="User profile menu"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={user.avatar || 'https://api.dicebear.com/7.x/bottts/svg?seed=Foodie'}
-                  alt={user.name}
-                  className="user-nav-avatar"
-                />
-                <span className="user-nav-name">{user.name.split(' ')[0]}</span>
-                <span className="user-nav-arrow">{userMenuOpen ? '▴' : '▾'}</span>
-              </button>
-
-              {userMenuOpen && (
-                <div className="user-dropdown-menu">
-                  <div className="user-dropdown-header">
-                    <div style={{ fontWeight: 700, color: 'var(--cream)', fontSize: '13px' }}>{user.name}</div>
-                    <div style={{ fontSize: '11px', color: 'var(--text-muted)' }} className="truncate">
-                      {user.email}
-                    </div>
-                  </div>
-                  <div className="user-dropdown-divider" />
-                  <button
-                    type="button"
-                    className="user-dropdown-item"
-                    onClick={() => {
-                      setUserMenuOpen(false);
-                      setFavoritesModalOpen(true);
-                    }}
-                  >
-                    <span>❤️ Saved Spots</span>
-                    <span className="dropdown-counter-badge">{favoritesCount}</span>
-                  </button>
-                  <button
-                    type="button"
-                    className="user-dropdown-item"
-                    onClick={() => {
-                      setUserMenuOpen(false);
-                      setProfileModalOpen(true);
-                    }}
-                  >
-                    <span>⚙️ Profile & Preferences</span>
-                  </button>
-                  <div className="user-dropdown-divider" />
-                  <button
-                    type="button"
-                    className="user-dropdown-item danger"
-                    onClick={() => {
-                      setUserMenuOpen(false);
-                      logout();
-                      showToast('Signed out successfully', '👋');
-                    }}
-                  >
-                    <span>🚪 Sign Out</span>
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <button
-              type="button"
-              className="navbar-signin-btn"
-              onClick={() => {
-                setAuthModalMode('login');
-                setAuthModalOpen(true);
-              }}
-            >
-              Sign In
-            </button>
-          )}
         </div>
       </nav>
 
@@ -509,9 +518,12 @@ export default function HomePage() {
       )}
 
       {/* ── Main Layout ──────────────────────────────────────── */}
-      <div className="map-layout">
+      <div className={`map-layout mobile-tab-${mobileTab}`}>
         {/* ── Sidebar ─────────────────────────────────────────── */}
-        <aside className="results-sidebar" aria-label="Search results">
+        <aside
+          className={`results-sidebar ${mobileTab === 'map' ? 'mobile-hidden' : ''}`}
+          aria-label="Search results"
+        >
           <div className="sidebar-header">
             <div className="sidebar-title">
               {aiBudgetText
@@ -601,7 +613,7 @@ export default function HomePage() {
         </aside>
 
         {/* ── Map ─────────────────────────────────────────────── */}
-        <div className="map-container">
+        <div className={`map-container ${mobileTab === 'list' ? 'mobile-hidden' : ''}`}>
           <MapView
             places={displayPlaces}
             selectedPlace={selectedPlace}
@@ -645,6 +657,29 @@ export default function HomePage() {
             />
           )}
         </div>
+      </div>
+
+      {/* ── Mobile Floating Map / List Toggle Pill ──────────────── */}
+      <div className="mobile-view-toggle-bar">
+        <button
+          type="button"
+          id="mobile-tab-toggle-btn"
+          className="mobile-view-pill-btn"
+          onClick={() => setMobileTab((prev) => (prev === 'map' ? 'list' : 'map'))}
+          aria-label="Toggle between map and list view"
+        >
+          {mobileTab === 'map' ? (
+            <>
+              <span className="pill-icon">📋</span>
+              <span className="pill-text">View List ({displayTotal})</span>
+            </>
+          ) : (
+            <>
+              <span className="pill-icon">🗺️</span>
+              <span className="pill-text">View Map</span>
+            </>
+          )}
+        </button>
       </div>
 
       {/* ── Modals ──────────────────────────────────────────── */}
