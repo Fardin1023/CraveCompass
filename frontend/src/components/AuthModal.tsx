@@ -94,7 +94,8 @@ export default function AuthModal({
         {/* Header with App Logo */}
         <div className="auth-header">
           <div className="auth-logo-icon">
-            <span style={{ fontSize: '28px' }}>🧭</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/cravecompass-icon.png" alt="" width={54} height={54} />
           </div>
           <h2 id="auth-modal-title" className="auth-title">
             {mode === 'login' ? 'Welcome Back!' : 'Create an Account'}

@@ -8,14 +8,15 @@ export const metadata: Metadata = {
     'Find the best restaurants, cafes, and eateries near your location. Search by cuisine, mood, or budget with real-time map pins.',
   keywords: 'restaurant discovery, food near me, map, cuisine, dining, local restaurants',
   icons: {
-    icon: '/brand-mark.svg',
-    shortcut: '/brand-mark.svg',
+    icon: [{ url: '/cravecompass-icon.png', type: 'image/png' }],
+    shortcut: '/cravecompass-icon.png',
+    apple: '/cravecompass-icon.png',
   },
   openGraph: {
     title: 'CraveCompass — Discover Food Near You',
     description: 'Find the best restaurants near you with an interactive map.',
     type: 'website',
-    images: [{ url: '/logo.jpg' }],
+    images: [{ url: '/cravecompass-logo.png', width: 2172, height: 724, alt: 'CraveCompass logo' }],
   },
 };
 
@@ -33,7 +34,6 @@ export default function RootLayout({
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/brand-mark.svg" type="image/svg+xml" />
         {/* Leaflet CSS for OpenStreetMap */}
         <link
           rel="stylesheet"

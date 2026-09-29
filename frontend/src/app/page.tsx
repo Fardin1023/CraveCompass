@@ -288,11 +288,14 @@ export default function HomePage() {
       <nav className="navbar" role="navigation" aria-label="Main navigation">
         <div className="navbar-top-row">
           <div className="navbar-logo">
-            <div className="navbar-logo-icon">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.jpg" alt="CraveCompass Logo" />
-            </div>
-            <span className="navbar-logo-text">CraveCompass</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className="navbar-logo-image"
+              src="/cravecompass-logo.png"
+              alt="CraveCompass"
+              width={2172}
+              height={724}
+            />
           </div>
 
           <div className="navbar-actions">
@@ -335,7 +338,7 @@ export default function HomePage() {
                 flexShrink: 0,
               }}
               onClick={handleLocateMe}
-              aria-label="Open location permission modal"
+              aria-label={geoLoading ? 'Locating you' : activeCoords ? 'Find food near me' : 'Choose your location'}
             >
               {geoLoading ? (
                 <svg className="animate-spin" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -347,7 +350,9 @@ export default function HomePage() {
                   <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
                 </svg>
               )}
-              {geoLoading ? 'Locating…' : activeCoords ? 'Near Me 📍' : 'Find Near Me'}
+              <span className="nav-location-action-text">
+                {geoLoading ? 'Locating…' : activeCoords ? 'Near Me 📍' : 'Find Near Me'}
+              </span>
             </button>
 
             {/* User Profile / Auth Area */}
