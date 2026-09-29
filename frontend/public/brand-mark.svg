@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">CraveCompass</title>
+  <rect width="64" height="64" rx="16" fill="#3A2D28"/>
+  <circle cx="32" cy="32" r="25" fill="#EBE3DB" stroke="#CBAD8D" stroke-width="2"/>
+  <circle cx="32" cy="32" r="20" fill="none" stroke="#D1C7BD" stroke-width="1.5"/>
+  <path d="M32 10 37 27 54 32 37 37 32 54 27 37 10 32 27 27Z" fill="#A48374" stroke="#3A2D28" stroke-linejoin="round" stroke-width="1.5"/>
+  <path d="M32 10 37 27 32 32 27 27Z" fill="#CBAD8D"/>
+  <circle cx="32" cy="32" r="7.5" fill="#3A2D28" stroke="#F1EDE6" stroke-width="2"/>
+  <circle cx="32" cy="32" r="2.5" fill="#CBAD8D"/>
+</svg>

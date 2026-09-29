@@ -87,7 +87,7 @@ export default function MapView({
     // Add zoom control at bottom-right or top-right
     L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-    // Tile layer (100% Free OpenStreetMap)
+    // OpenStreetMap tile layer, styled by the CSS mocha filter.
     const osmTileUrl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
     const osmAttribution =
       '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors';
@@ -141,8 +141,8 @@ export default function MapView({
     } else {
       userCircleRef.current = L.circle(userLatLng, {
         radius: 350,
-        color: '#38bdf8',
-        fillColor: '#0284c7',
+        color: '#CBAD8D',
+        fillColor: '#A48374',
         fillOpacity: 0.1,
         weight: 1.5,
         dashArray: '5, 5',
@@ -180,8 +180,8 @@ export default function MapView({
 
       userMarkerRef.current.bindPopup(
         `<div style="text-align:center;padding:6px 8px;font-family:inherit">
-          <div style="font-weight:800;color:#38bdf8;font-size:13px;margin-bottom:3px">📍 You Are Here</div>
-          <div style="font-size:11px;color:#cbd5e1">Showing nearby restaurants & food courts</div>
+          <div style="font-weight:800;color:#CBAD8D;font-size:13px;margin-bottom:3px">📍 You Are Here</div>
+          <div style="font-size:11px;color:#EBE3DB">Showing nearby restaurants & food courts</div>
         </div>`,
         { className: 'crave-osm-popup', offset: [0, -22] }
       );
@@ -382,7 +382,7 @@ export default function MapView({
           zIndex: 400,
           display: 'flex',
           gap: '6px',
-          background: 'rgba(15, 26, 9, 0.88)',
+          background: 'rgba(58, 45, 40, 0.88)',
           backdropFilter: 'blur(8px)',
           border: '1px solid var(--border-default)',
           borderRadius: 'var(--radius-pill)',
@@ -402,9 +402,9 @@ export default function MapView({
             color: mapStyle === 'dark' ? 'var(--text-inverse)' : 'var(--text-secondary)',
             transition: 'all 0.2s ease',
           }}
-          title="OpenStreetMap Dark Tiles"
+          title="Warm mocha map"
         >
-          🌙 OSM Dark
+          ☕ Mocha Map
         </button>
         <button
           type="button"
@@ -418,7 +418,7 @@ export default function MapView({
             color: mapStyle === 'standard' ? 'var(--text-inverse)' : 'var(--text-secondary)',
             transition: 'all 0.2s ease',
           }}
-          title="OpenStreetMap Standard Tiles"
+          title="Standard OpenStreetMap colors"
         >
           🗺️ OSM Standard
         </button>

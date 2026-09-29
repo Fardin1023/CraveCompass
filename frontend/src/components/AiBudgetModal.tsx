@@ -33,10 +33,10 @@ const CRAVING_TAGS = [
 ];
 
 function getBudgetTierInfo(amount: number) {
-  if (amount < 200) return { label: 'Pocket Friendly · Street Food & Cha', color: '#34d399', icon: '🍢' };
-  if (amount < 450) return { label: 'Sweet Spot · Food Courts & Meal Sets', color: '#fbbf24', icon: '🍱' };
-  if (amount < 900) return { label: 'Popular Choice · Kacchi Feasts & Cafes', color: '#fb923c', icon: '🍔' };
-  return { label: 'Gourmet Selection · Steaks, Buffets & Premium Dining', color: '#c084fc', icon: '👑' };
+  if (amount < 200) return { label: 'Pocket Friendly · Street Food & Cha', color: '#CBAD8D', icon: '🍢' };
+  if (amount < 450) return { label: 'Sweet Spot · Food Courts & Meal Sets', color: '#D1C7BD', icon: '🍱' };
+  if (amount < 900) return { label: 'Popular Choice · Kacchi Feasts & Cafes', color: '#EBE3DB', icon: '🍔' };
+  return { label: 'Gourmet Selection · Steaks, Buffets & Premium Dining', color: '#F1EDE6', icon: '👑' };
 }
 
 export default function AiBudgetModal({

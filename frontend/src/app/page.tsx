@@ -331,7 +331,7 @@ export default function HomePage() {
                 color: activeCoords ? 'var(--text-secondary)' : 'var(--text-inverse)',
                 cursor: 'pointer',
                 transition: 'all var(--t-base)',
-                boxShadow: activeCoords ? 'none' : 'var(--shadow-orange)',
+                boxShadow: activeCoords ? 'none' : 'var(--shadow-accent)',
                 flexShrink: 0,
               }}
               onClick={handleLocateMe}
@@ -372,7 +372,7 @@ export default function HomePage() {
                 {userMenuOpen && (
                   <div className="user-dropdown-menu">
                     <div className="user-dropdown-header">
-                      <div style={{ fontWeight: 700, color: 'var(--cream)', fontSize: '13px' }}>{user.name}</div>
+                      <div style={{ fontWeight: 700, color: 'var(--ivory)', fontSize: '13px' }}>{user.name}</div>
                       <div style={{ fontSize: '11px', color: 'var(--text-muted)' }} className="truncate">
                         {user.email}
                       </div>
@@ -589,7 +589,7 @@ export default function HomePage() {
                       color: 'var(--text-inverse)',
                       cursor: 'pointer',
                       border: 'none',
-                      boxShadow: 'var(--shadow-orange)',
+                      boxShadow: 'var(--shadow-accent)',
                     }}
                     onClick={handleLocateMe}
                   >

@@ -375,9 +375,9 @@ export default function UserProfileModal({
                   >
                     <span style={{ fontSize: '24px' }}>🌙</span>
                     <div>
-                      <div style={{ fontWeight: 700, color: 'var(--cream)' }}>OSM Dark Mode</div>
+                      <div style={{ fontWeight: 700, color: 'var(--ivory)' }}>Mocha Map</div>
                       <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
-                        Deep forest earth-tone theme
+                        Warm coffee and linen tones
                       </div>
                     </div>
                   </div>
@@ -387,7 +387,7 @@ export default function UserProfileModal({
                   >
                     <span style={{ fontSize: '24px' }}>🗺️</span>
                     <div>
-                      <div style={{ fontWeight: 700, color: 'var(--cream)' }}>OSM Standard</div>
+                      <div style={{ fontWeight: 700, color: 'var(--ivory)' }}>OSM Standard</div>
                       <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
                         Classic OpenStreetMap colors
                       </div>
@@ -403,7 +403,7 @@ export default function UserProfileModal({
                   onClick={() => setLocationSharing(!locationSharing)}
                 >
                   <div>
-                    <div style={{ fontWeight: 700, color: 'var(--cream)' }}>
+                    <div style={{ fontWeight: 700, color: 'var(--ivory)' }}>
                       Automatic Local Discovery
                     </div>
                     <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>

@@ -87,7 +87,7 @@ export default function FavoritesModal({
           ) : favorites.length === 0 ? (
             <div className="fav-empty">
               <span style={{ fontSize: '48px' }}>🍱</span>
-              <h3 style={{ color: 'var(--cream)', fontSize: '18px', fontWeight: 800 }}>
+              <h3 style={{ color: 'var(--ivory)', fontSize: '18px', fontWeight: 800 }}>
                 No Saved Places Yet
               </h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '13px', maxWidth: '280px', lineHeight: 1.5 }}>

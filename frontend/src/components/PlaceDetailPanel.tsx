@@ -137,7 +137,7 @@ export default function PlaceDetailPanel({
             </div>
           )}
           <div className="detail-stat">
-            <div className="detail-stat-value" style={{ color: isOpen ? '#34d399' : isOpen === false ? '#f87171' : 'var(--text-muted)' }}>
+            <div className="detail-stat-value" style={{ color: isOpen ? '#CBAD8D' : isOpen === false ? '#D1C7BD' : 'var(--text-muted)' }}>
               {isOpen === true ? '●' : isOpen === false ? '●' : '?'}
             </div>
             <div className="detail-stat-label">
